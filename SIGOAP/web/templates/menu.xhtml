@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:form>
+
+        <p:outputPanel id="menuPanel" layout="block">
+            <p:menu>
+                <p:submenu label="Pages" icon="ui-icon ui-icon-refresh">
+                    <p:menuitem value="Page 1"
+                                url="/views/page1.xhtml" />
+                    <p:menuitem value="Page 2" 
+                                url="/views/page2.xhtml" />
+                </p:submenu>
+                <p:submenu label="More Pages" icon="ui-icon ui-icon-refresh">
+                    <p:menuitem value="Page 3"
+                                url="/views/page3.xhtml" />
+                    <p:menuitem value="Page 4" 
+                                url="/views/page4.xhtml" />
+                </p:submenu>
+
+            </p:menu>
+        </p:outputPanel>
+
+    </h:form>
+</ui:composition>
