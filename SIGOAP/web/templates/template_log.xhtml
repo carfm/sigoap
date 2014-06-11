@@ -19,7 +19,7 @@
             <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
             <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
                 <p:layoutUnit position="north" size="170" id="north" >
-                    <ui:include src="header.xhtml" />
+                    <ui:include src="header_log.xhtml" />
                 </p:layoutUnit>
                 <p:layoutUnit styleClass="layoutUnitCenter" position="center">
                     <h:form id="mainForm">
@@ -40,7 +40,6 @@
                 <p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
             </p:dialog>
         </h:head>
-
         <h:body onload="statusDialog.hide();">
         </h:body>
     </f:view>

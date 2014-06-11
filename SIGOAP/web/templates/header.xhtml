@@ -6,13 +6,59 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
+    <h:form> 
+        <p:menubar style="background-color: #2F3F4F;">
+            <p:submenu label="File" icon="ui-icon-document">
+                <p:submenu label="New" icon="ui-icon-contact">
+                    <p:menuitem value="Project" url="#" />
+                    <p:menuitem value="Other" url="#" />
+                </p:submenu>
+                <p:menuitem value="Open" url="#" />
+                <p:separator />
+                <p:menuitem value="Quit" url="#" />
+            </p:submenu>
 
-    <p:panel style="background-color: #2F3F4F;">
-    </p:panel>
-    <p:panel style="background-color: #3C75CF;">
-        <h:graphicImage url="/resources/images/LogoHMCR.jpg" width="200" height="60"/>
-    </p:panel>
-    <p:panel style="background-color: #5E7090;">
+            <p:submenu label="Edit" icon="ui-icon-pencil">
+                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
+                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+            </p:submenu>
 
-    </p:panel>
+            <p:submenu label="Help" icon="ui-icon-help">
+                <p:menuitem value="Contents" url="#" />
+                <p:submenu label="Search" icon="ui-icon-search">
+                    <p:submenu label="Text">
+                        <p:menuitem value="Workspace" url="#" />
+                    </p:submenu>
+                    <p:menuitem value="File" url="#" />
+                </p:submenu>
+            </p:submenu>
+
+            <p:submenu label="Actions" icon="ui-icon-gear">
+                <p:submenu label="Ajax" icon="ui-icon-refresh">
+                    <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
+                    <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" />
+                </p:submenu>
+                <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+                    <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close" ajax="false"/>
+                </p:submenu>
+            </p:submenu>
+
+            <p:menuitem value="Cerrar Sesion" actionListener="#{loginBean.logout}" oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-close" />
+
+        </p:menubar>
+        <p:panel style="background-color: #3C75CF;">
+            <h:graphicImage url="/resources/images/LogoHMCR.jpg" width="200" height="60"/>
+        </p:panel>
+        <p:panel style="background-color: #5E7090;">
+
+        </p:panel>
+    </h:form>
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if (args.loggetOut) {
+                location.href = args.ruta;
+            }
+        }
+    </script>
+
 </ui:composition>

@@ -5,14 +5,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="templates/template_log.xhtml">
 
-    
+
     <ui:define name="metadata">
     </ui:define>
     <ui:define name="content">
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (!args.loggedIn) {
-                    
                     jQuery('#formLogin').effect("shake", {times: 5}, 100);
                 }
                 else {
@@ -20,31 +19,31 @@
                 }
             }
         </script>
-    <h:body>
-        <div class="conteiner">
-             <p:growl id="growl" showDetail="true" life="3000" />
-            <h:form id="formLogin">
-                <p:growl id="growl" showDetail="true"/>
-                <p:panel header="Ingrese usuario y clave">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="username" value="Usuario:" />
-                        <p:inputText value="#{loginBean.usuario.user}"
-                                     id="username" required="true" label="username" />
+        <h:body>
+            <div class="conteiner">
+                <p:growl id="growl" showDetail="true" life="3000" />
+                <h:form id="formLogin">
+                    <p:growl id="growl" showDetail="true"/>
+                    <p:panel header="Ingrese usuario y clave">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Usuario:" />
+                            <p:inputText value="#{loginBean.usuario.user}"
+                                         id="username" required="true" label="username" />
 
-                        <h:outputLabel for="password" value="Contraseña:" />
-                        <p:password value="#{loginBean.usuario.password}"
-                                       id="password" required="true" label="password"/>
-                        <f:facet name="footer">
-                            <p:commandButton id="loginButton" value="Login" update="growl"
-                                             actionListener="#{loginBean.login(actionEvent)}" 
-                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
-                        </f:facet>
-                    </h:panelGrid>
-                </p:panel>
-            </h:form> 
-        </div>
-        
-    </h:body>
+                            <h:outputLabel for="password" value="Contraseña:" />
+                            <p:password value="#{loginBean.usuario.password}"
+                                        id="password" required="true" label="password"/>
+                            <f:facet name="footer">
+                                <p:commandButton id="loginButton" value="Login" update="growl"
+                                                 actionListener="#{loginBean.login(actionEvent)}" 
+                                                 oncomplete="handleLoginRequest(xhr, status, args)"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form> 
+            </div>
+
+        </h:body>
     </ui:define>
 </ui:composition>
 
