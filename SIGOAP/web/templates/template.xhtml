@@ -22,11 +22,11 @@
                     <ui:include src="header.xhtml" />
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" id="west" resizable="false" header="#{msg['menu.title']}" style="height:580px;overflow:hidden;" size="200">
-                    <ui:include src="menu.xhtml" />
+                <p:layoutUnit position="west" id="west" resizable="false" header="Opciones" style="height:580px;overflow:hidden;" size="200" collapsible="true">
+                    <ui:include src="#{Opciones.nombreMenu}" />
                 </p:layoutUnit>
 
-                <p:layoutUnit styleClass="layoutUnitCenter" position="center">
+                <p:layoutUnit styleClass="layoutUnitCenter" position="center" >
                     <h:form id="mainForm">
                         <p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
                         <ui:insert name="content" />
@@ -40,6 +40,10 @@
                     <ui:include src="footer.xhtml" />
                 </p:layoutUnit>
             </p:layout>
+
+            <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" draggable="false" closable="false" resizable="false" visible="false" position="center" maximizable="false" minimizable="false" >
+                <p:graphicImage url="/resources/images/loading.gif" />
+            </p:dialog>
         </h:head>
 
         <h:body onload="statusDialog.hide();">

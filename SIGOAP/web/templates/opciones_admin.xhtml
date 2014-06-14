@@ -4,27 +4,20 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
-
     <h:form>
-
         <p:outputPanel id="menuPanel" layout="block">
             <p:menu>
                 <p:submenu label="Gestion de Usuario" icon="ui-icon ui-icon-refresh">
-                    <p:menuitem value="Page 1"
-                                 />
-                    <p:menuitem value="Page 2" 
+                    <p:menuitem value="Agregar Usuario"
+                                url="/views/page2.xhtml" />
+                    <p:menuitem value="Actualizar o Eliminar Usuario" 
                                 url="/views/page2.xhtml" />
                 </p:submenu>
-                <p:submenu label="Iniciar ETL" icon="ui-icon ui-icon-refresh">
-                    <p:menuitem value="Page 3"
-                                url="/views/page3.xhtml" />
-                    <p:menuitem value="Page 4" 
-                                url="/views/page4.xhtml" />
+                <p:submenu label="ETL" icon="ui-icon ui-icon-refresh">
+                    <p:menuitem value="Generar ETL"
+                                url="/views/admin/generar_etl.xhtml" />
                 </p:submenu>
-
             </p:menu>
         </p:outputPanel>
-
     </h:form>
 </ui:composition>

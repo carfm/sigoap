@@ -40,4 +40,10 @@ public class HibernateUtil implements java.io.Serializable {
         }
         return sessionFactory;
     }
+    
+    public static void closeSessionFactory() {
+        if ((sessionFactory != null) && (sessionFactory.isClosed() == false)) {
+            sessionFactory.close();
+        }
+    }
 }

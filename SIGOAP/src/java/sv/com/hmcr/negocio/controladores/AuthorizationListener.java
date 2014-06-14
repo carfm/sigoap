@@ -27,34 +27,34 @@ public class AuthorizationListener implements PhaseListener {
         if (!isLoginPage && usuario == null) {
             NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
             nh.handleNavigation(facesContext, null, "/index.xhtml");
-        } //else {
-//            // comprobar q solo accese a las paginas de administrador
-//            if (usuario == null) {
-//
-//            } else {
-//                Usuario u = (Usuario) usuario;
-//                int tipo = u.getIdtipousuario().getIdtipousuario();
-//                boolean Permiso = true;
-//                switch (tipo) {
-//                    case 1:
-//                        Permiso = (currentPage.lastIndexOf("menu_supervisor.xhtml") > -1);
-//                        break;
-//                    case 2:
-//                        Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1);
-//                        break;
-//                    case 3:
-//                        Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1);
-//                        break;
-//                }
-//                isLoginPage = (currentPage.lastIndexOf("index.xhtml") > -1);
-//                System.out.println(isLoginPage);
+        } else {
+            if (usuario == null) {
+                System.out.println("Usuario nulo");
+            } else {
+                Usuario u = (Usuario) usuario;
+                int tipo = u.getIdtipousuario().getIdtipousuario();
+                boolean Permiso = true;
+                switch (tipo) {
+                    case 1:
+                        Permiso = ((currentPage.lastIndexOf("menu_supervisor.xhtml") > -1));
+                        break;
+                    case 2:
+                        Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1);
+                        break;
+                    case 3:
+                        Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)||
+                                (currentPage.lastIndexOf("generar_etl.xhtml") > -1);
+                        break;
+                }
+                isLoginPage = (currentPage.lastIndexOf("index.xhtml") > -1);
+//                System.out.println(currentPage);
 //                System.out.println(Permiso);
-//                if (!Permiso && !isLoginPage) {
-//                    NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
-//                    nh.handleNavigation(facesContext, null, "/error.xhtml");
-//                }
-//            }
-//        }
+                if (!Permiso && !isLoginPage) {
+                    NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
+                    nh.handleNavigation(facesContext, null, "/error.xhtml");
+                }
+            }
+        }
     }
 
     @Override

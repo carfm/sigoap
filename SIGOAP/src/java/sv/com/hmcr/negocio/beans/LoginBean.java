@@ -29,6 +29,7 @@ public class LoginBean implements Serializable {
 
     private Usuario usuario;
     private UsuarioDAO usuarioDao;
+    private int numero; 
 
     /**
      * Creates a new instance of LoginBean
@@ -42,27 +43,31 @@ public class LoginBean implements Serializable {
 
     public void login(ActionEvent actionEvent) {
         RequestContext context = RequestContext.getCurrentInstance();
-
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesMessage msg;
         boolean LoggedIn;
         this.usuario = this.getUsuarioDao().login(this.getUsuario());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", this.usuario);
+        
         String ruta = "";
         if (this.usuario != null) {
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", this.usuario);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNombreusuario());
-            switch(this.usuario.getIdtipousuario().getIdtipousuario()){
+            switch (this.usuario.getIdtipousuario().getIdtipousuario()) {
                 case 1:
                     ruta = MyUtil.loginUrl() + "views/supervisor/menu_supervisor.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_supervisor.xhtml");
                     break;
                 case 2:
                     ruta = MyUtil.loginUrl() + "views/gerente/menu_gerente.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_gerente.xhtml");
                     break;
                 case 3:
                     ruta = MyUtil.loginUrl() + "views/admin/menu_admin.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_admin.xhtml");
                     break;
-            }            
+            }
             LoggedIn = true;
-
+            /// aa
         } else {
 
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Usuario o contraseña invalido(s)");
@@ -73,20 +78,29 @@ public class LoginBean implements Serializable {
             if (this.usuario == null) {
                 this.usuario = new Usuario();
                 try {
-                    int n = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString());
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numeroIncorrecto", Integer.toString(n + 1));
+                    int n = numero;
+                    n= n++;
+                            //Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString());
+                    //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numeroIncorrecto", Integer.toString(n + 1));
                     if ((n + 1) > 4) {
-                        //ruta = MyUtil.loginUrl() + "views/admin/page2.xhtml";
+                        ruta = MyUtil.loginUrl() + "error.xhtml";
+                        context = RequestContext.getCurrentInstance();
+                        FacesContext facesContext = FacesContext.getCurrentInstance();
+                        HttpSession sesion = (HttpSession) facesContext.getExternalContext().getSession(false);
+                        starTimer(sesion);
+                    } else {
+                        //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString()
                     }
+                    numero= n;
 //                    if ((n + 1) == 5) {
 //                        HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 //                        starTimer(sesion);                       
 //                    }
-                    context.addCallbackParam("num", n + 1);
+                    //context.addCallbackParam("num", n + 1);
                 } catch (Exception e) {
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numeroIncorrecto", "0");
                 }
-                System.out.println(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString());
+                System.out.println(numero);
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -111,6 +125,7 @@ public class LoginBean implements Serializable {
     }
 
     public void logout() {
+
         String ruta = MyUtil.baseurl() + "index.xhtml";
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facesContext = FacesContext.getCurrentInstance();

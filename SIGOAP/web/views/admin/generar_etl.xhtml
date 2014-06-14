@@ -8,8 +8,9 @@
     <ui:define name="metadata">
     </ui:define>
     <ui:define name="content">
-        <p:outputLabel value="Bienvenido Gerente #{Opciones.usuario.nombreusuario} #{Opciones.usuario.apellidousuario}"/>
+        <h:form>
+            <p:commandButton value="Generar ETL" id="ajax"  styleClass="ui-priority-primary" />
+        </h:form>
+        
     </ui:define>
 </ui:composition>
-
-

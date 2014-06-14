@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sv.com.hmcr.dao;
 
 import java.util.List;
@@ -13,19 +12,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import sv.com.hmcr.dominio.Usuario;
 import sv.com.hmcr.util.HibernateUtil;
+import sv.com.hmcr.util.MyUtil;
 
+public class UsuarioDAO implements java.io.Serializable {
 
-public class UsuarioDAO implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
-
-    private Session sesion;
-    private SessionFactory sessionFactory;
-    private Transaction tx;
-    private HibernateUtil hibernateUtil = new HibernateUtil();
 
     public boolean guarda(Usuario usuario) {
         try {
-            SessionFactory sessionFactory = hibernateUtil.getSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session sesion = sessionFactory.openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.save(usuario);
@@ -40,7 +35,7 @@ public class UsuarioDAO implements java.io.Serializable{
 
     public boolean actualizar(Usuario usuario) {
         try {
-            SessionFactory sessionFactory = hibernateUtil.getSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session sesion = sessionFactory.openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.saveOrUpdate(usuario);
@@ -55,7 +50,7 @@ public class UsuarioDAO implements java.io.Serializable{
 
     public boolean eliminar(Usuario usuario) {
         try {
-            SessionFactory sessionFactory = hibernateUtil.getSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session sesion = sessionFactory.openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.delete(usuario);
@@ -71,7 +66,7 @@ public class UsuarioDAO implements java.io.Serializable{
     public Usuario obtenerUsuario(String user) throws HibernateException {
         Usuario usuario = null;
         Session session = null;
-        session = hibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         usuario = (Usuario) session.get(Usuario.class, user);
         session.close();
@@ -82,18 +77,24 @@ public class UsuarioDAO implements java.io.Serializable{
     public List<Usuario> obtenListaUsuarios() throws HibernateException {
         List<Usuario> listaUsuarios;
         Session session = null;
-        session = hibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         listaUsuarios = (List<Usuario>) session.createQuery("from Usuario").list();
         session.close();
+        HibernateUtil.closeSessionFactory();
         return listaUsuarios;
     }
 
     public Usuario login(Usuario usuario) {
         Usuario model = this.obtenerUsuario(usuario.getUser());
-        if (!model.getPassword().equals(usuario.getPassword())) {
+        String pass = usuario.getPassword();      
+        if (MyUtil.generateMD5Signature(pass + usuario.getUser()).equals(model.getPassword()) == false) {
+            //Contraseña incorrecta
             model = null;
-        }
+        }else{
+            // Contraseña correcta se limpia la contraseña
+            model.setPassword("");
+        } 
         return model;
     }
 }

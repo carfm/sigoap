@@ -12,7 +12,7 @@
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (!args.loggedIn) {
-                    jQuery('#formLogin').effect("shake", {times: 5}, 100);
+                    jQuery('#formLogin').effect("shake", {times: 2}, 100);
                 }
                 else {
                     location.href = args.ruta;
