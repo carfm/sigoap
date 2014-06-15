@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sigoap?zeroDateTimeBehavior=convertToNull</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.current_session_context_class">thread</property>
-        <property name="show_sql">true</property> 
-        
-        <mapping class="sv.com.hmcr.dominio.Usuario"/>
-        <mapping class="sv.com.hmcr.dominio.Tipousuario"/>
-        <mapping class="sv.com.hmcr.dominio.Empleado"/>
-        <mapping class="sv.com.hmcr.dominio.Genera"/>
-        <mapping class="sv.com.hmcr.dominio.Reporte"/>
-        <mapping class="sv.com.hmcr.dominio.ProcesaAudita"/>
-        <mapping class="sv.com.hmcr.dominio.Orden"/>
-        <mapping class="sv.com.hmcr.dominio.RegistroError"/>
-        <mapping class="sv.com.hmcr.dominio.Razon"/>
-    </session-factory>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sigoap?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="show_sql">true</property>
+    <mapping class="sv.com.hmcr.dominio.Usuario"/>
+    <mapping class="sv.com.hmcr.dominio.Tipousuario"/>
+    <mapping class="sv.com.hmcr.dominio.Empleado"/>
+    <mapping class="sv.com.hmcr.dominio.Genera"/>
+    <mapping class="sv.com.hmcr.dominio.Reporte"/>
+    <mapping class="sv.com.hmcr.dominio.ProcesaAudita"/>
+    <mapping class="sv.com.hmcr.dominio.Orden"/>
+    <mapping class="sv.com.hmcr.dominio.RegistroError"/>
+    <mapping class="sv.com.hmcr.dominio.Razon"/>
+    <mapping class="sv.com.hmcr.dominio.AnalisisefTemp"/>
+    <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
+  </session-factory>
 </hibernate-configuration>

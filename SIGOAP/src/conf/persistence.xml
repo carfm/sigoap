@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>sv.com.hmcr.dominio.Tipousuario</class>
     <class>sv.com.hmcr.dominio.Usuario</class>
+    <class>sv.com.hmcr.dominio.Temporalordenesauditadas</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sigoap?zeroDateTimeBehavior=convertToNull"/>
