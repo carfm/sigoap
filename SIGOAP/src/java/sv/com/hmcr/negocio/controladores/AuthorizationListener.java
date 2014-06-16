@@ -37,7 +37,8 @@ public class AuthorizationListener implements PhaseListener {
                 switch (tipo) {
                     case 1://
                         Permiso = ((currentPage.lastIndexOf("menu_supervisor.xhtml") > -1))||
-                                ((currentPage.lastIndexOf("crearOrdenesProcesadas.xhtml") > -1));
+                                ((currentPage.lastIndexOf("crearOrdenesProcNuevos.xhtml") > -1))||
+                                ((currentPage.lastIndexOf("OrdenesProcesadasNuevos.xhtml") > -1));
                         break;
                     case 2:
                         Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1)||
@@ -51,8 +52,6 @@ public class AuthorizationListener implements PhaseListener {
                         break;
                 }
                 isLoginPage = (currentPage.lastIndexOf("index.xhtml") > -1);
-//                System.out.println(currentPage);
-//                System.out.println(Permiso);
                 if (!Permiso && !isLoginPage) {
                     NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
                     nh.handleNavigation(facesContext, null, "/error.xhtml");

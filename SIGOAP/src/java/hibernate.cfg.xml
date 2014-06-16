@@ -19,6 +19,6 @@
     <mapping class="sv.com.hmcr.dominio.Razon"/>
     <mapping class="sv.com.hmcr.dominio.AnalisisefTemp"/>
     <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
-    <mapping class="sv.com.hmcr.dominio.Temprocesadasnuevos"/>
+    <mapping class="sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos"/>
   </session-factory>
 </hibernate-configuration>

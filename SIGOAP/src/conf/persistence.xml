@@ -6,6 +6,7 @@
     <class>sv.com.hmcr.dominio.Usuario</class>
     <class>sv.com.hmcr.dominio.Temporalordenesauditadas</class>
     <class>sv.com.hmcr.dominio.Temprocesadasnuevos</class>
+    <class>sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sigoap?zeroDateTimeBehavior=convertToNull"/>

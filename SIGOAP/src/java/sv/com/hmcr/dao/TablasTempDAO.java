@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import sv.com.hmcr.dominio.AnalisisefTemp;
 import sv.com.hmcr.dominio.Temporalordenesauditadas;
+import sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos;
 import sv.com.hmcr.util.HibernateUtil;
 
 public class TablasTempDAO implements java.io.Serializable {
@@ -61,6 +62,31 @@ public class TablasTempDAO implements java.io.Serializable {
 //                break;
             default:
                 lista = (List<Temporalordenesauditadas>) session.createQuery("from Temporalordenesauditadas").list();
+                break;
+        }
+        session.close();
+        return lista;
+    }
+    
+    public List<Temporalordenesprocesadasnuevos> obtenerOrdenesProcesadasNuevos(int tipo) throws HibernateException {
+        List<Temporalordenesprocesadasnuevos> lista;
+        Session session ;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        switch (tipo) {
+            case 1:
+                lista = (List<Temporalordenesprocesadasnuevos>) session.createQuery("from Temporalordenesprocesadasnuevos").list();
+                break;
+//            case 2:
+//                lista = (List<Temporalordenesprocesadasnuevos>) session.createQuery(
+//                        "from Temporalordenesprocesadasnuevos a order by a.errororden asc").setMaxResults(5).list();
+//                break;
+//            case 3:
+//                lista = (List<Temporalordenesprocesadasnuevos>) session.createQuery(
+//                        "from Temporalordenesprocesadasnuevos a order by a.errororden desc").setMaxResults(5).list();
+//                break;
+            default:
+                lista = (List<Temporalordenesprocesadasnuevos>) session.createQuery("from Temporalordenesprocesadasnuevos").list();
                 break;
         }
         session.close();

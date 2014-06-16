@@ -21,16 +21,14 @@
                 <p:layoutUnit position="north" size="170" id="north" >
                     <ui:include src="header_log.xhtml" />
                 </p:layoutUnit>
+                
                 <p:layoutUnit styleClass="layoutUnitCenter" position="center">
                     <h:form id="mainForm">
                         <p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
                         <ui:insert name="content" />
                     </h:form>
                 </p:layoutUnit>
-
-                <p:layoutUnit position="east" size="0" style="width:0px; display:none;" id="east">
-                </p:layoutUnit>
-
+                
                 <p:layoutUnit position="south" resizable="true" id="south">
                     <ui:include src="footer.xhtml" />
                 </p:layoutUnit>
