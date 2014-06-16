@@ -35,13 +35,15 @@ public class AuthorizationListener implements PhaseListener {
                 int tipo = u.getIdtipousuario().getIdtipousuario();
                 boolean Permiso = true;
                 switch (tipo) {
-                    case 1:
-                        Permiso = ((currentPage.lastIndexOf("menu_supervisor.xhtml") > -1));
+                    case 1://
+                        Permiso = ((currentPage.lastIndexOf("menu_supervisor.xhtml") > -1))||
+                                ((currentPage.lastIndexOf("crearOrdenesProcesadas.xhtml") > -1));
                         break;
                     case 2:
                         Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1)||
                                 (currentPage.lastIndexOf("crearAnalisisEficiencia.xhtml") > -1)||
-                                (currentPage.lastIndexOf("crearOrdenesAuditadas.xhtml")> -1);
+                                (currentPage.lastIndexOf("crearOrdenesAuditadas.xhtml")> -1)||
+                                (currentPage.lastIndexOf("OrdenesAuditadas.xhtml")> -1);
                         break;
                     case 3:
                         Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)||

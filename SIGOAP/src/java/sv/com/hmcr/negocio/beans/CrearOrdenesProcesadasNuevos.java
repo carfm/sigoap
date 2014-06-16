@@ -22,7 +22,7 @@ import javax.faces.application.FacesMessage;
  */
 @ManagedBean
 @ViewScoped
-public class CrearOrdenesAuditadas implements java.io.Serializable {
+public class CrearOrdenesProcesadasNuevos implements java.io.Serializable {
 
     private Date fechaInicio;
     private Date fechaFin;
@@ -35,7 +35,7 @@ public class CrearOrdenesAuditadas implements java.io.Serializable {
     /**
      * Creates a new instance of CrearAnalisisEf
      */
-    public CrearOrdenesAuditadas() {
+    public CrearOrdenesProcesadasNuevos() {
         dao = new TablasTempDAO();
     }
 
@@ -46,15 +46,16 @@ public class CrearOrdenesAuditadas implements java.io.Serializable {
         parametrosReportes.setFechaInicio(fecIni);
         parametrosReportes.setFechaFin(fecFin);
         parametrosReportes.setTop(Integer.parseInt(mostrar));
-        parametrosReportes.setEncabezado("HMCR SOLUTIONS\nREPORTE DE ORDENES AUDITADAS\nDEL PERIODO " + fecIni + " AL " + fecFin);
-        dao.ejecutarProc("CALL ordenesAuditadas('" + fecIni + "','" + fecFin + "')");
+        parametrosReportes.setEncabezado("HMCR SOLUTIONS\nREPORTE DE ORDENES "
+                + "PROCESADAS DE AGENTES NUEVOS\nDEL PERIODO " + fecIni + " AL " + fecFin+"\n\nSUPERVISADOS POR: ");
+        dao.ejecutarProc("CALL ordenesProcesadasNuevos('" + fecIni + "','" + fecFin + "','cramirez')");
         System.out.println("salio");
-        try {
-            FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect("OrdenesAuditadas.xhtml");
-        } catch (Exception e) {
-            
-        }
+//        try {
+//            FacesContext contex = FacesContext.getCurrentInstance();
+//            contex.getExternalContext().redirect("OrdenesAuditadas.xhtml");
+//        } catch (Exception e) {
+//            
+//        }
     }
 
     public void limpiar() {

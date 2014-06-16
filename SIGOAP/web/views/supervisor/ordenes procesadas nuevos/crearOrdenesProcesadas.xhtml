@@ -7,7 +7,7 @@
     <ui:composition template="/templates/template.xhtml">
         <head>
             <title>
-                <ui:define name="title">Generar reporte de Ordenes Auditadas</ui:define>
+                <ui:define name="title">Generar reporte de ordenes procesadas por nuevos</ui:define>
             </title>
         </head>
 
@@ -16,28 +16,28 @@
                  <!--este form es una pantalla de parametros basica usando beans... aqui al poner value="# {}"
             automaticamente se guarda el valor en la variable de su bean
             pueden agregar o quitar cosas a su gusto.... vean el showcase segun su necesidad-->
-                <h:form id="parametrosOA" >
-                    <p:panel header="Reporte de Ordenes Auditadas">
+                <h:form id="parametrosOPN" >
+                    <p:panel header="Reporte de Ordenes Procesadas por agentes nuevos">
                         <h:panelGrid columns="6" cellpadding="5">
                             <h:outputLabel for="fechaInicio" value="Fecha Inicio" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearOrdenesAuditadas.fechaInicio}"/>
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearOrdenesProcesadasNuevo.fechaInicio}"/>
                             <p:message for="fechaInicio"/>
                             <h:outputLabel for="fechaFin" value="Fecha Fin" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearOrdenesAuditadas.fechaFin}"/>
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearOrdenesProcesadasNuevos.fechaFin}"/>
                             <p:message for="fechaFin"/>
                             <h:outputLabel for="top" value="Mostrar"/>
-                            <h:selectOneMenu id="top" value="#{crearOrdenesAuditadas.mostrar}">
+                            <h:selectOneMenu id="top" value="#{crearOrdenesProcesadasNuevos.mostrar}">
                                 <f:selectItem itemValue="1" itemLabel="Todos" />
-                                <f:selectItem itemValue="2" itemLabel="Los 5 con menos auditoria" />
-                                <f:selectItem itemValue="3" itemLabel="Los 5 con mas auditoria" />
+                                <f:selectItem itemValue="2" itemLabel="Los 5 con menos ordenes completas" />
+                                <f:selectItem itemValue="3" itemLabel="Los 5 con mas ordenes completas" />
                             </h:selectOneMenu>
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                         </h:panelGrid>
-                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearOrdenesAuditadas.generar}" icon="ui-icon-check" update=":parametrosOA" validateClient="true"/>
-                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosOA" actionListener="#{crearOrdenesAuditadas.limpiar}"/>
+                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearOrdenesProcesadasNuevos.generar()}" icon="ui-icon-check" update=":parametrosOPN" validateClient="true"/>
+                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosOPN" actionListener="#{crearOrdenesProcesadasNuevos.limpiar()}"/>
                     </p:panel>
                 </h:form>
             </ui:define>

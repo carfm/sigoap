@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import sv.com.hmcr.dao.TablasTempDAO;
 import sv.com.hmcr.dominio.AnalisisefTemp;
+import sv.com.hmcr.dominio.Temporalordenesauditadas;
 
 /**
  *
@@ -27,14 +28,14 @@ import sv.com.hmcr.dominio.AnalisisefTemp;
  */
 @ManagedBean
 @ViewScoped
-public class AnalisisEficiencia implements java.io.Serializable {
-    private List<AnalisisefTemp> listado; 
+public class OrdenesAuditadas implements java.io.Serializable {
+    private List<Temporalordenesauditadas> listado; 
     private TablasTempDAO dao;
     
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
 
-    public AnalisisEficiencia() {  
+    public OrdenesAuditadas() {  
         
         dao=new TablasTempDAO ();
         listado=new ArrayList<>();
@@ -42,8 +43,7 @@ public class AnalisisEficiencia implements java.io.Serializable {
     }
     
     public void preProcessPDF(Object document) {
-      Document pdf = (Document) document;
-      
+      Document pdf = (Document) document;      
       pdf.setPageSize(PageSize.LETTER.rotate());
       pdf.open();
       pdf.addCreationDate();
@@ -52,17 +52,19 @@ public class AnalisisEficiencia implements java.io.Serializable {
       pdf.leftMargin();
     }
 
-    public List<AnalisisefTemp> getListado() {
+    public List<Temporalordenesauditadas> getListado() {
        // listado=dao.obtenerAnalisisEf(parametrosReportes.getTop());
-        listado=dao.obtenerAnalisisEf(parametrosReportes.getTop());
+        listado=dao.obtenerOrdenesAuditadas(parametrosReportes.getTop());
         return listado;
     }
+    
+    
 
     public TablasTempDAO getDao() {
         return dao;
     }
 
-    public void setListado(List<AnalisisefTemp> listado) {
+    public void setListado(List<Temporalordenesauditadas> listado) {
         this.listado = listado;
     }
 

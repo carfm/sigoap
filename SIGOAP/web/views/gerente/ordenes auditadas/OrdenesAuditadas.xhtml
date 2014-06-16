@@ -11,7 +11,7 @@
     <ui:composition template="/templates/template.xhtml">
         <head>
             <title>
-                <ui:define name="title">Ordenes Procesadas</ui:define>
+                <ui:define name="title">Ordenes Auditadas</ui:define>
             </title>
         </head>
         <body>
@@ -28,9 +28,9 @@
                     paginatorTemplate: disposicion de los elementos del paginador, copienlo exacto
                     sortBy: columna por la que se ordenara inicialmente; es el nombre de un atributo de la clase de dominio
                     -->
-                    <p:dataTable emptyMessage="No existen datos para mostrar" id="analisisEf" 
-                                 var="cursor" value="#{analisisEficiencia.listado}" 
-                                 style="margin-bottom:20px"  sortBy="ordenerror" paginator="true" rows="10" 
+                    <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenesAuditadas" 
+                                 var="cursor" value="#{ordenesAuditadas.listado}" 
+                                 style="margin-bottom:20px"  sortBy="CORRELATIVO" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
                                  {RowsPerPageDropdown}">
@@ -46,81 +46,39 @@
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
                         filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
                         footerText: para poner los totales-->
-                        <p:column filterBy="empleado" filterMatchMode="contains" sortBy="empleado" footerText="TOTALES">
+                        <p:column filterBy="correlativo" filterMatchMode="contains" sortBy="correlativo" footerText="TOTALES">
                             <f:facet name="header">
-                                <h:outputText value="Nombre del agente" />
+                                <h:outputText value="N°" />
                             </f:facet>
-                            <h:outputText value="#{cursor.empleado}" />
+                            <h:outputText value="#{cursor.correlativo}" />
                         </p:column>
 
-                        <p:column sortBy="totalerrores">
+                        <p:column sortBy="auditor">
                             <f:facet name="header">
-                                <h:outputText value="Total de errores" />
+                                <h:outputText value="Nombre del auditor" />
                             </f:facet>
-                            <h:outputText value="#{cursor.totalerrores}" />
+                            <h:outputText value="#{cursor.auditor}" />
                         </p:column>
 
-                        <p:column sortBy="totalgraves">
+                        <p:column sortBy="auditadas">
                             <f:facet name="header">
-                                <h:outputText value="Errores Graves" />
+                                <h:outputText value="Ordenes auditadas" />
                             </f:facet>
-                            <h:outputText value="#{cursor.totalgraves}" />
+                            <h:outputText value="#{cursor.auditadas}" />
                         </p:column>
 
                         <p:column sortBy="totalmedianos">
                             <f:facet name="header">
-                                <h:outputText value="Errores Medianos" />
+                                <h:outputText value="Ordenes sin error" />
                             </f:facet>
-                            <h:outputText value="#{cursor.totalmedianos}" />
+                            <h:outputText value="#{cursor.sinerror}" />
                         </p:column>
 
                         <p:column sortBy="totalleves">
                             <f:facet name="header">
-                                <h:outputText value="Errores Leves" />
+                                <h:outputText value="Ordenes con error" />
                             </f:facet>
-                            <h:outputText value="#{cursor.totalleves}" />
-                        </p:column>
-
-                        <p:column sortBy="totalordenes">
-                            <f:facet name="header">
-                                <h:outputText value="Ordenes Procesadas" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.totalordenes}" />
-                        </p:column>
-
-                        <p:column sortBy="totalcompletas">
-                            <f:facet name="header">
-                                <h:outputText value="Ordenes Completas" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.totalcompletas}" />
-                        </p:column>
-
-                        <p:column sortBy="totalincompletas">
-                            <f:facet name="header">
-                                <h:outputText value="Ordenes Regresadas Incompletas" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.totalincompletas}" />
-                        </p:column>
-
-                        <p:column sortBy="totalnada">
-                            <f:facet name="header">
-                                <h:outputText value="Ordenes regresadas sin hacer nada" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.totalnada}" />
-                        </p:column>
-
-                        <p:column sortBy="errororden">
-                            <f:facet name="header">
-                                <h:outputText value="Errores/Ordenes procesadas completas (%)" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.errororden}" />
-                        </p:column>
-
-                        <p:column sortBy="ordenerror">
-                            <f:facet name="header">
-                                <h:outputText value="Ordenes ingresadas completas por error" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.ordenerror}" />
+                            <h:outputText value="#{cursor.conerror}" />
                         </p:column>
                     </p:dataTable>
                     <!--Para exportar copien todo este bloque
@@ -136,24 +94,24 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                        <p:dataExporter type="xls" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="xls" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="analisisEf" fileName="Analisis_Eficiencia"  preProcessor="#{analisisEficiencia.preProcessPDF}"/>
+                                        <p:dataExporter type="pdf" target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF(document)}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                        <p:dataExporter type="csv" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="csv" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column><h:commandLink>
                                         <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                        <p:dataExporter type="xml" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="xml" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink></p:column>
                             </p:row> 
                         </f:facet>
@@ -168,24 +126,24 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                        <p:dataExporter type="xls" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="xls" pageOnly="true" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia"  preProcessor="#{analisisEficiencia.preProcessPDF}"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF(document)}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                        <p:dataExporter type="csv" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="csv" pageOnly="true" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column><h:commandLink>
                                         <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                        <p:dataExporter type="xml" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="xml" pageOnly="true" target="ordenesAuditadas" fileName="Ordenes_Auditadas" />
                                     </h:commandLink></p:column>
                             </p:row>
 
