@@ -21,6 +21,7 @@ public class ParametrosReportes implements java.io.Serializable {
     private String agente;
     private int top;
     private String encabezado;
+    private String supervisor;
 
     public ParametrosReportes() {
     }
@@ -63,5 +64,19 @@ public class ParametrosReportes implements java.io.Serializable {
 
     public void setEncabezado(String encabezado) {
         this.encabezado = encabezado;
+    }
+
+    /**
+     * @return the supervisor
+     */
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    /**
+     * @param supervisor the supervisor to set
+     */
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
     }
 }

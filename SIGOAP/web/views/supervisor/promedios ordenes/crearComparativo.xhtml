@@ -9,36 +9,37 @@
     <ui:composition template="/templates/template.xhtml">
         <head>
             <title>
-                <ui:define name="title">Analisis de eficiencia</ui:define>
+                <ui:define name="title">Comparativo Agentes Nuevos y Promedio de la Empresa</ui:define>
             </title>
         </head>
         <body>
             <ui:define name="content">
                 <!--este form es una pantalla de parametros basica usando beans... aqui al poner value="# {}"
-                automaticamente se guarda el valor en la variable de su bean
-                pueden agregar o quitar cosas a su gusto.... vean el showcase segun su necesidad-->
+        automaticamente se guarda el valor en la variable de su bean
+        pueden agregar o quitar cosas a su gusto.... vean el showcase segun su necesidad-->
                 <h:form id="parametrosAE">
-                    <p:panel header="Analisis de Eficiencia">
+                    <p:panel header="Comparativo Agentes Nuevos y Promedio de la Empresa">
                         <h:panelGrid columns="6" cellpadding="5">
                             <h:outputLabel for="fechaInicio" value="Fecha Inicio" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearAnalisisEf.fechaInicio}"/>
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearComparativo.fechaInicio}"/>
                             <p:message for="fechaInicio"/>
                             <h:outputLabel for="fechaFin" value="Fecha Fin" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearAnalisisEf.fechaFin}"/>
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearComparativo.fechaFin}"/>
                             <p:message for="fechaFin"/>
                             <h:outputLabel for="top" value="Mostrar"/>
-                            <h:selectOneMenu id="top" value="#{crearAnalisisEf.mostrar}">
+                            <h:selectOneMenu id="top" value="#{crearComparativo.mostrar}">
                                 <f:selectItem itemValue="1" itemLabel="Todos" />
                                 <f:selectItem itemValue="2" itemLabel="5 Mejores" />
                                 <f:selectItem itemValue="3" itemLabel="5 Peores" />
+                                <f:selectItem itemValue="4" itemLabel="Solo diferencias negativas" />
                             </h:selectOneMenu>
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
                         </h:panelGrid>
-                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearAnalisisEf.generar()}" icon="ui-icon-check" update=":parametrosAE" validateClient="true"/>
-                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosAE" actionListener="#{crearAnalisisEf.limpiar}"/>
+                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearComparativo.generar()}" icon="ui-icon-check" update=":parametrosAE" validateClient="true"/>
+                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosAE" actionListener="#{crearComparativo.limpiar}"/>
                     </p:panel>
                 </h:form>
             </ui:define>

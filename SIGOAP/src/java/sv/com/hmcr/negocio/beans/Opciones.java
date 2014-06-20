@@ -25,8 +25,12 @@ public class Opciones {
     private Usuario usuario;
 
     public Opciones() {
-        nombreMenu = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("opciones").toString();
-        usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        try {
+            nombreMenu = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("opciones").toString();
+            usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        } catch (Exception e) {
+
+        }
     }
 
     /**

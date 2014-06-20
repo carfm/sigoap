@@ -20,5 +20,7 @@
     <mapping class="sv.com.hmcr.dominio.AnalisisefTemp"/>
     <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
     <mapping class="sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos"/>
+    <mapping class="sv.com.hmcr.dominio.ComparativonuevosTemp"/>
+    <mapping class="sv.com.hmcr.dominio.EstadisticasTemp"/>
   </session-factory>
 </hibernate-configuration>

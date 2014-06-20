@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import sv.com.hmcr.dao.TablasTempDAO;
-import sv.com.hmcr.dominio.AnalisisefTemp;
 import sv.com.hmcr.dominio.Temporalordenesauditadas;
 
 /**
@@ -58,8 +57,28 @@ public class OrdenesAuditadas implements java.io.Serializable {
         return listado;
     }
     
-    
+    public Integer totalesAuditadas(){
+        int total = 0;
+        for (Temporalordenesauditadas listado1 : listado) {
+            total += listado1.getAuditadas();
+        }
+        return total;
+    }
 
+    public Integer totalesConError(){
+        int total = 0;
+        for (Temporalordenesauditadas listado1 : listado) {
+            total += listado1.getConerror();
+        }
+        return total;
+    }
+    public Integer totalesSinError(){
+        int total = 0;
+        for (Temporalordenesauditadas listado1 : listado) {
+            total += listado1.getSinerror();
+        }
+        return total;
+    }
     public TablasTempDAO getDao() {
         return dao;
     }

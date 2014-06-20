@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <html>
+
+
+        <h:head>
+            <title>Tiempo Promedio de Procesamiento</title>
+        </h:head>
+        <h:body>
+
+            <h:form id="agregarUsuario">         
+
+                <p:panel header="Tiempo Promedio de Procesamiento..">
+
+                    <p:outputLabel for="popupCalendar" value="Fecha Inicio:" />
+                    <p:calendar id="popupCalendar" value="#{ordenesProcesadas.date1}" />
+                    <p:outputLabel for="popupCalendar1" value="Fecha Fin:" />
+                    <p:calendar id="popupCalendar1" value="#{ordenesProcesadas.date2}" />
+                    
+                    <center>                           
+                        <h:outputLabel value="HMCR SOLUTIONS" /> <br/>
+                        <h:outputLabel value="TIEMPOS PROMEDIOS DE PROCESAMIENTO DE ORDENES" /><br/>
+                        <h:outputLabel value="DEL PERIODO 99-99-9999 AL 99-99-9999" />
+                    </center>
+
+
+
+                </p:panel>
+            </h:form>
+            <h:form id="tablaUsuarios">
+                <p:growl id="mensajes" showDetail="true" life="3000" />
+                <p:dataTable emptyMessage="No hay usuarios registrados" id="usuarios" 
+                             var="users" value="#{gestionUsuarios.listaUsuarios}" 
+                             style="margin-bottom:20px" paginator="false" rows="5" 
+                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                             {RowsPerPageDropdown}">
+                    <f:facet name="header">
+
+                    </f:facet>
+
+                    <!--                         <center>                           
+                                                 <h:outputLabel value="HMCR SOLUTIONS" /> <br/>
+                                                 <h:outputLabel value="REPORTE DE ÓRDENES PROCESADAS" /><br/>
+                                                 <h:outputLabel value="DEL PERIODO 99-99-9999 AL 99-99-9999" />
+                                            </center>
+                                        </f:facet>-->
+                    <p:column headerText="Nombre del agente">
+                        <h:outputText value="#{users.user}" />
+                        <f:facet name="footer">
+                            <h:outputText value="Totales" />
+                        </f:facet>
+                    </p:column>
+
+                    <p:column headerText="Tiempo promedio">
+                        <h:outputText value="#{users.idtipousuario.nombretipousuario}" />
+                        <f:facet name="footer">
+                            <h:outputText value="9999" />
+                        </f:facet>
+                    </p:column>
+
+                    <p:column headerText="Tiempo mínimo">
+                        <h:outputText value="#{users.nombreusuario}" />
+                        <f:facet name="footer">
+                            <h:outputText value="9999" />
+                        </f:facet>
+                    </p:column>
+
+                    <p:column headerText="Tiempo máximo">
+                        <h:outputText value="#{users.apellidousuario}" />
+                        <f:facet name="footer">
+                            <h:outputText value="9999" />
+                        </f:facet>
+                    </p:column>
+
+                    
+                </p:dataTable>
+
+                <p:dialog id="modificarDlg" header="Modificar Usuario" showEffect="explode" hideEffect="explode"
+                          widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250" >
+                    <h:form id="formModificar">
+                        <h:panelGrid columns="3" cellpadding="5" >
+                            <h:outputLabel for="userMod" value="Nombre de Usuario:" />
+                            <p:inputText id="userMod" value="#{gestionUsuarios.usuario.user}" />
+                            <p:message for="userMod" />
+
+                            <h:outputLabel for="tipoMod" value="Tipo de Usuario" />
+                            <h:selectOneMenu value="#{gestionUsuarios.idTipoUsuario}" id="tipoMod">
+                                <f:selectItem itemValue="administrador" itemLabel="Administrador" />
+                                <f:selectItem itemValue="gerente" itemLabel="Gerente" />
+                                <f:selectItem itemValue="supervisor" itemLabel="Supervisor" />
+                            </h:selectOneMenu>             
+                            <p:message for="tipoMod" />
+
+                            <h:outputLabel for="passwordMod" value="Contraseña" />
+                            <p:password id="passwordMod" value="#{gestionUsuarios.usuario.password}" 
+                                        required="true" label="contraseña" feedback="true" inline="true"/>
+                            <p:message for="passwordMod" />
+
+                            <h:outputLabel for="nombreUserMod" value="Nombre" />
+                            <p:inputText id="nombreUserMod" value="#{gestionUsuarios.usuario.nombreusuario}" 
+                                         label="Nombre" required="true"/>
+                            <p:message for="nombreUserMod" />
+
+                            <h:outputLabel for="apellidoUserMod" value="Apellido" />
+                            <p:inputText id="apellidoUserMod" value="#{gestionUsuarios.usuario.apellidousuario}" 
+                                         label="Apellido" required="true"/>
+                            <p:message for="apellidoUserMod" />          
+                        </h:panelGrid>
+                        <p:commandButton update=":tablaUsuarios" value="Modificar"
+                                         actionListener="#{gestionUsuarios.editarUsuario}" resetValues="true"  />
+                    </h:form>    
+                </p:dialog>
+
+                <p:dialog id="eliminarDlg" header="Eliminar Usuario" showEffect="explode" hideEffect="explode"
+                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="250" >
+                    <h:form id="formEliminar">
+                        <h:outputText value="Desea Eliminar?"/>
+                        <p:commandButton value="si" actionListener="#{gestionUsuarios.borrarUsuario}"
+                                         update=":tablaUsuarios" oncomplete="eliminarDlg.hide();" />
+                        <p:commandButton value="No" onclick="eliminarDlg.hide();" />
+                    </h:form>                
+                </p:dialog>
+
+
+
+            </h:form>
+
+            <!--<h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />-->
+        </h:body>
+    </html>
+</f:view>
+

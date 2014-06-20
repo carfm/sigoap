@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sv.com.hmcr.negocio.beans;
 
 import java.text.SimpleDateFormat;
@@ -13,28 +8,21 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import sv.com.hmcr.dao.TablasTempDAO;
 
-/**
- *
- * @author Luis
- */
 @ManagedBean
 @ViewScoped
-public class CrearAnalisisEf implements java.io.Serializable {
+public class CrearComparativo implements java.io.Serializable{
     private Date fechaInicio;
     private Date fechaFin;
     private String mostrar;
     private TablasTempDAO dao;
-
+    
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
 
-    /**
-     * Creates a new instance of CrearAnalisisEf
-     */
-    public CrearAnalisisEf() {
+    public CrearComparativo() {
         dao = new TablasTempDAO();
     }
-
+    
     public void generar() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String fecIni=format.format(fechaInicio);
@@ -42,11 +30,11 @@ public class CrearAnalisisEf implements java.io.Serializable {
         parametrosReportes.setFechaInicio(fecIni);
         parametrosReportes.setFechaFin(fecFin);
         parametrosReportes.setTop(Integer.parseInt(mostrar));
-        parametrosReportes.setEncabezado("HMCR SOLUTIONS\nANALISIS DE EFICIENCIA\nDEL PERIODO "+fecIni+" AL "+fecFin);
-        dao.ejecutarProc("CALL analisis_eficiencia('" + fecIni + "','" + fecFin + "')");
+        parametrosReportes.setEncabezado("DELL PERIODO "+fecIni+" AL "+fecFin);
+        dao.ejecutarProc("CALL comparativo_nuevos('" + fecIni + "','" + fecFin + "')");
        try {
             FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect("AnalisisEficiencia.xhtml");
+            contex.getExternalContext().redirect("Comparativo.xhtml");
         } catch (Exception e) {
         }
     }
@@ -93,5 +81,7 @@ public class CrearAnalisisEf implements java.io.Serializable {
     public void setParametrosReportes(ParametrosReportes parametrosReportes) {
         this.parametrosReportes = parametrosReportes;
     }
-
+    
+    
+    
 }

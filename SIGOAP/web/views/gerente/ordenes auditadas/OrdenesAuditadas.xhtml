@@ -46,37 +46,37 @@
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
                         filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
                         footerText: para poner los totales-->
-                        <p:column filterBy="correlativo" filterMatchMode="contains" sortBy="correlativo" footerText="TOTALES">
+                        <p:column  sortBy="correlativo" >
                             <f:facet name="header">
                                 <h:outputText value="N°" />
                             </f:facet>
                             <h:outputText value="#{cursor.correlativo}" />
                         </p:column>
 
-                        <p:column sortBy="auditor">
+                        <p:column filterBy="auditor" filterMatchMode="contains" sortBy="auditor" footerText="TOTALES">
                             <f:facet name="header">
                                 <h:outputText value="Nombre del auditor" />
                             </f:facet>
                             <h:outputText value="#{cursor.auditor}" />
                         </p:column>
 
-                        <p:column sortBy="auditadas">
+                        <p:column sortBy="auditadas" footerText="#{ordenesAuditadas.totalesAuditadas()}">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes auditadas" />
                             </f:facet>
                             <h:outputText value="#{cursor.auditadas}" />
                         </p:column>
 
-                        <p:column sortBy="totalmedianos">
+                        <p:column sortBy="sinerror" footerText="#{ordenesAuditadas.totalesSinError()}">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes sin error" />
                             </f:facet>
                             <h:outputText value="#{cursor.sinerror}" />
                         </p:column>
 
-                        <p:column sortBy="totalleves">
+                        <p:column sortBy="conerror" footerText="#{ordenesAuditadas.totalesConError()}">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes con error" />
+                                <h:outputText value="Ordenes con error"  />
                             </f:facet>
                             <h:outputText value="#{cursor.conerror}" />
                         </p:column>

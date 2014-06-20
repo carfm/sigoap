@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <head>
+            <title>
+                <ui:define name="title">Estadisticas de agente</ui:define>
+            </title>
+        </head>
+        <body>
+            <ui:define name="content">
+                <!--este form es una pantalla de parametros basica usando beans... aqui al poner value="# {}"
+                automaticamente se guarda el valor en la variable de su bean
+                pueden agregar o quitar cosas a su gusto.... vean el showcase segun su necesidad-->
+                <h:form id="parametrosAE">
+                    <p:panel header="Estadisticas de Agente">
+                        <h:panelGrid columns="4" cellpadding="5">
+                            <h:outputLabel for="agente" value="Agente" />
+                            <p:selectOneMenu filter="true" filterMatchMode="startsWith" value="#{crearEstadisticasBean.idAgente}" id="agente">
+                                <f:selectItems value="#{crearEstadisticasBean.listaEmpleados}"
+                                               var="emps" itemValue="#{emps.idempleado}" 
+                                               itemLabel="#{emps.nombreempleado}" />
+                            </p:selectOneMenu>
+
+                            <h:outputLabel for="mes" value="Mes" />
+                            <h:selectOneMenu value="#{crearEstadisticasBean.mes}" id="mes">
+                                <f:selectItem itemValue="1" itemLabel="Enero" />
+                                <f:selectItem itemValue="2" itemLabel="Febrero" />
+                                <f:selectItem itemValue="3" itemLabel="Marzo" />
+                                <f:selectItem itemValue="4" itemLabel="Abril" />
+                                <f:selectItem itemValue="5" itemLabel="Mayo" />
+                                <f:selectItem itemValue="6" itemLabel="Junio" />
+                                <f:selectItem itemValue="7" itemLabel="Julio" />
+                                <f:selectItem itemValue="8" itemLabel="Agosto" />
+                                <f:selectItem itemValue="9" itemLabel="Septiembre" />
+                                <f:selectItem itemValue="10" itemLabel="Octubre" />
+                                <f:selectItem itemValue="11" itemLabel="Noviembre" />
+                                <f:selectItem itemValue="12" itemLabel="Diciembre" />
+                            </h:selectOneMenu>
+
+                            <h:outputLabel for="anio" value="Año"/>
+                            <p:inputText id="anio" value="#{crearEstadisticasBean.anio}" label="anio">
+                                <f:validateLongRange minimum="2008" for="anio"/>
+                            </p:inputText>
+                            <h:outputLabel value="" />
+                            <p:message for="anio" />
+                        </h:panelGrid>
+                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearEstadisticasBean.generar()}" icon="ui-icon-check" update=":parametrosAE" validateClient="true"/>
+                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosAE" actionListener="#{crearAnalisisEf.limpiar}"/>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>

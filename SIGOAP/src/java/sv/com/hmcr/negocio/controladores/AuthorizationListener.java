@@ -38,13 +38,18 @@ public class AuthorizationListener implements PhaseListener {
                     case 1://
                         Permiso = ((currentPage.lastIndexOf("menu_supervisor.xhtml") > -1))||
                                 ((currentPage.lastIndexOf("crearOrdenesProcNuevos.xhtml") > -1))||
-                                ((currentPage.lastIndexOf("OrdenesProcesadasNuevos.xhtml") > -1));
+                                ((currentPage.lastIndexOf("OrdenesProcesadasNuevos.xhtml") > -1))||
+                                ((currentPage.lastIndexOf("crearComparativo.xhtml") > -1))||
+                                ((currentPage.lastIndexOf("Comparativo.xhtml") > -1));
                         break;
                     case 2:
                         Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1)||
                                 (currentPage.lastIndexOf("crearAnalisisEficiencia.xhtml") > -1)||
+                                (currentPage.lastIndexOf("AnalisisEficiencia.xhtml")> -1)||
                                 (currentPage.lastIndexOf("crearOrdenesAuditadas.xhtml")> -1)||
-                                (currentPage.lastIndexOf("OrdenesAuditadas.xhtml")> -1);
+                                (currentPage.lastIndexOf("OrdenesAuditadas.xhtml")> -1)||
+                                (currentPage.lastIndexOf("EstadisticasAgente.xhtml")> -1)||
+                                (currentPage.lastIndexOf("crearEstadisticas.xhtml")> -1);
                         break;
                     case 3:
                         Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)||

@@ -67,9 +67,7 @@
             <definitions>.\lib\nblibraries.properties</definitions>
         </libraries>
         <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
-            <config-files>
-                <config-file>web/WEB-INF/security-app-context.xml</config-file>
-            </config-files>
+            <config-files/>
             <config-file-groups>
                 <config-file-group name="Default Group"/>
             </config-file-groups>

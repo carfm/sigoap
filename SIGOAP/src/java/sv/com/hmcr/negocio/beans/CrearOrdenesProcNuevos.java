@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import sv.com.hmcr.dao.TablasTempDAO;
+import sv.com.hmcr.dominio.Usuario;
 
 /**
  *
@@ -25,7 +26,6 @@ public class CrearOrdenesProcNuevos implements java.io.Serializable{
     private Date fechaFin;
     private String mostrar;
     private TablasTempDAO dao;
-    private String supervisor;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -35,14 +35,17 @@ public class CrearOrdenesProcNuevos implements java.io.Serializable{
     }
 
     public void generar() {
+        Object usuario = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        Usuario u = (Usuario) usuario;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String fecIni = format.format(getFechaInicio());
         String fecFin = format.format(getFechaFin());
         getParametrosReportes().setFechaInicio(fecIni);
         getParametrosReportes().setFechaFin(fecFin);
         getParametrosReportes().setTop(Integer.parseInt(getMostrar()));
+        getParametrosReportes().setSupervisor(u.getUser());
         parametrosReportes.setEncabezado("HMCR SOLUTIONS\nREPORTE DE ORDENES PROCESADAS DE AGENTES NUEVOS\nDEL PERIODO "+fecIni+" AL "+fecFin+"\n\nSUPERVISADOS POR:");
-        getDao().ejecutarProc("CALL ordenesProcesadasNuevos('" + fecIni + "','" + fecFin + "','cramirez')");
+        getDao().ejecutarProc("CALL ordenesProcesadasNuevos('" + fecIni + "','" + fecFin + "','"+getParametrosReportes().getSupervisor()+"')");
         System.out.println("salio");
         try {
             FacesContext contex = FacesContext.getCurrentInstance();
@@ -124,18 +127,5 @@ public class CrearOrdenesProcNuevos implements java.io.Serializable{
         this.parametrosReportes = parametrosReportes;
     }
 
-    /**
-     * @return the supervisor
-     */
-    public String getSupervisor() {
-        return supervisor;
-    }
-
-    /**
-     * @param supervisor the supervisor to set
-     */
-    public void setSupervisor(String supervisor) {
-        this.supervisor = supervisor;
-    }
 
 }
