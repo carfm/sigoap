@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <head>
+            <title>
+                <ui:define name="title">Generar control de ordenes regresadas</ui:define>
+            </title>
+        </head>
+        
+        <body>
+            <ui:define name="content">
+                <!--este form es una pantalla de parametros basica usando beans... aqui al poner value="# {}"
+            automaticamente se guarda el valor en la variable de su bean
+            pueden agregar o quitar cosas a su gusto.... vean el showcase segun su necesidad-->
+                <h:form id="parametrosAE" >
+                    <p:panel header="control de ordenes regresadas">
+                        <h:panelGrid columns="6" cellpadding="5">
+                            <h:outputLabel for="fechaInicio" value="Fecha Inicio" />
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearRazonesEnvio.fechaInicio}"/>
+                            <p:message for="fechaInicio"/>
+                            <h:outputLabel for="fechaFin" value="Fecha Fin" />
+                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearRazonesEnvio.fechaFin}"/>
+                            <p:message for="fechaFin"/>
+                            <h:outputLabel for="top" value="Mostrar"/>
+                            <h:selectOneMenu id="top" value="#{crearRazonesEnvio.mostrar}">                
+                                <f:selectItem itemValue="1" itemLabel="Todos" />
+                                <f:selectItem itemValue="2" itemLabel="3 con  más ordenes enviadas" />
+                                <f:selectItem itemValue="3" itemLabel="3 con menos ordenes enviadas" />
+                            </h:selectOneMenu>
+                            <h:outputLabel value="" />
+                            <h:outputLabel value="" />
+                            <h:outputLabel value="" />
+                            <h:outputLabel value="" />
+                        </h:panelGrid>
+                        <p:commandButton value="Generar" ajax="true" actionListener="#{crearRazonesEnvio.generar()}" icon="ui-icon-check" update=":parametrosAE" validateClient="true"/>
+                        <p:commandButton value="Limpiar" resetValues="true" update=":parametrosAE" actionListener="#{crearRazonesEnvio.generar()}"/>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>
+

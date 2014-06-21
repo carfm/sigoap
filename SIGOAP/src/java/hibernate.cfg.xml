@@ -22,5 +22,7 @@
     <mapping class="sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos"/>
     <mapping class="sv.com.hmcr.dominio.ComparativonuevosTemp"/>
     <mapping class="sv.com.hmcr.dominio.EstadisticasTemp"/>
+    <mapping class="sv.com.hmcr.dominio.Temporaltiempos"/>
+    <mapping class="sv.com.hmcr.dominio.Temporalrazones"/>
   </session-factory>
 </hibernate-configuration>

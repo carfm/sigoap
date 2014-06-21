@@ -30,7 +30,7 @@ public class CrearComparativo implements java.io.Serializable{
         parametrosReportes.setFechaInicio(fecIni);
         parametrosReportes.setFechaFin(fecFin);
         parametrosReportes.setTop(Integer.parseInt(mostrar));
-        parametrosReportes.setEncabezado("DELL PERIODO "+fecIni+" AL "+fecFin);
+        parametrosReportes.setEncabezado("DEL PERIODO "+fecIni+" AL "+fecFin);
         dao.ejecutarProc("CALL comparativo_nuevos('" + fecIni + "','" + fecFin + "')");
        try {
             FacesContext contex = FacesContext.getCurrentInstance();

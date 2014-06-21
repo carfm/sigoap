@@ -14,6 +14,8 @@ import sv.com.hmcr.dominio.ComparativonuevosTemp;
 import sv.com.hmcr.dominio.EstadisticasTemp;
 import sv.com.hmcr.dominio.Temporalordenesauditadas;
 import sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos;
+import sv.com.hmcr.dominio.Temporalrazones;
+import sv.com.hmcr.dominio.Temporaltiempos;
 import sv.com.hmcr.util.HibernateUtil;
 
 public class TablasTempDAO implements java.io.Serializable {
@@ -164,6 +166,56 @@ public class TablasTempDAO implements java.io.Serializable {
                 lista = (List<EstadisticasTemp>) session.createQuery("from EstadisticasTemp").list();
         session.close();
         session=null;
+        return lista;
+    }
+    
+    public List<Temporaltiempos> obtenerTiemposPromedios(int tipo) throws HibernateException {
+        List<Temporaltiempos> lista;
+        Session session ;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        switch (tipo) {
+            case 1:
+                lista = (List<Temporaltiempos>) session.createQuery("from Temporaltiempos").list();
+                break;
+            case 2:
+                lista = (List<Temporaltiempos>) session.createQuery(
+                        "from Temporaltiempos a order by a.promedio asc").setMaxResults(3).list();
+                break;
+            case 3:
+                lista = (List<Temporaltiempos>) session.createQuery(
+                        "from Temporaltiempos a order by a.promedio desc").setMaxResults(3).list();
+                break;
+            default:
+                lista = (List<Temporaltiempos>) session.createQuery("from Temporaltiempos").list();
+                break;
+        }
+        session.close();
+        return lista;
+    }
+    
+    public List<Temporalrazones> obtenerRazones(int tipo) throws HibernateException {
+        List<Temporalrazones> lista;
+        Session session ;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        switch (tipo) {
+            case 1:
+                lista = (List<Temporalrazones>) session.createQuery("from Temporalrazones").list();
+                break;
+            case 2:
+                lista = (List<Temporalrazones>) session.createQuery(
+                        "from Temporalrazones a order by a.promedio asc").setMaxResults(3).list();
+                break;
+            case 3:
+                lista = (List<Temporalrazones>) session.createQuery(
+                        "from Temporalrazones a order by a.promedio desc").setMaxResults(3).list();
+                break;
+            default:
+                lista = (List<Temporalrazones>) session.createQuery("from Temporalrazones").list();
+                break;
+        }
+        session.close();
         return lista;
     }
 
