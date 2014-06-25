@@ -5,7 +5,13 @@
  */
 package sv.com.hmcr.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -16,18 +22,24 @@ import sv.com.hmcr.dominio.Temporalordenesauditadas;
 import sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos;
 import sv.com.hmcr.dominio.Temporalrazones;
 import sv.com.hmcr.dominio.Temporaltiempos;
+import sv.com.hmcr.dominio.temp_errorEncontrado;
+import sv.com.hmcr.dominio.temp_procesada;
 import sv.com.hmcr.util.HibernateUtil;
 
 public class TablasTempDAO implements java.io.Serializable {
 
-    
+    private ResultSet resultado;
+    private Statement sentencia;
+    private Connection conexion;
+    String Conexion = "jdbc:mysql://localhost:3306/pruebadsi?user=root";
+    String Driver1 = "com.mysql.jdbc.Driver";
 
-     public List<AnalisisefTemp> obtenerAnalisisEf(int tipo) throws HibernateException {
+    public List<AnalisisefTemp> obtenerAnalisisEf(int tipo) throws HibernateException {
         List<AnalisisefTemp> lista;
         Session session;
-        session= HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        switch (tipo){
+        switch (tipo) {
             case 1:
                 lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp").list();
                 break;
@@ -38,7 +50,7 @@ public class TablasTempDAO implements java.io.Serializable {
             case 3:
                 lista = (List<AnalisisefTemp>) session.createQuery(
                         "from AnalisisefTemp a order by a.errororden desc").setMaxResults(5).list();
-                break; 
+                break;
             default:
                 lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp").list();
                 break;
@@ -49,7 +61,7 @@ public class TablasTempDAO implements java.io.Serializable {
 
     public List<Temporalordenesauditadas> obtenerOrdenesAuditadas(int tipo) throws HibernateException {
         List<Temporalordenesauditadas> lista;
-        Session session ;
+        Session session;
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         switch (tipo) {
@@ -71,10 +83,10 @@ public class TablasTempDAO implements java.io.Serializable {
         session.close();
         return lista;
     }
-    
+
     public List<Temporalordenesprocesadasnuevos> obtenerOrdenesProcesadasNuevos(int tipo) throws HibernateException {
         List<Temporalordenesprocesadasnuevos> lista;
-        Session session ;
+        Session session;
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         switch (tipo) {
@@ -119,6 +131,7 @@ public class TablasTempDAO implements java.io.Serializable {
         session.close();
         return lista;
     }
+
     public void ejecutarProc(String consulta) throws HibernateException {
         Session session;
         session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -127,13 +140,13 @@ public class TablasTempDAO implements java.io.Serializable {
         query.executeUpdate();
         session.getTransaction().commit();
     }
-    
+
     public List<ComparativonuevosTemp> obtenerComparativonuevosTemp(int tipo) throws HibernateException {
         List<ComparativonuevosTemp> lista;
-        Session session=null;
-        session= HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = null;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        switch (tipo){
+        switch (tipo) {
             case 1:
                 lista = (List<ComparativonuevosTemp>) session.createQuery("from ComparativonuevosTemp").list();
                 break;
@@ -144,7 +157,7 @@ public class TablasTempDAO implements java.io.Serializable {
             case 3:
                 lista = (List<ComparativonuevosTemp>) session.createQuery(
                         "from ComparativonuevosTemp a order by a.diferenciaTotal desc").setMaxResults(5).list();
-                break; 
+                break;
             case 4:
                 lista = (List<ComparativonuevosTemp>) session.createQuery(
                         "from ComparativonuevosTemp a where a.diferenciaTotal<0").list();
@@ -154,24 +167,24 @@ public class TablasTempDAO implements java.io.Serializable {
                 break;
         }
         session.close();
-        session=null;
+        session = null;
         return lista;
     }
-    
+
     public List<EstadisticasTemp> obtenerEstadisticasTemp() throws HibernateException {
         List<EstadisticasTemp> lista;
-        Session session=null;
-        session= HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = null;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-                lista = (List<EstadisticasTemp>) session.createQuery("from EstadisticasTemp").list();
+        lista = (List<EstadisticasTemp>) session.createQuery("from EstadisticasTemp").list();
         session.close();
-        session=null;
+        session = null;
         return lista;
     }
-    
+
     public List<Temporaltiempos> obtenerTiemposPromedios(int tipo) throws HibernateException {
         List<Temporaltiempos> lista;
-        Session session ;
+        Session session;
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         switch (tipo) {
@@ -193,10 +206,10 @@ public class TablasTempDAO implements java.io.Serializable {
         session.close();
         return lista;
     }
-    
+
     public List<Temporalrazones> obtenerRazones(int tipo) throws HibernateException {
         List<Temporalrazones> lista;
-        Session session ;
+        Session session;
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         switch (tipo) {
@@ -219,4 +232,118 @@ public class TablasTempDAO implements java.io.Serializable {
         return lista;
     }
 
+    public ResultSet obtenrLocation() {
+        ResultSet lista = null;
+
+        try {
+            Class.forName(Driver1).newInstance();
+            conexion = DriverManager.getConnection(Conexion);
+            sentencia = conexion.createStatement();
+            lista = sentencia.executeQuery("SELECT * FROM location");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error 1 " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error 2 " + e.getMessage());
+        } catch (InstantiationException | IllegalAccessException e) {
+            JOptionPane.showMessageDialog(null, "Error 3 " + e.getMessage());
+        }
+        JOptionPane.showMessageDialog(null, "no retorna nada ");
+
+        return lista;
+    }
+
+    public List<temp_procesada> obtenerOrdenProcesada(int tipo) throws HibernateException {
+        List<temp_procesada> lista;
+        Session session;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        switch (tipo) {
+            case 1:
+                lista = (List<temp_procesada>) session.createQuery("from temp_procesada").list();
+                break;
+            case 2:
+                lista = (List<temp_procesada>) session.createQuery(
+                        "from temp_procesada a order by a.totalProcesadas asc").setMaxResults(5).list();
+                break;
+            case 3:
+                lista = (List<temp_procesada>) session.createQuery(
+                        "from temp_procesada a order by a.totalProcesadas desc").setMaxResults(5).list();
+                break;
+            default:
+                lista = (List<temp_procesada>) session.createQuery("from temp_procesada").list();
+                break;
+        }
+        session.close();
+        return lista;
+    }
+
+    public List<temp_errorEncontrado> obtenerErrorEncontrado(int tipo) throws HibernateException {
+        List<temp_errorEncontrado> lista;
+        Session session;
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        switch (tipo) {
+            case 1:
+                lista = (List<temp_errorEncontrado>) session.createQuery("from temp_errorEncontrado").list();
+                break;
+            case 2:
+                lista = (List<temp_errorEncontrado>) session.createQuery(
+                        "from temp_errorEncontrado a order by a.total asc").setMaxResults(5).list();
+                break;
+            case 3:
+                lista = (List<temp_errorEncontrado>) session.createQuery(
+                        "from temp_errorEncontrado a order by a.total desc").setMaxResults(5).list();
+                break;
+            default:
+                lista = (List<temp_errorEncontrado>) session.createQuery("from temp_errorEncontrado").list();
+                break;
+        }
+        session.close();
+        return lista;
+    }
+
+    public Connection getConexion() {
+        return conexion;
+    }
+
+    public ResultSet getResultado() {
+        return resultado;
+    }
+
+    /**
+     * @param resultado the resultado to set
+     */
+    public void setResultado(ResultSet resultado) {
+        this.resultado = resultado;
+    }
+
+    /**
+     * @return the sentencia
+     */
+    public Statement getSentencia() {
+        return sentencia;
+    }
+
+    /**
+     * @param sentencia the sentencia to set
+     */
+    public void setSentencia(Statement sentencia) {
+        this.sentencia = sentencia;
+    }
+
+    /**
+     * @param conexion the conexion to set
+     */
+    public void setConexion(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public void cerrarConexion() {
+        try {
+            getSentencia().close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
 }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Este bloque deben copiarlo asi como esta-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <head>
+            <title>
+                <ui:define name="title">Ordenes De Locations Actuales</ui:define>
+            </title>
+        </head>
+        <body>
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:dataTable emptyMessage="No existen datos para mostrar" id="noti" 
+                                 var="dat" value="#{location.datos}" 
+                                 style="margin-bottom:20px"  sortBy="agente" paginator="true" rows="10" 
+                                 paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                                 {RowsPerPageDropdown}">
+
+                        <!--encabezado del reporte-->
+                        <f:facet name="header">
+                            <h:outputText value="#{parametrosReportes.encabezado}" style="text-align: center; text-height: 50px;" />
+                            <!--<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="analisisEf" trigger="toggler" -->
+                        </f:facet>
+
+                        <p:column filterBy="agente" filterMatchMode="contains" sortBy="agente" >
+                            <f:facet name="header">
+                                <h:outputText value="Nombre del agente" />
+                            </f:facet>
+                            <h:outputText value="#{dat.agente}" />
+                        </p:column>
+
+                        <p:column sortBy="nombre" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="Nombre De Location" />
+                            </f:facet>
+                            <h:outputText value="#{dat.nombre}" />
+                        </p:column>
+
+                        <p:column sortBy="supervisadoPor" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="Supervisado Por" />
+                            </f:facet>
+                            <h:outputText value="#{dat.supervisadoPor}" />
+                        </p:column>
+
+                        
+                        
+                        
+                    </p:dataTable>
+                    <!--Para exportar copien todo este bloque
+                    en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
+                    -->
+
+                    <p:panelGrid style="margin-top:20px; float: left; margin-left: 20px;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="4">Exportar Todos los datos</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
+                                        <p:dataExporter type="xls" target="noti" fileName="notificaciones" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
+                                        <p:dataExporter type="pdf" target="noti" fileName="notificaciones" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
+                                        <p:dataExporter type="csv" target="noti" fileName="notificaciones" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column><h:commandLink>
+                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
+                                        <p:dataExporter type="xml" target="noti" fileName="notificaciones" />
+                                    </h:commandLink></p:column>
+                            </p:row> 
+                        </f:facet>
+
+                    </p:panelGrid>
+                    <p:panelGrid style="margin-top:20px; float: right; margin-right: 20px;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="4">Exportar Pagina Actual</p:column>
+                            </p:row>
+                            <p:row>            
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
+                                        <p:dataExporter type="xls" pageOnly="true" target="noti" fileName="notificaciones" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="noti" fileName="notificaciones"  />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
+                                        <p:dataExporter type="csv" pageOnly="true" target="noti" fileName="notificaciones" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column><h:commandLink>
+                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
+                                        <p:dataExporter type="xml" pageOnly="true" target="noti" fileName="notificaciones" />
+                                    </h:commandLink></p:column>
+                            </p:row>
+
+                        </f:facet>
+
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>
+

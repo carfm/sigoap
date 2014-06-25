@@ -11,6 +11,7 @@ package sv.com.hmcr.dao;
 
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,8 +22,10 @@ import sv.com.hmcr.util.MyUtil;
 public class UsuarioDAO implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
 
     public boolean guarda(Usuario usuario) {
+        HibernateUtil.buildSessionFactory();
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session sesion = sessionFactory.openSession();
@@ -67,13 +70,27 @@ public class UsuarioDAO implements java.io.Serializable {
         }
     }
 
-    public Usuario obtenerUsuario(String user) throws HibernateException {
-        Usuario usuario = null;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        usuario = (Usuario) session.get(Usuario.class, user);
-        session.close();
+    public Usuario obtenerUsuario(String user)  {
+        HibernateUtil.buildSessionFactory();
+        Usuario usuario;
+        try {           
+            HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            usuario = (Usuario) session.get(Usuario.class, user);
+            //session.getTransaction().commit();
+            session.close();
+        } finally {
+            HibernateUtil.closeSessionAndUnbindFromThread();
+        }
+
+//        HibernateUtil.closeSessionFactory();
+//        
+//        Session session;
+//        session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        session.beginTransaction();
+//        
+//        session.close();
         return usuario;
 
     }
@@ -89,7 +106,7 @@ public class UsuarioDAO implements java.io.Serializable {
         return listaUsuarios;
     }
 
-    public Usuario login(Usuario usuario) {
+    public Usuario login(Usuario usuario) {       
         Usuario model = this.obtenerUsuario(usuario.getUser());
         String pass = usuario.getPassword();      
         if (MyUtil.generateMD5Signature(pass + usuario.getUser()).equals(model.getPassword()) == false) {

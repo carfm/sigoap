@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,7 @@ public class LoginBean implements Serializable {
 
     private Usuario usuario;
     private UsuarioDAO usuarioDao;
-    private int numero; 
+    private int numero;
 
     /**
      * Creates a new instance of LoginBean
@@ -48,7 +49,7 @@ public class LoginBean implements Serializable {
         boolean LoggedIn;
         this.usuario = this.getUsuarioDao().login(this.getUsuario());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", this.usuario);
-        
+
         String ruta = "";
         if (this.usuario != null) {
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNombreusuario());
@@ -79,8 +80,8 @@ public class LoginBean implements Serializable {
                 this.usuario = new Usuario();
                 try {
                     int n = numero;
-                    n= n++;
-                            //Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString());
+                    n = n++;
+                    //Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString());
                     //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numeroIncorrecto", Integer.toString(n + 1));
                     if ((n + 1) > 4) {
                         ruta = MyUtil.loginUrl() + "error.xhtml";
@@ -91,7 +92,7 @@ public class LoginBean implements Serializable {
                     } else {
                         //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("numeroIncorrecto").toString()
                     }
-                    numero= n;
+                    numero = n;
 //                    if ((n + 1) == 5) {
 //                        HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 //                        starTimer(sesion);                       
@@ -124,16 +125,26 @@ public class LoginBean implements Serializable {
         timer.schedule(timerTask, 10000);
     }
 
-    public void logout() {
-
-        String ruta = MyUtil.baseurl() + "index.xhtml";
-        RequestContext context = RequestContext.getCurrentInstance();
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession sesion = (HttpSession) facesContext.getExternalContext().getSession(false);
-        sesion.invalidate();
-        this.usuario = null;
-        context.addCallbackParam("loggetOut", true);
-        context.addCallbackParam("ruta", ruta);
+    public String logout() {
+        try {
+            String ruta = MyUtil.baseurl() + "index.xhtml";
+            RequestContext context = RequestContext.getCurrentInstance();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession sesion = (HttpSession) facesContext.getExternalContext().getSession(false);
+            sesion.invalidate();
+            this.usuario = null;
+            context.addCallbackParam("loggetOut", true);
+            context.addCallbackParam("ruta", ruta);
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                FacesContext contex = FacesContext.getCurrentInstance();
+                contex.getExternalContext().redirect("index.xhtml");
+            } catch (Exception ex) {
+                System.out.println(e);
+            }
+        }
+        return "index?faces-redirect=true";
     }
 
     /**
