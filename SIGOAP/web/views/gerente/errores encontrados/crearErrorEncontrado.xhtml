@@ -20,10 +20,10 @@
                     <p:panel header="reporte de errores encontrados">
                         <h:panelGrid columns="6" cellpadding="5">
                             <h:outputLabel for="fechaInicio" value="Fecha Inicio" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearErrorEncontrado.fechaInicio}"/>
+                            <p:calendar maxdate="today (get new Date())" mindate="2013-01-01" navigator="true" requiredMessage="Error: Campo requerido" id="fechaInicio" required="true" pattern="yyyy-MM-dd" label="fechaInicio" value="#{crearErrorEncontrado.fechaInicio}"/>
                             <p:message for="fechaInicio"/>
                             <h:outputLabel for="fechaFin" value="Fecha Fin" />
-                            <p:calendar navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearErrorEncontrado.fechaFin}"/>
+                            <p:calendar maxdate="today (get new Date())" mindate="2013-01-01" navigator="true" requiredMessage="Error: Campo requerido" id="fechaFin" required="true" pattern="yyyy-MM-dd" label="fechaFin" value="#{crearErrorEncontrado.fechaFin}"/>
                             <p:message for="fechaFin"/>
                             <h:outputLabel for="top" value="Mostrar"/>
                             <h:selectOneMenu id="top" value="#{crearErrorEncontrado.mostrar}">

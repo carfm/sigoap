@@ -66,7 +66,7 @@ public class AnalisisefTemp implements Serializable {
     @Column(name = "errororden")
     private Float errororden;
     @Column(name = "ordenerror")
-    private Float ordenerror;
+    private Integer ordenerror;
 
     public AnalisisefTemp() {
     }
@@ -155,11 +155,11 @@ public class AnalisisefTemp implements Serializable {
         this.errororden = errororden;
     }
 
-    public Float getOrdenerror() {
+    public Integer getOrdenerror() {
         return ordenerror;
     }
 
-    public void setOrdenerror(Float ordenerror) {
+    public void setOrdenerror(Integer ordenerror) {
         this.ordenerror = ordenerror;
     }
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <head>
+            <title>
+                <ui:define name="title">Gestion de usuarios</ui:define>
+            </title>
+        </head>
+        <body>
+            <ui:define name="content">
+                <h:form id="agregarUsuario">         
+
+                    <p:panel header="Ingrese los datos del usuario" style="width: 40%;margin-left: 30%;">
+                        <h:panelGrid columns="3" cellpadding="5" id="registrarUsuario">
+                            <h:outputLabel for="user" value="Nombre de Usuario" />
+                            <p:inputText id="user" value="#{gestionUsuarios.usuario.user}" label="user">
+                                <f:validateLength maximum="12" minimum="3" for="user"/>       
+                            </p:inputText>
+                            <p:message for="user" />
+
+                            <h:outputLabel for="tipo" value="Tipo de Usuario" />
+                            <h:selectOneMenu value="#{gestionUsuarios.idTipoUsuario}" id="tipo">
+                                <f:selectItem itemValue="administrador" itemLabel="Administrador" />
+                                <f:selectItem itemValue="gerente" itemLabel="Gerente" />
+                                <f:selectItem itemValue="supervisor" itemLabel="Supervisor" />
+                            </h:selectOneMenu>             
+                            <p:message for="tipo" />
+
+                            <h:outputLabel for="password" value="Contraseña" />
+                            <p:password id="password" value="#{gestionUsuarios.usuario.password}" 
+                                        required="true" label="contraseña" feedback="true" inline="true"/>
+                            <p:message for="password" />
+
+                            <h:outputLabel for="nombreUser" value="Nombre" />
+                            <p:inputText id="nombreUser" value="#{gestionUsuarios.usuario.nombreusuario}" 
+                                         label="Nombre" required="true"/>
+                            <p:message for="nombreUser" />
+
+                            <h:outputLabel for="apellidoUser" value="Apellido" />
+                            <p:inputText id="apellidoUser" value="#{gestionUsuarios.usuario.apellidousuario}" 
+                                         label="Apellido" required="true"/>
+                            <p:message for="apellidoUser" />          
+                        </h:panelGrid>
+
+                        <p:commandButton value="Agregar" ajax="true" icon="ui-icon-check"
+                                         actionListener="#{gestionUsuarios.agregarUsuario}" 
+                                         resetValues="true" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>

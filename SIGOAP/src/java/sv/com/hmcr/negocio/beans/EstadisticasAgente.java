@@ -20,11 +20,15 @@ import sv.com.hmcr.dominio.EstadisticasTemp;
 @ViewScoped
 public class EstadisticasAgente implements java.io.Serializable{
 private List<EstadisticasTemp> listado; 
-    private TablasTempDAO dao;
+private TablasTempDAO dao;
+private Double errorOrden=0.0;
+private int ordenError=0;
     
     public EstadisticasAgente() {
         dao=new TablasTempDAO ();
         listado=dao.obtenerEstadisticasTemp();
+        errorOrden=(listado.get(3).getMesE()*1.0)/listado.get(0).getMes();
+        ordenError=listado.get(0).getMes()/listado.get(3).getMesE();
     }
 
     public List<EstadisticasTemp> getListado() {
@@ -41,6 +45,22 @@ private List<EstadisticasTemp> listado;
 
     public void setDao(TablasTempDAO dao) {
         this.dao = dao;
+    }
+
+    public Double getErrorOrden() {
+        return errorOrden;
+    }
+
+    public int getOrdenError() {
+        return ordenError;
+    }
+
+    public void setErrorOrden(Double errorOrden) {
+        this.errorOrden = errorOrden;
+    }
+
+    public void setOrdenError(int ordenError) {
+        this.ordenError = ordenError;
     }
     
     

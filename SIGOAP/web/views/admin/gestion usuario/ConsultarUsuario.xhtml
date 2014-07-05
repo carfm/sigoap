@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <head>
+            <title>
+                <ui:define name="title">Gestion de usuarios</ui:define>
+            </title>
+        </head>
+        <body>
+            <ui:define name="content">
+                <h:form id="tablaUsuarios">
+                    <p:growl id="mensajes" showDetail="true" life="3000" />
+                    <p:dataTable emptyMessage="No hay usuarios registrados" id="usuarios" 
+                                 var="users" value="#{gestionUsuarios.listaUsuarios}" 
+                                 style="margin-bottom:20px" paginator="true" rows="5" 
+                                 paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                                 {RowsPerPageDropdown}" rowKey="#{users.user}" selectionMode="single" 
+                                 selection="#{gestionUsuarios.usuario}" editable="true">
+                        <f:facet name="header">
+                            Lista de Usuarios Registrados
+                        </f:facet>
+                        <p:ajax event="rowEdit" listener="#{gestionUsuarios.onRowEdit}" update=":tablaUsuarios:usuarios" />
+                        <p:ajax event="rowEditCancel" listener="#{gestionUsuarios.onRowCancel}" update=":tablaUsuarios:usuarios" />
+                        <p:column headerText="User">
+                            <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{users.user}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{users.user}" label="User"  /></f:facet>                           
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Tipo de Usuario">
+                            <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{users.idtipousuario.nombretipousuario}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{users.idtipousuario.idtipousuario}" id="tipo">
+                                <f:selectItem itemValue="3" itemLabel="Administrador" />
+                                <f:selectItem itemValue="2" itemLabel="Gerente" />
+                                <f:selectItem itemValue="1" itemLabel="Supervisor" />
+                            </h:selectOneMenu>
+                            </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{users.nombreusuario}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{users.nombreusuario}" label="Nombre"  /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Apellido">
+                            <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{users.apellidousuario}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{users.apellidousuario}" label="Apellido"  /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column style="width:32px">  
+                            <p:commandButton value="Borrar" actionListener="#{gestionUsuarios.borrarUsuario}" update=":tablaUsuarios:usuarios">
+                            </p:commandButton>
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>

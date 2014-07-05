@@ -62,12 +62,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Total de errores" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalE}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.totalerrores}" />
                         </p:column>
 
                         <p:column sortBy="totalgraves">
                             <f:facet name="header">
                                 <h:outputText value="Errores Graves" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalEG}" />
                             </f:facet>
                             <h:outputText value="#{cursor.totalgraves}" />
                         </p:column>
@@ -76,12 +82,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Errores Medianos" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalEM}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.totalmedianos}" />
                         </p:column>
 
                         <p:column sortBy="totalleves">
                             <f:facet name="header">
                                 <h:outputText value="Errores Leves" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalEL}" />
                             </f:facet>
                             <h:outputText value="#{cursor.totalleves}" />
                         </p:column>
@@ -90,12 +102,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Procesadas" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalO}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.totalordenes}" />
                         </p:column>
 
                         <p:column sortBy="totalcompletas">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Completas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalOC}" />
                             </f:facet>
                             <h:outputText value="#{cursor.totalcompletas}" />
                         </p:column>
@@ -104,12 +122,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Regresadas Incompletas" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalOI}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.totalincompletas}" />
                         </p:column>
 
                         <p:column sortBy="totalnada">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes regresadas sin hacer nada" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{analisisEficiencia.totalON}" />
                             </f:facet>
                             <h:outputText value="#{cursor.totalnada}" />
                         </p:column>
