@@ -34,6 +34,7 @@ public class GestionUsuarios implements Serializable{
         this.dao=new UsuarioDAO();
         this.usuario=new Usuario();
         usuario.setBloqueado((short)0);
+        listaUsuarios=dao.obtenListaUsuarios();
     }
     
     public void agregarUsuario(){
@@ -63,22 +64,22 @@ public class GestionUsuarios implements Serializable{
     }
     
     public void onRowEdit(RowEditEvent event) {
-        Usuario u=((Usuario) event.getObject());
+        usuario=(Usuario) event.getObject();
         
-        switch (u.getIdtipousuario().getIdtipousuario()){
+        switch (usuario.getIdtipousuario().getIdtipousuario()){
             case 3:
-                u.getIdtipousuario().setNombretipousuario("Administrador");
+                usuario.getIdtipousuario().setNombretipousuario("Administrador");
                 break;
             case 2:
-                u.getIdtipousuario().setNombretipousuario("Gerente");
+                usuario.getIdtipousuario().setNombretipousuario("Gerente");
                 break;
             case 1:
-                u.getIdtipousuario().setNombretipousuario("Supervisor");
+                usuario.getIdtipousuario().setNombretipousuario("Supervisor");
                 break;
         }        
-        if(dao.actualizar(u)){
+        if(dao.actualizar(usuario)){
             FacesMessage msg = new FacesMessage("Actualizado correctamente","Se ha modificado el usuario "
-                    +((Usuario) event.getObject()).getNombreusuario()+" "+u.getApellidousuario());
+                    +((Usuario) event.getObject()).getNombreusuario()+" "+usuario.getApellidousuario());
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         else{
@@ -141,7 +142,7 @@ public class GestionUsuarios implements Serializable{
     }
 
     public List<Usuario> getListaUsuarios() {
-        listaUsuarios=dao.obtenListaUsuarios();
+        
         return listaUsuarios;
     }     
     
