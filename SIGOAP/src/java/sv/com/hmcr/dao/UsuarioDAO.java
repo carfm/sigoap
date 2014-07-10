@@ -96,13 +96,17 @@ public class UsuarioDAO implements java.io.Serializable {
     }
 
     public List<Usuario> obtenListaUsuarios() throws HibernateException {
+        HibernateUtil.buildSessionFactory();
         List<Usuario> listaUsuarios;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        listaUsuarios = (List<Usuario>) session.createQuery("from Usuario").list();
-        session.close();
-        HibernateUtil.closeSessionFactory();
+        try {           
+            HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            listaUsuarios = (List<Usuario>) session.createQuery("from Usuario").list();
+            session.close();
+        } finally {
+            HibernateUtil.closeSessionAndUnbindFromThread();
+        }
         return listaUsuarios;
     }
 

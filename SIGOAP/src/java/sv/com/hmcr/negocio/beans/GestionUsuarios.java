@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import sv.com.hmcr.dao.UsuarioDAO;
 import sv.com.hmcr.dominio.Tipousuario;
 import sv.com.hmcr.dominio.Usuario;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -61,30 +62,34 @@ public class GestionUsuarios implements Serializable{
         }
     }
     
-    public void editarUsuario() {
-        Tipousuario tipo=new Tipousuario();
+    public void onRowEdit(RowEditEvent event) {
+        Usuario u=((Usuario) event.getObject());
         
-        switch (idTipoUsuario){
-            case "administrador":
-                tipo.setIdtipousuario(3);
+        switch (u.getIdtipousuario().getIdtipousuario()){
+            case 3:
+                u.getIdtipousuario().setNombretipousuario("Administrador");
                 break;
-            case "gerente":
-                tipo.setIdtipousuario(2);
+            case 2:
+                u.getIdtipousuario().setNombretipousuario("Gerente");
                 break;
-            case "supervisor":
-                tipo.setIdtipousuario(1);
+            case 1:
+                u.getIdtipousuario().setNombretipousuario("Supervisor");
                 break;
-        }
-        usuario.setIdtipousuario(tipo);        
-        if(dao.actualizar(usuario)){
+        }        
+        if(dao.actualizar(u)){
             FacesMessage msg = new FacesMessage("Actualizado correctamente","Se ha modificado el usuario "
-                    +usuario.getNombreusuario()+" "+usuario.getApellidousuario());
+                    +((Usuario) event.getObject()).getNombreusuario()+" "+u.getApellidousuario());
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         else{
             FacesMessage msg = new FacesMessage("Error","Hubo un problema al modificar el usuario");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    }
+    
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion Cancelada", ((Usuario) event.getObject()).getUser());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void borrarUsuario() {
@@ -138,8 +143,6 @@ public class GestionUsuarios implements Serializable{
     public List<Usuario> getListaUsuarios() {
         listaUsuarios=dao.obtenListaUsuarios();
         return listaUsuarios;
-    }
-    
-    
+    }     
     
 }

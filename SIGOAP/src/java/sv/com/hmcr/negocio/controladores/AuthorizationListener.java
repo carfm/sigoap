@@ -65,7 +65,8 @@ public class AuthorizationListener implements PhaseListener {
                         case 3:
                             Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)
                                     || (currentPage.lastIndexOf("generar_etl.xhtml") > -1)
-                                    || (currentPage.lastIndexOf("GestionUsuario.xhtml") > -1);
+                                    || (currentPage.lastIndexOf("AgregarUsuario.xhtml") > -1)
+                                    || (currentPage.lastIndexOf("ConsultarUsuario.xhtml") > -1);
                             break;
                     }
                     isLoginPage = (currentPage.lastIndexOf("index.xhtml") > -1);
