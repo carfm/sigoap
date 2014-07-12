@@ -5,7 +5,6 @@
  */
 package sv.com.hmcr.negocio.beans;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +12,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import sv.com.hmcr.dao.TablasTempDAO;
-import javax.faces.application.FacesMessage;
 
 /**
  *
@@ -45,7 +43,7 @@ public class CrearErrorEncontrado implements java.io.Serializable {
         parametrosReportes.setFechaFin(fecFin);
         parametrosReportes.setTop(Integer.parseInt(mostrar));
         parametrosReportes.setEncabezado("HMCR SOLUTIONS\nANALISIS DE EFICIENCIA\nDEL PERIODO "+fecIni+" AL "+fecFin);
-        dao.ejecutarProc("CALL temp_errorencontrado('" + fecIni + "','" + fecFin + "')");
+        dao.ejecutarProc("CALL Error_Encontrado ('" + fecIni + "','" + fecFin + "')");
        try {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect("ErrorEncontrado.xhtml");
