@@ -41,7 +41,7 @@ public class TablasTempDAO implements java.io.Serializable {
         session.beginTransaction();
         switch (tipo) {
             case 1:
-                lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp").list();
+                lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp a order by a.errororden desc").list();
                 break;
             case 2:
                 lista = (List<AnalisisefTemp>) session.createQuery(
@@ -52,7 +52,7 @@ public class TablasTempDAO implements java.io.Serializable {
                         "from AnalisisefTemp a order by a.errororden desc").setMaxResults(5).list();
                 break;
             default:
-                lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp").list();
+                lista = (List<AnalisisefTemp>) session.createQuery("from AnalisisefTemp a order by a.errororden desc").list();
                 break;
         }
         session.close();
