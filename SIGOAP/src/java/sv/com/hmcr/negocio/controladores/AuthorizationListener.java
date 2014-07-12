@@ -46,7 +46,8 @@ public class AuthorizationListener implements PhaseListener {
                                     || ((currentPage.lastIndexOf("tiempoPromedio.xhtml") > -1))
                                     || ((currentPage.lastIndexOf("crearRazonesEnvio.xhtml") > -1))
                                     || ((currentPage.lastIndexOf("razonesEnvio.xhtml") > -1))
-                                    || ((currentPage.lastIndexOf("location.xhtml") > -1));
+                                    || ((currentPage.lastIndexOf("location.xhtml") > -1)
+                                    || ((currentPage.lastIndexOf("primer_ingreso.xhtml") > -1)));
                             break;
                         case 2:
                             Permiso = (currentPage.lastIndexOf("menu_gerente.xhtml") > -1)
@@ -60,13 +61,15 @@ public class AuthorizationListener implements PhaseListener {
                                     || (currentPage.lastIndexOf("crearErrorEncontrado.xhtml") > -1)
                                     || (currentPage.lastIndexOf("notificaciones.xhtml") > -1)
                                     || (currentPage.lastIndexOf("OrdenProcesada.xhtml") > -1)
-                                    || (currentPage.lastIndexOf("crearOrdenProcesada.xhtml") > -1);
+                                    || (currentPage.lastIndexOf("crearOrdenProcesada.xhtml") > -1
+                                    || ((currentPage.lastIndexOf("primer_ingreso.xhtml") > -1)));
                             break;
                         case 3:
                             Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)
                                     || (currentPage.lastIndexOf("generar_etl.xhtml") > -1)
                                     || (currentPage.lastIndexOf("AgregarUsuario.xhtml") > -1)
-                                    || (currentPage.lastIndexOf("ConsultarUsuario.xhtml") > -1);
+                                    || (currentPage.lastIndexOf("ConsultarUsuario.xhtml") > -1
+                                    || ((currentPage.lastIndexOf("primer_ingreso.xhtml") > -1)));
                             break;
                     }
                     isLoginPage = (currentPage.lastIndexOf("index.xhtml") > -1);
