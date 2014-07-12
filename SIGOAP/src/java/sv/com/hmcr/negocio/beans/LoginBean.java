@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -49,26 +48,28 @@ public class LoginBean implements Serializable {
         boolean LoggedIn;
         this.usuario = this.getUsuarioDao().login(this.getUsuario());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", this.usuario);
-
         String ruta = "";
         if (this.usuario != null) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNombreusuario());
             switch (this.usuario.getIdtipousuario().getIdtipousuario()) {
-                case 1:
-                    ruta = MyUtil.loginUrl() + "views/supervisor/menu_supervisor.xhtml";
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_supervisor.xhtml");
-                    break;
-                case 2:
-                    ruta = MyUtil.loginUrl() + "views/gerente/menu_gerente.xhtml";
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_gerente.xhtml");
-                    break;
-                case 3:
-                    ruta = MyUtil.loginUrl() + "views/admin/menu_admin.xhtml";
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_admin.xhtml");
-                    break;
-            }
+                    case 1:
+                        ruta = MyUtil.loginUrl() + "views/supervisor/menu_supervisor.xhtml";
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_supervisor.xhtml");
+                        break;
+                    case 2:
+                        ruta = MyUtil.loginUrl() + "views/gerente/menu_gerente.xhtml";
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_gerente.xhtml");
+                        break;
+                    case 3:
+                        ruta = MyUtil.loginUrl() + "views/admin/menu_admin.xhtml";
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("opciones", "opciones_admin.xhtml");
+                        break;
+                }
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNombreusuario());
             LoggedIn = true;
-            /// aa
+            if (this.usuario.getPrimeravez() == 1) {
+                //ingreso a pagina de actualizar contraseña 
+                ruta = MyUtil.loginUrl() + "primer_ingreso.xhtml";
+            }
         } else {
 
             msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Usuario o contraseña invalido(s)");
