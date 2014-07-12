@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="templates/template_log.xhtml">
+    <h:head>
+        <title>
+            <ui:define name="title">Primer ingreso a sistema</ui:define>
+        </title>
+    </h:head>
+    <ui:define name="content">
+        <div class="conteiner">
+            <h:outputLabel value="Este es su primer ingreso al sistema"/>
+            <br/>
+            <h:outputLabel value="Necesita actualizar su contraseña"/>
+            <h:form>
+                <h:panelGrid columns="2" id="matchGrid" cellpadding="5">                  
+                    <h:outputLabel for="pwd1" value="Nueva contraseña: *" />
+                    <p:password id="pwd1" value="#{primerIngresoBean.contraseña1}" match="pwd2" label="Password 1" required="true" />
+
+                    <h:outputLabel for="pwd2" value="Confirmar nueva contraseña: *" />
+                    <p:password id="pwd2" value="#{primerIngresoBean.contraseña2}" label="Password 2" required="true" />
+                </h:panelGrid>
+                <p:commandButton update="matchGrid" value="Actualizar" actionListener="#{primerIngresoBean.actualizarContraseña(actionEvent)}" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
