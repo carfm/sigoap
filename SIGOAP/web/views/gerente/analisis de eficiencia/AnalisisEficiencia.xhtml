@@ -28,7 +28,7 @@
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="analisisEf" 
                                  var="cursor" value="#{analisisEficiencia.listado}" 
-                                 style="margin-bottom:20px"  sortBy="ordenerror" paginator="true" rows="10" 
+                                 style="margin-bottom:20px" sortBy="ordenerror" sortOrder="descending" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
                                  {RowsPerPageDropdown}">
@@ -171,7 +171,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="analisisEf" fileName="Analisis_Eficiencia"  preProcessor="#{analisisEficiencia.preProcessPDF}"/>
+                                        <p:dataExporter type="pdf" target="analisisEf" fileName="Analisis_Eficiencia" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
@@ -203,7 +203,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia"  preProcessor="#{analisisEficiencia.preProcessPDF}"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
