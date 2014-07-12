@@ -15,160 +15,145 @@
         <body>
             <ui:define name="content">
                 <h:form>
-                <!--con este tag se crea la tabla;
-                emptyMessage: es el mensaje si no existen datos
-                id: identificador de la tabla
-                value: una lista (de nombre listado) de objetos declarada en el Bean (aqui en bean se llama AnalisisEficiencia)
-                la referencia al bean es el mismo nombre pero con la primer letra minuscula
-                Style: es opcional, estilo css del objeto
-                paginator: mostrar por paginas la tabla, rows: el numero de filas a mostrar por pagina
-                paginatorPosition: la posicion de la navegabilidad entre paginas (bottom=abajo)
-                paginatorTemplate: disposicion de los elementos del paginador, copienlo exacto
-                sortBy: columna por la que se ordenara inicialmente; es el nombre de un atributo de la clase de dominio
-                -->
-                <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenProc" 
-                             var="cursor" value="#{ordenProcesada.listado}" 
-                             style="margin-bottom:20px"  sortBy="totalProcesadas" paginator="true" rows="10" 
-                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
-                             {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                             {RowsPerPageDropdown}">
+                    <!--con este tag se crea la tabla;
+                    emptyMessage: es el mensaje si no existen datos
+                    id: identificador de la tabla
+                    value: una lista (de nombre listado) de objetos declarada en el Bean (aqui en bean se llama AnalisisEficiencia)
+                    la referencia al bean es el mismo nombre pero con la primer letra minuscula
+                    Style: es opcional, estilo css del objeto
+                    paginator: mostrar por paginas la tabla, rows: el numero de filas a mostrar por pagina
+                    paginatorPosition: la posicion de la navegabilidad entre paginas (bottom=abajo)
+                    paginatorTemplate: disposicion de los elementos del paginador, copienlo exacto
+                    sortBy: columna por la que se ordenara inicialmente; es el nombre de un atributo de la clase de dominio
+                    -->
+                    <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenProc" 
+                                 var="cursor" value="#{ordenProcesada.listado}" 
+                                 style="margin-bottom:20px"  sortBy="usuario" paginator="true" rows="10" 
+                                 paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                                 {RowsPerPageDropdown}">
 
-                    <!--encabezado del reporte-->
-                    <f:facet name="header">
-                        <h:outputText value="#{parametrosReportes.encabezado}" style="text-align: center; text-height: 50px;" />
-                        <!--<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
-                        <p:columnToggler datasource="analisisEf" trigger="toggler" -->
-                    </f:facet>
-                    <!--columnas de la tabla
-                    headerText: titulo de la columna
-                    filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
-                    filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
-                    footerText: para poner los totales-->
-                    <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario" footerText="TOTALES">
+                        <!--encabezado del reporte-->
                         <f:facet name="header">
-                            <h:outputText value="Nombre del agente" />
+                            <h:outputText value="HMCR SOLUTIONS" escape="false" style="text-align: center; text-height: 50px;" />
+                            <br />
+                            <h:outputText value="REPORTE  DE ORDENES PROCESADAS" escape="false" style="text-align: center; text-height: 50px;" />
+                            <br />
+                            <h:outputText value="DEL PERIODO DE #{parametrosReportes.fechaInicio} AL #{parametrosReportes.fechaFin}" style="text-align: center; text-height: 50px;" />
+                            <!--<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="analisisEf" trigger="toggler" -->
                         </f:facet>
-                        <h:outputText value="#{cursor.usuario}" />
-                    </p:column>
+                        <!--columnas de la tabla
+                        headerText: titulo de la columna
+                        filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
+                        filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
+                        footerText: para poner los totales-->
+                        <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario" footerText="TOTALES">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre del agente" />
+                            </f:facet>
+                            <h:outputText value="#{cursor.usuario}" />
+                        </p:column>
 
-                    <p:column sortBy="totalProcesadas">
+                        <p:column sortBy="totalProcesadas">
+                            <f:facet name="header">
+                                <h:outputText value="Total Ordenes Procesadas" />
+                            </f:facet>
+                            <h:outputText value="#{cursor.totalProcesadas}" />
+                        </p:column>
+
+                        <p:column sortBy="completas">
+                            <f:facet name="header">
+                                <h:outputText value="Ordenes Completas" />
+                            </f:facet>
+                            <h:outputText value="#{cursor.completas}" />
+                        </p:column>
+
+                        <p:column sortBy="incompletas">
+                            <f:facet name="header">
+                                <h:outputText value="Ordenes Incompletas" />
+                            </f:facet>
+                            <h:outputText value="#{cursor.incompletas}" />
+                        </p:column>
+
+                        <p:column sortBy="nada">
+                            <f:facet name="header">
+                                <h:outputText value="Ordenes Sin Hacer Nada" />
+                            </f:facet>
+                            <h:outputText value="#{cursor.nada}" />
+                        </p:column>
+                    </p:dataTable>
+                    <!--Para exportar copien todo este bloque
+                    en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
+                    -->
+
+                    <p:panelGrid style="margin-top:20px; float: left; margin-left: 20px;">
                         <f:facet name="header">
-                            <h:outputText value="Total Ordenes Procesadas" />
+                            <p:row>
+                                <p:column colspan="4">Exportar Todos los datos</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
+                                        <p:dataExporter type="xls" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
+                                        <p:dataExporter type="pdf" target="ordenProc" fileName="temp_procesada"  preProcessor="#{ordenProcesada.preProcessPDF}"/>
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
+                                        <p:dataExporter type="csv" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column><h:commandLink>
+                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
+                                        <p:dataExporter type="xml" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink></p:column>
+                            </p:row> 
                         </f:facet>
-                        <h:outputText value="#{cursor.totalProcesadas}" />
-                    </p:column>
 
-                    <p:column sortBy="completas">
+                    </p:panelGrid>
+                    <p:panelGrid style="margin-top:20px; float: right; margin-right: 20px;">
                         <f:facet name="header">
-                            <h:outputText value="Ordenes Completas" />
+                            <p:row>
+                                <p:column colspan="4">Exportar Pagina Actual</p:column>
+                            </p:row>
+                            <p:row>            
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
+                                        <p:dataExporter type="xls" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="ordenProc" fileName="temp_procesada"  preProcessor="#{ordenProcesada.preProcessPDF}"/>
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column>
+                                    <h:commandLink>
+                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
+                                        <p:dataExporter type="csv" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink>
+                                </p:column>
+                                <p:column><h:commandLink>
+                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
+                                        <p:dataExporter type="xml" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
+                                    </h:commandLink></p:column>
+                            </p:row>
+
                         </f:facet>
-                        <h:outputText value="#{cursor.completas}" />
-                    </p:column>
 
-                    <p:column sortBy="incompletas">
-                        <f:facet name="header">
-                            <h:outputText value="Ordenes Incompletas" />
-                        </f:facet>
-                        <h:outputText value="#{cursor.incompletas}" />
-                    </p:column>
-
-                    <p:column sortBy="nada">
-                        <f:facet name="header">
-                            <h:outputText value="Ordenes Sin Hacer Nada" />
-                        </f:facet>
-                        <h:outputText value="#{cursor.nada}" />
-                    </p:column>
-</p:dataTable>
-                <!--Para exportar copien todo este bloque
-                en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
-                -->
-
-                <p:panelGrid style="margin-top:20px; float: left; margin-left: 20px;">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="4">Exportar Todos los datos</p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                    <p:dataExporter type="xls" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink>
-                            </p:column>
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                    <p:dataExporter type="pdf" target="ordenProc" fileName="temp_procesada"  preProcessor="#{ordenProcesada.preProcessPDF}"/>
-                                </h:commandLink>
-                            </p:column>
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                    <p:dataExporter type="csv" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink>
-                            </p:column>
-                            <p:column><h:commandLink>
-                                    <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                    <p:dataExporter type="xml" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink></p:column>
-                        </p:row> 
-                    </f:facet>
-
-                </p:panelGrid>
-                <p:panelGrid style="margin-top:20px; float: right; margin-right: 20px;">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="4">Exportar Pagina Actual</p:column>
-                        </p:row>
-                        <p:row>            
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                    <p:dataExporter type="xls" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink>
-                            </p:column>
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                    <p:dataExporter type="pdf" pageOnly="true" target="ordenProc" fileName="temp_procesada"  preProcessor="#{ordenProcesada.preProcessPDF}"/>
-                                </h:commandLink>
-                            </p:column>
-                            <p:column>
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                    <p:dataExporter type="csv" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink>
-                            </p:column>
-                            <p:column><h:commandLink>
-                                    <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                    <p:dataExporter type="xml" pageOnly="true" target="ordenProc" fileName="temp_procesada" />
-                                </h:commandLink></p:column>
-                        </p:row>
-
-                    </f:facet>
-
-                </p:panelGrid>
-            </h:form>
+                    </p:panelGrid>
+                </h:form>
             </ui:define>
         </body>
     </ui:composition>
 </html>
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Este bloque deben copiarlo asi como esta-->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <html>
-
-
-        <h:head>
-            <title></title><!--titulo de la ventana-->
-        </h:head>
-        <h:body>
-            
-        </h:body>
-    </html>
-</ui:composition>
