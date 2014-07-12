@@ -65,6 +65,8 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "BLOQUEADO")
     private short bloqueado;
+    @Column(name = "PRIMERAVEZ  ")
+    private short primeravez;
     @OneToMany(mappedBy = "user")
     private List<Empleado> empleadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -177,6 +179,20 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "sv.com.hmcr.dominio.Usuario[ user=" + user + " ]";
+    }
+
+    /**
+     * @return the primeravez
+     */
+    public short getPrimeravez() {
+        return primeravez;
+    }
+
+    /**
+     * @param primeravez the primeravez to set
+     */
+    public void setPrimeravez(short primeravez) {
+        this.primeravez = primeravez;
     }
     
 }
