@@ -8,6 +8,7 @@ package sv.com.hmcr.negocio.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -28,11 +29,15 @@ public class Comparativo implements java.io.Serializable{
     private ParametrosReportes parametrosReportes;
     public Comparativo() {
         dao=new TablasTempDAO ();
-        listado=new ArrayList<ComparativonuevosTemp>();
+        listado=new ArrayList<>();
+    }
+    
+    @PostConstruct
+    public void init() {
+        listado = dao.obtenerComparativonuevosTemp(parametrosReportes.getTop());
     }
 
     public List<ComparativonuevosTemp> getListado() {
-        listado=dao.obtenerComparativonuevosTemp(parametrosReportes.getTop());
         return listado;
     }
 

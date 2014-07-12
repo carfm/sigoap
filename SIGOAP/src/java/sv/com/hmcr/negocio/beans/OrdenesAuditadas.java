@@ -10,6 +10,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -50,10 +51,13 @@ public class OrdenesAuditadas implements java.io.Serializable {
       pdf.addTitle("Analisis de eficiencia\nMio");
       pdf.leftMargin();
     }
+    
+    @PostConstruct
+    public void init() {
+        listado = dao.obtenerOrdenesAuditadas(parametrosReportes.getTop());
+    }
 
     public List<Temporalordenesauditadas> getListado() {
-       // listado=dao.obtenerAnalisisEf(parametrosReportes.getTop());
-        listado=dao.obtenerOrdenesAuditadas(parametrosReportes.getTop());
         return listado;
     }
     

@@ -10,11 +10,11 @@ import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import sv.com.hmcr.dao.TablasTempDAO;
-import sv.com.hmcr.dominio.AnalisisefTemp;
 import sv.com.hmcr.dominio.Temporaltiempos;
 
 /**
@@ -52,10 +52,13 @@ public class TiemposPromedios implements java.io.Serializable {
       pdf.addTitle("Analisis de eficiencia\nMio");
       pdf.leftMargin();
     }
+    
+    @PostConstruct
+    public void init() {
+        listado = dao.obtenerTiemposPromedios(parametrosReportes.getTop());
+    }
 
     public List<Temporaltiempos> getListado() {
-       // listado=dao.obtenerAnalisisEf(parametrosReportes.getTop());
-        listado=dao.obtenerTiemposPromedios(parametrosReportes.getTop());
         return listado;
     }
 
