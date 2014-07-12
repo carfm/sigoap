@@ -6,11 +6,11 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/templates/template.xhtml">
-        <head>
+        <h:head>
             <title>
                 <ui:define name="title">Gestion de usuarios</ui:define>
             </title>
-        </head>
+        </h:head>
         <body>
             <ui:define name="content">
                 <h:form id="agregarUsuario">         
@@ -30,11 +30,6 @@
                                 <f:selectItem itemValue="supervisor" itemLabel="Supervisor" />
                             </h:selectOneMenu>             
                             <p:message for="tipo" />
-
-                            <h:outputLabel for="password" value="Contraseña" />
-                            <p:password id="password" value="#{gestionUsuarios.usuario.password}" 
-                                        required="true" label="contraseña" feedback="true" inline="true"/>
-                            <p:message for="password" />
 
                             <h:outputLabel for="nombreUser" value="Nombre" />
                             <p:inputText id="nombreUser" value="#{gestionUsuarios.usuario.nombreusuario}" 
