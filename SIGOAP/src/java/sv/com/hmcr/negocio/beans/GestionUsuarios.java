@@ -15,6 +15,7 @@ import sv.com.hmcr.dao.UsuarioDAO;
 import sv.com.hmcr.dominio.Tipousuario;
 import sv.com.hmcr.dominio.Usuario;
 import org.primefaces.event.RowEditEvent;
+import sv.com.hmcr.util.MyUtil;
 
 /**
  *
@@ -51,9 +52,12 @@ public class GestionUsuarios implements Serializable{
                 break;
         }
         usuario.setIdtipousuario(tipo);
+        usuario.setPrimeravez(Short.parseShort("1"));
+        usuario.setPassword(MyUtil.generateMD5Signature("Welcome2SIGOAP!"+usuario.getUser()));
         if(dao.guarda(usuario)){
             FacesMessage msg = new FacesMessage("Registro Exitoso", "Se ha creado el usuario "
-                    +usuario.getNombreusuario()+" "+usuario.getApellidousuario());
+                    +usuario.getNombreusuario()+" "+usuario.getApellidousuario() +" \n Recuerde que la contraseña inicial"
+                    + " es la establecida en el manual de usuario");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         else{
