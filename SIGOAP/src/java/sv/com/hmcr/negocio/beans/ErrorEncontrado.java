@@ -129,4 +129,30 @@ public class ErrorEncontrado implements java.io.Serializable {
         this.parametrosReportes = parametrosReportes;
     }
 
+    public List<DetalleOrden> getListadoDetalle() {
+        return listadoDetalle;
+    }
+
+    public DetalleDAO getDaoDetalle() {
+        return daoDetalle;
+    }
+
+    public temp_errorEncontrado getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setListadoDetalle(List<DetalleOrden> listadoDetalle) {
+        this.listadoDetalle = listadoDetalle;
+    }
+
+    public void setDaoDetalle(DetalleDAO daoDetalle) {
+        this.daoDetalle = daoDetalle;
+    }
+
+    public void setSeleccionado(temp_errorEncontrado seleccionado) {
+        this.seleccionado = seleccionado;
+    }
+    
+    
+
 }

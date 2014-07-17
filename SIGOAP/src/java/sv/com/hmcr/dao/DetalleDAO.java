@@ -35,15 +35,18 @@ public class DetalleDAO implements java.io.Serializable {
                         + "o.specimen as specimen, case when o.tipoorden=1 then "
                         + "'completa' when o.tipoorden=2 then 'incompleta' when "
                         + "o.tipoorden=3 then 'sin hacer nada' end as tipoOrden "
-                        + "from Orden o, Procesa_Audita p where o.specimen=p.specimen "
-                        + "and p.idempleado='"+empleado+"' and fecha between '"+fechaini+"' and '"+fechafin+"' order by o.tipoorden";
+                        + "from Orden o inner join Procesa_Audita p on (o.specimen = p.specimen) "
+                        + "where p.idempleado='"+empleado+"' and AND  p.tipoprocesaaudita=1 "
+                        + "and p.fechaprocesaaudita between '"+fechaini+"' and '"+fechafin+"' order by o.tipoorden";
             else
                 squery="select "
-                        + "o.specimen as specimen, case when r.categoriaerror=1 "
+                        + "p.specimen as specimen, case when r.categoriaerror=1 "
                         + "then 'Leve' when r.categoriaerror=2 then 'Mediano' when "
                         + "r.categoriaerror=3 then 'Grave' end as tipoOrden from "
-                        + "procesa_audita o, Registro_Error r where o.specimen=r.specimen "
-                        + "and o.idempleado='"+empleado+"' and r.fecha between '"+fechaini+"' and '"+fechafin+"' order by r.categoriaerror";
+                        + "Registro_Error r inner join procesa_audita p on (r.specimen = p.specimen) "
+                        + "where r.idempleado='"+empleado+"' and p.tipoprocesaaudita=1"
+                        + " and p.fechaprocesaaudita between '"+fechaini+"' and '"+fechafin+"' order by r.categoriaerror";
+
             SQLQuery query=session.createSQLQuery(squery);
             query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
             Map<String,Object> row = null;
@@ -53,9 +56,7 @@ public class DetalleDAO implements java.io.Serializable {
             else{
             for (Object object : data) {
             row= (Map<String,Object>)object;
-            det.setSpecimen(row.get("specimen").toString());
-            det.setTipoOrden(row.get("tipoOrden").toString());
-            listaUsuarios.add(det);
+            listaUsuarios.add(new DetalleOrden(row.get("specimen").toString(),row.get("tipoOrden").toString()));
             }
             }
             
