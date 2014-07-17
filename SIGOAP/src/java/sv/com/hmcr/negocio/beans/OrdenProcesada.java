@@ -13,7 +13,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.SelectEvent;
+import sv.com.hmcr.dao.DetalleDAO;
 import sv.com.hmcr.dao.TablasTempDAO;
+import sv.com.hmcr.dominio.DetalleOrden;
 import sv.com.hmcr.dominio.temp_procesada;
 
 /**
@@ -32,6 +35,9 @@ public class OrdenProcesada implements java.io.Serializable {
 
     private List<temp_procesada> listado;
     private TablasTempDAO dao;
+    private List<DetalleOrden> listadoDetalle;
+    private DetalleDAO daoDetalle;
+    private temp_procesada seleccionado;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -40,6 +46,8 @@ public class OrdenProcesada implements java.io.Serializable {
 
         dao = new TablasTempDAO();
         listado = new ArrayList<>();
+        daoDetalle=new DetalleDAO();
+        listadoDetalle=null;
 
     }
 
@@ -57,6 +65,12 @@ public class OrdenProcesada implements java.io.Serializable {
     @PostConstruct
     public void init() {
         listado = dao.obtenerOrdenProcesada(parametrosReportes.getTop());
+    }
+    
+    public void onRowSelect(SelectEvent event) {
+        String id=daoDetalle.recuperarId(seleccionado.getUsuario());
+        listadoDetalle=daoDetalle.obtenerDetalle(1, id,parametrosReportes.getFechaInicio(),
+                parametrosReportes.getFechaFin()); 
     }
 
     public List<temp_procesada> getListado() {

@@ -19,7 +19,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.SelectEvent;
+import sv.com.hmcr.dao.DetalleDAO;
 import sv.com.hmcr.dao.TablasTempDAO;
+import sv.com.hmcr.dominio.DetalleOrden;
 import sv.com.hmcr.dominio.temp_errorEncontrado;
 
 /**
@@ -38,6 +41,9 @@ public class ErrorEncontrado implements java.io.Serializable {
 
     private List<temp_errorEncontrado> listado;
     private TablasTempDAO dao;
+    private List<DetalleOrden> listadoDetalle;
+    private DetalleDAO daoDetalle;
+    private temp_errorEncontrado seleccionado;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -46,6 +52,8 @@ public class ErrorEncontrado implements java.io.Serializable {
 
         dao = new TablasTempDAO();
         listado = new ArrayList<>();
+        daoDetalle=new DetalleDAO();
+        listadoDetalle=null;
 
     }
 
@@ -90,6 +98,13 @@ public class ErrorEncontrado implements java.io.Serializable {
     public void init() {
         listado = dao.obtenerErrorEncontrado(parametrosReportes.getTop());
     }
+    
+    public void onRowSelect(SelectEvent event) {
+        String id=daoDetalle.recuperarId(seleccionado.getUsuario());
+        listadoDetalle=daoDetalle.obtenerDetalle(2, id,parametrosReportes.getFechaInicio(),
+                parametrosReportes.getFechaFin()); 
+    }
+    
     public List<temp_errorEncontrado> getListado() {
         return listado;
     }

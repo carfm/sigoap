@@ -31,7 +31,7 @@
                                  style="margin-bottom:20px"  sortBy="usuario" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}">
+                                 {RowsPerPageDropdown}" selectionMode="single" selection="#{ordenProcesada.seleccionado}" rowKey="#{cursor.usuario}">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">
@@ -43,6 +43,8 @@
                             <!--<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
                             <p:columnToggler datasource="analisisEf" trigger="toggler" -->
                         </f:facet>
+                        
+                        <p:ajax update=":dialogo:detalleOrden" event="rowSelect" listener="#{ordenProcesada.onRowSelect}" oncomplete="PF('detalleAgente').show()" />
                         <!--columnas de la tabla
                         headerText: titulo de la columna
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
@@ -153,6 +155,41 @@
 
                     </p:panelGrid>
                 </h:form>
+                <p:dialog header="Detalle del agente" widgetVar="detalleAgente" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="dialogo">
+                    <p:dataTable emptyMessage="No existen datos para mostrar" id="detalleOrden" 
+                             var="cursorDet" value="#{ordenProcesada.listadoDetalle}" 
+                             style="margin-bottom:20px" paginator="true" rows="10" 
+                             paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+                             {RowsPerPageDropdown}">
+
+                    <f:facet name="header">
+                        <h:outputText escape="false" value="#{ordenProcesada.seleccionado.usuario}" style="text-align: center; text-height: 50px;" />
+                        <br />
+                        <h:outputText escape="false" value=" Ordenes procesadas del 
+                                      #{parametrosReportes.fechaInicio} al #{parametrosReportes.fechaFin}" 
+                                      style="text-align: center; text-height: 50px;" />
+                        <br />
+                        <h:outputText escape="false" value="Ordenes procesadas: #{ordenProcesada.seleccionado.totalProcesadas}" style="text-align: center; text-height: 50px;" />
+                        
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Specimen" />
+                        </f:facet>
+                        <h:outputText value="#{cursorDet.specimen}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tipo de orden" />
+                        </f:facet>
+                        <h:outputText value="#{cursorDet.tipoOrden}" />
+                    </p:column>
+                    </p:dataTable>
+                    </h:form>
+                </p:dialog>
             </ui:define>
         </body>
     </ui:composition>
