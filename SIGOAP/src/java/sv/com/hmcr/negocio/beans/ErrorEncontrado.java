@@ -5,9 +5,11 @@
  */
 package sv.com.hmcr.negocio.beans;
 
-import com.lowagie.text.Chunk;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -57,24 +59,25 @@ public class ErrorEncontrado implements java.io.Serializable {
 
     }
 
-    public void preProcessPDF(Object documet) {
-        Document document = new Document();
+    public void preProcessPDF(Object doc) {
+        Document document = (Document) doc;
+        document.setPageSize(PageSize.LETTER);
 
         try {
             PdfWriter.getInstance(document,
-                    new FileOutputStream("Paragraph.pdf"));
+                new FileOutputStream("temp_errorencontrado.pdf"));
 
             document.open();
-            Paragraph paragraph = new Paragraph();
-
-            for (int i = 0; i < 10; i++) {
-                Chunk chunk = new Chunk(
-                        "This is a sentence which is long " + i + ". ");
-                paragraph.add(chunk);
-            }
-
-            document.add(paragraph);
-            document.close();
+            Font font1 = new Font(Font.HELVETICA  , 25, Font.BOLD);
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setAlignment(Element.ALIGN_CENTER);           
+            paragraph1.add("HMCR SOLUTIONS\nREPORTE DE ERRORES ENCONTRADOS SEGUN CATEGORIA\n"
+                    + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
+                    +parametrosReportes.getFechaFin());
+            paragraph1.setFont(font1);
+            paragraph1.setSpacingAfter(30);
+            document.add(paragraph1);
+            //document.close();
 
         } catch (DocumentException e) {
             e.printStackTrace();
