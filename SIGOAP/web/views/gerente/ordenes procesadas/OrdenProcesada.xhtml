@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -7,12 +5,6 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/templates/template.xhtml">
-        <head>
-            <title>
-                <ui:define name="title">Reporte De Ordenes Procesadas</ui:define>
-            </title>
-        </head>
-        <body>
             <ui:define name="content">
                 <h:form>
                     <!--con este tag se crea la tabla;
@@ -44,7 +36,7 @@
                             <p:columnToggler datasource="analisisEf" trigger="toggler" -->
                         </f:facet>
                         
-                        <p:ajax update=":dialogo:detalleOrden" event="rowSelect" listener="#{ordenProcesada.onRowSelect}" oncomplete="PF('detalleAgente').show()" />
+                       <p:ajax update=":dialogo:detalleOrden" event="rowSelect" listener="#{ordenProcesada.onRowSelect}" oncomplete="PF('detalleAgente').show()" />
                         <!--columnas de la tabla
                         headerText: titulo de la columna
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
@@ -155,7 +147,7 @@
 
                     </p:panelGrid>
                 </h:form>
-                <p:dialog header="Detalle del agente" widgetVar="detalleAgente" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog appendToBody="true" header="Detalle del agente" widgetVar="detalleAgente" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <h:form id="dialogo">
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="detalleOrden" 
                              var="cursorDet" value="#{ordenProcesada.listadoDetalle}" 
@@ -191,6 +183,5 @@
                     </h:form>
                 </p:dialog>
             </ui:define>
-        </body>
     </ui:composition>
 </html>

@@ -36,7 +36,7 @@ public class DetalleDAO implements java.io.Serializable {
                         + "'completa' when o.tipoorden=2 then 'incompleta' when "
                         + "o.tipoorden=3 then 'sin hacer nada' end as tipoOrden "
                         + "from Orden o inner join Procesa_Audita p on (o.specimen = p.specimen) "
-                        + "where p.idempleado='"+empleado+"' and AND  p.tipoprocesaaudita=1 "
+                        + "where p.idempleado='"+empleado+"' AND  p.tipoprocesaaudita=1 "
                         + "and p.fechaprocesaaudita between '"+fechaini+"' and '"+fechafin+"' order by o.tipoorden";
             else
                 squery="select "

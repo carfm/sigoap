@@ -65,7 +65,7 @@ public class EstadisticasTemp implements Serializable {
     @Column(name = "porcentaje")
     private BigDecimal porcentaje;
     @Column(name = "promedioOrden")
-    private BigDecimal promedioOrden;
+    private Integer promedioOrden;
     @Size(max = 80)
     @Column(name = "tipoerror")
     private String tipoerror;
@@ -78,7 +78,7 @@ public class EstadisticasTemp implements Serializable {
     @Column(name = "mesE")
     private Integer mesE;
     @Column(name = "porcentajeE")
-    private BigDecimal porcentajeE;
+    private Integer porcentajeE;
     @Column(name = "promedioError")
     private BigDecimal promedioError;
 
@@ -145,11 +145,11 @@ public class EstadisticasTemp implements Serializable {
         this.porcentaje = porcentaje;
     }
 
-    public BigDecimal getPromedioOrden() {
+    public Integer getPromedioOrden() {
         return promedioOrden;
     }
 
-    public void setPromedioOrden(BigDecimal promedioOrden) {
+    public void setPromedioOrden(Integer promedioOrden) {
         this.promedioOrden = promedioOrden;
     }
 
@@ -193,11 +193,11 @@ public class EstadisticasTemp implements Serializable {
         this.mesE = mesE;
     }
 
-    public BigDecimal getPorcentajeE() {
+    public Integer getPorcentajeE() {
         return porcentajeE;
     }
 
-    public void setPorcentajeE(BigDecimal porcentajeE) {
+    public void setPorcentajeE(Integer porcentajeE) {
         this.porcentajeE = porcentajeE;
     }
 

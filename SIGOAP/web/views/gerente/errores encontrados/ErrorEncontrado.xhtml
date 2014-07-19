@@ -145,7 +145,7 @@
 
                     </p:panelGrid>
                 </h:form>
-                <p:dialog header="Detalle del agente" widgetVar="detalleAgente" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog appendToBody="true" header="Detalle del agente" widgetVar="detalleAgente" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <h:form id="dialogo">
                         <p:dataTable emptyMessage="No existen datos para mostrar" id="detalleOrden" 
                                      var="cursorDet" value="#{errorEncontrado.listadoDetalle}" 

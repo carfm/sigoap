@@ -27,8 +27,10 @@ private int ordenError=0;
     public EstadisticasAgente() {
         dao=new TablasTempDAO ();
         listado=dao.obtenerEstadisticasTemp();
-        errorOrden=(listado.get(3).getMesE()*1.0)/listado.get(0).getMes();
-        ordenError=listado.get(0).getMes()/listado.get(3).getMesE();
+        if (listado.get(0).getMes()!=0){
+            errorOrden=(listado.get(3).getMesE()*1.0)/listado.get(0).getMes();
+        }
+        ordenError=listado.get(0).getMes()/(listado.get(3).getMesE()+1);
     }
 
     public List<EstadisticasTemp> getListado() {

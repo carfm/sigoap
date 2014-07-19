@@ -62,7 +62,8 @@ public class AuthorizationListener implements PhaseListener {
                                     || (currentPage.lastIndexOf("notificaciones.xhtml") > -1)
                                     || (currentPage.lastIndexOf("OrdenProcesada.xhtml") > -1)
                                     || (currentPage.lastIndexOf("crearOrdenProcesada.xhtml") > -1
-                                    || ((currentPage.lastIndexOf("primer_ingreso.xhtml") > -1)));
+                                    || ((currentPage.lastIndexOf("primer_ingreso.xhtml") > -1))
+                                    || ((currentPage.lastIndexOf("modal.xhtml") > -1)));
                             break;
                         case 3:
                             Permiso = (currentPage.lastIndexOf("menu_admin.xhtml") > -1)
