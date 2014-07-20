@@ -6,14 +6,22 @@
 
 package sv.com.hmcr.negocio.beans;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import sv.com.hmcr.dao.TablasTempDAO;
 import sv.com.hmcr.dominio.Temporalordenesauditadas;
 
@@ -42,14 +50,17 @@ public class OrdenesAuditadas implements java.io.Serializable {
         
     }
     
-    public void preProcessPDF(Object document) {
-      Document pdf = (Document) document;      
-      pdf.setPageSize(PageSize.LETTER.rotate());
-      pdf.open();
-      pdf.addCreationDate();
-      pdf.addHeader("hola", "como estas");
-      pdf.addTitle("Analisis de eficiencia\nMio");
-      pdf.leftMargin();
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = new Document();
+        pdf.open();
+        pdf.setPageSize(PageSize.LETTER);
+        pdf.addCreationDate();
+        pdf.addHeader("hola", "como estas");
+        pdf.addTitle("Analisis de eficiencia\nMio");
+        pdf.add(new Chunk("This is sentence 1. "));
+//        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//        String logo = servletContext.getRealPath("") + File.separator + "resources"  + File.separator + "images" + File.separator + "LogoHMCR.png";        
+//        pdf.add(Image.getInstance(logo));
     }
     
     @PostConstruct

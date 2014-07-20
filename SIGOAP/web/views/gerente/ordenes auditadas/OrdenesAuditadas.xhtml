@@ -104,7 +104,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF(document)}"/>
+                                        <p:dataExporter type="pdf" target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
@@ -136,7 +136,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF(document)}"/>
+                                        <p:dataExporter type="pdf"  target="ordenesAuditadas" fileName="Ordenes_Auditadas"  preProcessor="#{ordenesAuditadas.preProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
