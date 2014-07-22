@@ -60,37 +60,52 @@
                             <h:outputText value="#{cursor.correlativo}" />
                         </p:column>
 
-                        <p:column filterBy="agente" filterMatchMode="contains" sortBy="agente" footerText="TOTALES">
+                        <p:column filterBy="agente" filterMatchMode="contains" sortBy="agente">
                             <f:facet name="header">
                                 <h:outputText value="Nombre del agente" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="TOTALES" />
                             </f:facet>
                             <h:outputText value="#{cursor.agente}" />
                         </p:column>
 
-                        <p:column sortBy="total" footerText="#{ordenesProcNuevos.totalesProcesadas()}">
+                        <p:column sortBy="total">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes procesadas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesProcNuevos.totalesProcesadas()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.total}" />
                         </p:column>
 
-                        <p:column sortBy="completas" footerText="#{ordenesProcNuevos.totalesCompletas()}">
+                        <p:column sortBy="completas" footerText="">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes completas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesProcNuevos.totalesCompletas()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.completas}" />
                         </p:column>
 
-                        <p:column sortBy="incompletas" footerText="#{ordenesProcNuevos.totalesIncompletas()}">
+                        <p:column sortBy="incompletas">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes regresadas incompletas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesProcNuevos.totalesIncompletas()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.incompletas}" />
                         </p:column>
                         
-                        <p:column sortBy="nada" footerText="#{ordenesProcNuevos.totalesNada()}">
+                        <p:column sortBy="nada">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes regresadas sin hacer nada" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesProcNuevos.totalesNada()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.nada}" />
                         </p:column>

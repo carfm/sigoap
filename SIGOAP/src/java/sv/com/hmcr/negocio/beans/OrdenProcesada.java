@@ -38,6 +38,10 @@ public class OrdenProcesada implements java.io.Serializable {
     private List<DetalleOrden> listadoDetalle;
     private DetalleDAO daoDetalle;
     private temp_procesada seleccionado;
+    private int totalO = 0;
+    private int totalOC = 0;
+    private int totalOI = 0;
+    private int totalON = 0;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -65,6 +69,7 @@ public class OrdenProcesada implements java.io.Serializable {
     @PostConstruct
     public void init() {
         listado = dao.obtenerOrdenProcesada(parametrosReportes.getTop());
+        calcularTotales();
     }
     
     public void onRowSelect(SelectEvent event) {
@@ -119,6 +124,48 @@ public class OrdenProcesada implements java.io.Serializable {
 
     public void setSeleccionado(temp_procesada seleccionado) {
         this.seleccionado = seleccionado;
+    }
+
+    public int getTotalO() {
+        return totalO;
+    }
+
+    public int getTotalOC() {
+        return totalOC;
+    }
+
+    public int getTotalOI() {
+        return totalOI;
+    }
+
+    public int getTotalON() {
+        return totalON;
+    }
+
+    public void setTotalO(int totalO) {
+        this.totalO = totalO;
+    }
+
+    public void setTotalOC(int totalOC) {
+        this.totalOC = totalOC;
+    }
+
+    public void setTotalOI(int totalOI) {
+        this.totalOI = totalOI;
+    }
+
+    public void setTotalON(int totalON) {
+        this.totalON = totalON;
+    }
+    
+    private void calcularTotales() {
+        for (int i = 0; i < listado.size(); i++) {
+
+            totalO += listado.get(i).getTotalProcesadas();
+            totalOC += listado.get(i).getCompletas();
+            totalOI += listado.get(i).getIncompletas();
+            totalON +=listado.get(i).getNada();
+        }
     }
 
 }

@@ -40,9 +40,12 @@
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
                         filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
                         footerText: para poner los totales-->
-                        <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario" footerText="TOTALES">
+                        <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario">
                             <f:facet name="header">
                                 <h:outputText value="Nombre del agente" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="TOTALES" />
                             </f:facet>
                             <h:outputText value="#{cursor.usuario}" />
                         </p:column>
@@ -51,12 +54,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Errores Graves" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{errorEncontrado.totalEG}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.grave}" />
                         </p:column>
 
                         <p:column sortBy="mediano">
                             <f:facet name="header">
                                 <h:outputText value="Errores Medianos" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{errorEncontrado.totalEM}" />
                             </f:facet>
                             <h:outputText value="#{cursor.mediano}" />
                         </p:column>
@@ -65,6 +74,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Errores Leves" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{errorEncontrado.totalEL}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.leve}" />
                         </p:column>
 
@@ -72,9 +84,17 @@
                             <f:facet name="header">
                                 <h:outputText value="Total" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{errorEncontrado.totalE}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.total}" />
                         </p:column>
                     </p:dataTable>
+                    <h:outputText value="Cantidad de ordenes Auditadas = 9999"
+                                  style="text-align: center;font-size: 20px;margin-left: auto;margin-right: auto;display: block;"/>
+                    <h:outputText value="Errores por órdenes procesadas completas: 
+                                  cantidad de errores totales/ ordenes procesadas completas = 0.999999"
+                                  style="text-align: center;font-size: 20px;margin-left: auto;margin-right: auto;display: block;"/>
                     <!--Para exportar copien todo este bloque
                     en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
                     -->

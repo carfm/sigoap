@@ -48,8 +48,7 @@ public class AnalisisEficiencia implements java.io.Serializable {
 
         dao = new TablasTempDAO();
         listado=new ArrayList<AnalisisefTemp>();
-        listado = dao.obtenerAnalisisEf(1);
-        calcularTotales();
+        
 
     }
 
@@ -67,6 +66,7 @@ public class AnalisisEficiencia implements java.io.Serializable {
     @PostConstruct
     public void init() {
         listado = dao.obtenerAnalisisEf(parametrosReportes.getTop());
+        calcularTotales();
     }
 
     public List<AnalisisefTemp> getListado() {
@@ -158,15 +158,15 @@ public class AnalisisEficiencia implements java.io.Serializable {
     }
     
     private void calcularTotales() {
-        for (int i = 0; i < listado.size(); i++) {
-            totalE += listado.get(i).getTotalerrores();
-            totalEG += listado.get(i).getTotalgraves();
-            totalEM += listado.get(i).getTotalmedianos();
-            totalEL += listado.get(i).getTotalleves();
-            totalO += listado.get(i).getTotalordenes();
-            totalOC += listado.get(i).getTotalcompletas();
-            totalOI += listado.get(i).getTotalincompletas();
-            totalON += listado.get(i).getTotalnada();
+        for (AnalisisefTemp listado1 : listado) {
+            totalE += listado1.getTotalerrores();
+            totalEG += listado1.getTotalgraves();
+            totalEM += listado1.getTotalmedianos();
+            totalEL += listado1.getTotalleves();
+            totalO += listado1.getTotalordenes();
+            totalOC += listado1.getTotalcompletas();
+            totalOI += listado1.getTotalincompletas();
+            totalON += listado1.getTotalnada();
         }
     }
 

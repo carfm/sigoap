@@ -42,9 +42,12 @@
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
                         filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
                         footerText: para poner los totales-->
-                        <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario" footerText="TOTALES">
+                        <p:column filterBy="usuario" filterMatchMode="contains" sortBy="usuario">
                             <f:facet name="header">
                                 <h:outputText value="Nombre del agente" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="TOTALES" />
                             </f:facet>
                             <h:outputText value="#{cursor.usuario}" />
                         </p:column>
@@ -53,12 +56,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Total Ordenes Procesadas" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenProcesada.totalO}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.totalProcesadas}" />
                         </p:column>
 
                         <p:column sortBy="completas">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Completas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenProcesada.totalOC}" />
                             </f:facet>
                             <h:outputText value="#{cursor.completas}" />
                         </p:column>
@@ -67,12 +76,18 @@
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Incompletas" />
                             </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenProcesada.totalOI}" />
+                            </f:facet>
                             <h:outputText value="#{cursor.incompletas}" />
                         </p:column>
 
                         <p:column sortBy="nada">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes Sin Hacer Nada" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenProcesada.totalON}" />
                             </f:facet>
                             <h:outputText value="#{cursor.nada}" />
                         </p:column>

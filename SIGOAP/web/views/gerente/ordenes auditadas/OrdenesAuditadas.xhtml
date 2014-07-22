@@ -57,30 +57,42 @@
                             <h:outputText value="#{cursor.correlativo}" />
                         </p:column>
 
-                        <p:column filterBy="auditor" filterMatchMode="contains" sortBy="auditor" footerText="TOTALES">
+                        <p:column filterBy="auditor" filterMatchMode="contains" sortBy="auditor">
                             <f:facet name="header">
                                 <h:outputText value="Nombre del auditor" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="TOTALES" />
                             </f:facet>
                             <h:outputText value="#{cursor.auditor}" />
                         </p:column>
 
-                        <p:column sortBy="auditadas" footerText="#{ordenesAuditadas.totalesAuditadas()}">
+                        <p:column sortBy="auditadas">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes auditadas" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesAuditadas.totalesAuditadas()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.auditadas}" />
                         </p:column>
 
-                        <p:column sortBy="sinerror" footerText="#{ordenesAuditadas.totalesSinError()}">
+                        <p:column sortBy="sinerror">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes sin error" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesAuditadas.totalesSinError()}" />
                             </f:facet>
                             <h:outputText value="#{cursor.sinerror}" />
                         </p:column>
 
-                        <p:column sortBy="conerror" footerText="#{ordenesAuditadas.totalesConError()}">
+                        <p:column sortBy="conerror">
                             <f:facet name="header">
                                 <h:outputText value="Ordenes con error"  />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="#{ordenesAuditadas.totalesConError()}"  />
                             </f:facet>
                             <h:outputText value="#{cursor.conerror}" />
                         </p:column>

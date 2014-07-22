@@ -46,6 +46,10 @@ public class ErrorEncontrado implements java.io.Serializable {
     private List<DetalleOrden> listadoDetalle;
     private DetalleDAO daoDetalle;
     private temp_errorEncontrado seleccionado;
+    private int totalE = 0;
+    private int totalEG = 0;
+    private int totalEM = 0;
+    private int totalEL = 0;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -100,6 +104,7 @@ public class ErrorEncontrado implements java.io.Serializable {
     @PostConstruct
     public void init() {
         listado = dao.obtenerErrorEncontrado(parametrosReportes.getTop());
+        calcularTotales();
     }
     
     public void onRowSelect(SelectEvent event) {
@@ -155,7 +160,47 @@ public class ErrorEncontrado implements java.io.Serializable {
     public void setSeleccionado(temp_errorEncontrado seleccionado) {
         this.seleccionado = seleccionado;
     }
+
+    public int getTotalE() {
+        return totalE;
+    }
+
+    public int getTotalEG() {
+        return totalEG;
+    }
+
+    public int getTotalEM() {
+        return totalEM;
+    }
+
+    public int getTotalEL() {
+        return totalEL;
+    }
+
+    public void setTotalE(int totalE) {
+        this.totalE = totalE;
+    }
+
+    public void setTotalEG(int totalEG) {
+        this.totalEG = totalEG;
+    }
+
+    public void setTotalEM(int totalEM) {
+        this.totalEM = totalEM;
+    }
+
+    public void setTotalEL(int totalEL) {
+        this.totalEL = totalEL;
+    }       
     
+    private void calcularTotales() {
+        for (temp_errorEncontrado listado1 : listado) {
+            totalE += listado1.getTotal();
+            totalEG += listado1.getGrave();
+            totalEM += listado1.getMediano();
+            totalEL += listado1.getLeve();
+        }
+    }
     
 
 }
