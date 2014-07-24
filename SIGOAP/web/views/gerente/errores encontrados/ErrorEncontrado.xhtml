@@ -114,7 +114,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="error" fileName="temp_errorencontrado"  preProcessor="#{errorEncontrado.preProcessPDF}"/>
+                                        <p:dataExporter type="pdf" target="error" fileName="temp_errorencontrado"  preProcessor="#{errorEncontrado.preProcessPDF}" postProcessor="#{errorEncontrado.postProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>

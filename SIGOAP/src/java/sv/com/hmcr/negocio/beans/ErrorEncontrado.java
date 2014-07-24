@@ -9,18 +9,32 @@ package sv.com.hmcr.negocio.beans;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
+import com.lowagie.text.ExceptionConverter;
 import com.lowagie.text.Font;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfPageEventHelper;
+import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import org.primefaces.event.SelectEvent;
 import sv.com.hmcr.dao.DetalleDAO;
 import sv.com.hmcr.dao.TablasTempDAO;
@@ -68,8 +82,7 @@ public class ErrorEncontrado implements java.io.Serializable {
         document.setPageSize(PageSize.LETTER);
 
         try {
-            PdfWriter.getInstance(document,
-                new FileOutputStream("temp_errorencontrado.pdf"));
+            PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
 
             document.open();
             Font font1 = new Font(Font.HELVETICA  , 25, Font.BOLD);
@@ -90,16 +103,26 @@ public class ErrorEncontrado implements java.io.Serializable {
         }
 
     }
-//        Document pdf = (Document) document;
-//
-//        pdf.setPageSize(PageSize.LETTER.rotate());
-//        pdf.open();
-//        pdf.addCreationDate();
-//        pdf.addHeader("hola", "como estas");
-//        pdf.addTitle("Analisis de eficiencia\nMio");
-//        pdf.leftMargin();
+public void postProcessPDF(Object doc) throws IOException {
+        Document document = (Document) doc;
+        document.setPageSize(PageSize.LETTER); 
+        Date now = new Date();
+        DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
+       
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
+            TableHeader event = new TableHeader();
+            writer.setPageEvent(event);
+            document.open();
+            event.setHeader(""+df.format(now));
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String logo = servletContext.getRealPath("") + "resources/images/LogoHMCR.jpg";
+            document.add(Image.getInstance(logo));
+            document.close();
+        } catch (DocumentException | FileNotFoundException e) {
+        }
 
-//}
+    }
     
     @PostConstruct
     public void init() {
@@ -202,5 +225,51 @@ public class ErrorEncontrado implements java.io.Serializable {
         }
     }
     
+    class TableHeader extends PdfPageEventHelper {
+        String header;
+        //plantilla con el numero total de paginas
+        PdfTemplate total;
+
+        public void setHeader(String header) {
+            this.header = header;
+        }
+
+        //al abrir el documento, crea el pdfTemplate (total) que guardara el total de paginas
+        @Override
+        public void onOpenDocument(PdfWriter writer, Document document) {
+            total = writer.getDirectContent().createTemplate(30, 16);
+        }
+
+        //al finalizar la pagina, agrega encabezado.
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            PdfPTable table = new PdfPTable(3);
+            try {
+                table.setWidths(new int[]{24, 24, 2});
+                table.setTotalWidth(527);
+                table.setLockedWidth(true);
+                table.getDefaultCell().setFixedHeight(20);
+                table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                table.addCell(header);
+                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
+                table.addCell(String.format("Pagina %d de", writer.getPageNumber()));
+                PdfPCell cell = new PdfPCell(Image.getInstance(total));
+                cell.setBorder(Rectangle.BOTTOM);
+                table.addCell(cell);
+                table.writeSelectedRows(0, -1, 34, 803, writer.getDirectContent());
+            }
+            catch(DocumentException de) {
+                throw new ExceptionConverter(de);
+            }
+        }
+
+        //llena el numero total de paginas antes de cerrar el documento.
+        @Override
+        public void onCloseDocument(PdfWriter writer, Document document) {
+            ColumnText.showTextAligned(total, Element.ALIGN_LEFT,
+                    new Phrase(String.valueOf(writer.getPageNumber() - 1)),
+                    2, 2, 0);
+        }
+    }
 
 }
