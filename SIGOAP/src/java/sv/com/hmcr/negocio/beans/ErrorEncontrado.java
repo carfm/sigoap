@@ -62,7 +62,7 @@ public class ErrorEncontrado implements java.io.Serializable {
     private int totalEG = 0;
     private int totalEM = 0;
     private int totalEL = 0;
-    private int totalA = 0;
+    private Long totalA;
     private Double totalO = 0.0;
 
     @ManagedProperty(value = "#{parametrosReportes}")
@@ -118,9 +118,9 @@ public void postProcessPDF(Object doc) throws IOException {
         try {
             //PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
             //document.open();
-            Paragraph paragraph1 = new Paragraph("Cantidad de ordenes Auditadas = 9999\n" +
+            Paragraph paragraph1 = new Paragraph("Cantidad de ordenes Auditadas = "+totalA+"\n" +
                             "Errores por órdenes procesadas completas: cantidad "
-                    + "de errores totales/ ordenes procesadas completas = 0.999999",
+                    + "de errores totales/ ordenes procesadas completas ="+totalO,
                             new Font(Font.HELVETICA  , 11, Font.NORMAL,new Color(0, 0, 0)));
             paragraph1.setAlignment(Element.ALIGN_CENTER);           
             paragraph1.setSpacingBefore(30);
@@ -224,7 +224,7 @@ public void postProcessPDF(Object doc) throws IOException {
         this.totalEL = totalEL;
     }       
 
-    public int getTotalA() {
+    public Long getTotalA() {
         return totalA;
     }
 
@@ -232,7 +232,7 @@ public void postProcessPDF(Object doc) throws IOException {
         return totalO;
     }
 
-    public void setTotalA(int totalA) {
+    public void setTotalA(Long totalA) {
         this.totalA = totalA;
     }
 
@@ -246,11 +246,12 @@ public void postProcessPDF(Object doc) throws IOException {
             totalEG += listado1.getGrave();
             totalEM += listado1.getMediano();
             totalEL += listado1.getLeve();
-            totalA = dao.recuperarAuditadas(parametrosReportes.getFechaInicio(),
+            
+        }
+        totalA = dao.recuperarAuditadas(parametrosReportes.getFechaInicio(),
                     parametrosReportes.getFechaFin());
             totalO = (totalE*1.0)/dao.recuperarOP(parametrosReportes.getFechaInicio(),
                     parametrosReportes.getFechaFin());
-        }
     }
 
 }

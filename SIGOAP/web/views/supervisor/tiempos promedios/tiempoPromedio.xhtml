@@ -1,4 +1,4 @@
-gener<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- Este bloque deben copiarlo asi como esta-->
 
@@ -30,10 +30,10 @@ gener<?xml version="1.0" encoding="UTF-8"?>
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="tiemposPromedios" 
                                  var="cursor" value="#{tiemposPromedios.listado}" 
-                                 style="margin-bottom:20px"  sortBy="agente" paginator="true" rows="10" 
+                                 sortBy="agente" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}">
+                                 {RowsPerPageDropdown}" style="margin-bottom:20px;display: block;width: 95%;margin-left: auto;margin-right: auto;">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">
@@ -103,7 +103,7 @@ gener<?xml version="1.0" encoding="UTF-8"?>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="tiemposPromedios" fileName="Tiempos_Promedios" preProcessor="#{ordenesProcNuevos.preProcessPDF}" postProcessor="#{ordenesProcNuevos.postProcessPDF}"/>
+                                        <p:dataExporter type="pdf" target="tiemposPromedios" fileName="Tiempos_Promedios" preProcessor="#{tiemposPromedios.preProcessPDF}" postProcessor="#{tiemposPromedios.postProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
@@ -135,7 +135,7 @@ gener<?xml version="1.0" encoding="UTF-8"?>
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="tiemposPromedios" fileName="Tiempos_Promedios"  preProcessor="#{ordenesProcNuevos.preProcessPDF}" postProcessor="#{ordenesProcNuevos.postProcessPDF}"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="tiemposPromedios" fileName="Tiempos_Promedios"  preProcessor="#{tiemposPromedios.preProcessPDF}" postProcessor="#{tiemposPromedios.postProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>

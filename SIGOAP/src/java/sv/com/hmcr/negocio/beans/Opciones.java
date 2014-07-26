@@ -6,7 +6,7 @@
 package sv.com.hmcr.negocio.beans;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import sv.com.hmcr.dominio.Usuario;
 
@@ -15,7 +15,7 @@ import sv.com.hmcr.dominio.Usuario;
  * @author Carlos y Jose
  */
 @ManagedBean(name = "Opciones")
-@RequestScoped
+@SessionScoped
 public class Opciones {
 
     /**

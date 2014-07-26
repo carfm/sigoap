@@ -35,6 +35,7 @@ import javax.servlet.ServletContext;
 import sv.com.hmcr.dao.TablasTempDAO;
 import sv.com.hmcr.dominio.ComparativonuevosTemp;
 import sv.com.hmcr.dominio.Estandar;
+import sv.com.hmcr.dominio.Usuario;
 
 /**
  *
@@ -54,9 +55,6 @@ public class Comparativo implements java.io.Serializable{
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
     
-    @ManagedProperty(value = "#{opciones}")
-    private Opciones opciones;
-    
     public Comparativo() {
         dao=new TablasTempDAO ();
         listado=new ArrayList<>();
@@ -71,6 +69,7 @@ public class Comparativo implements java.io.Serializable{
         document.setPageSize(PageSize.LETTER.rotate());
         Date now = new Date();
         DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
+        Usuario sup = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
 
         try {
             PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
@@ -84,7 +83,7 @@ public class Comparativo implements java.io.Serializable{
                     + "REPORTE DE PROMEDIOS DE ÓRDENES PROCESADAS DE AGENTES NUEVOS\n"
                     + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
                     +parametrosReportes.getFechaFin()+"\n\n SUPERVISADOS POR: "+
-                    opciones.getUsuario().getNombreusuario()+" "+opciones.getUsuario().getApellidousuario(),
+                    sup.getNombreusuario()+" "+sup.getApellidousuario(),
             new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
             paragraph1.setAlignment(Element.ALIGN_CENTER);           
             paragraph1.setSpacingAfter(30);
@@ -94,7 +93,7 @@ public class Comparativo implements java.io.Serializable{
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String logo = servletContext.getRealPath("") + "/resources/images/LogoHMCR.jpg";
             Image imagen = Image.getInstance(logo);
-            imagen.setAbsolutePosition(10f, 735f);
+            imagen.setAbsolutePosition(25f, 550f);
             imagen.scalePercent(40f);
             document.add(imagen);
             //document.close();
@@ -109,7 +108,7 @@ public class Comparativo implements java.io.Serializable{
             //PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
             //document.open();
             Paragraph paragraph1 = new Paragraph("PROMEDIO EMPRESARIAL: PROCESADAS: "
-                    + "999 INCOMPLETAS: 999 SIN HACER NADA: 999",
+                    +eComp+ " INCOMPLETAS: "+eIn+"+ SIN HACER NADA: "+eNada,
                             new Font(Font.HELVETICA  , 11, Font.NORMAL,new Color(0, 0, 0)));
             paragraph1.setAlignment(Element.ALIGN_CENTER);           
             paragraph1.setSpacingBefore(15);
@@ -165,10 +164,6 @@ public class Comparativo implements java.io.Serializable{
         return eNada;
     }
 
-    public Opciones getOpciones() {
-        return opciones;
-    }
-
     public void setEstandar(List<Estandar> estandar) {
         this.estandar = estandar;
     }
@@ -184,10 +179,6 @@ public class Comparativo implements java.io.Serializable{
     public void seteNada(BigDecimal eNada) {
         this.eNada = eNada;
     }
-
-    public void setOpciones(Opciones opciones) {
-        this.opciones = opciones;
-    }  
     
     
 }

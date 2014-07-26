@@ -88,15 +88,23 @@ public class AnalisisEficiencia implements java.io.Serializable {
                     + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
                     +parametrosReportes.getFechaFin(),
             new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
+            Paragraph paragraph2 = new Paragraph("TE=Total de errores; EG=Errores Graves; EM=Errores Medianos;" +
+"EL=Errores Leves\n\n OP=Ordenes Procesadas; OC=Ordenes Completas;" +
+"ORI=Ordenes Regresadas Incompletas; ORN=Ordenes regresadas sin hacer nada\n\n" +
+"E/O=Errores/Ordenes procesadas completas (%); O/E=Ordenes ingresadas completa s por error",
+            new Font(Font.HELVETICA  , 9, Font.NORMAL,new Color(0, 0, 0)));
             paragraph1.setAlignment(Element.ALIGN_CENTER);           
-            paragraph1.setSpacingAfter(30);
+            paragraph1.setSpacingAfter(20);
+            paragraph2.setAlignment(Element.ALIGN_CENTER);           
+            paragraph2.setSpacingAfter(10);
             document.add(fechaCre);
             document.add(paragraph1);
+            document.add(paragraph2);
             document.setFooter(footer);
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String logo = servletContext.getRealPath("") + "/resources/images/LogoHMCR.jpg";
             Image imagen = Image.getInstance(logo);
-            imagen.setAbsolutePosition(10f, 735f);
+            imagen.setAbsolutePosition(25f, 550f);
             imagen.scalePercent(40f);
             document.add(imagen);
             //document.close();

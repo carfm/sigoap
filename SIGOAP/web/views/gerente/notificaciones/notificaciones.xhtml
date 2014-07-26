@@ -20,10 +20,10 @@
                     
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="noti" 
                                  var="dat" value="#{notificacion.datos}" 
-                                 style="margin-bottom:20px"  sortBy="agente" paginator="true" rows="10" 
+                                 sortBy="agente" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}">
+                                 {RowsPerPageDropdown}" style="margin-bottom:20px;display: block;width: 95%;margin-left: auto;margin-right: auto;">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">

@@ -28,10 +28,11 @@
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="analisisEf" 
                                  var="cursor" value="#{analisisEficiencia.listado}" 
-                                 style="margin-bottom:20px" sortBy="ordenerror" sortOrder="descending" paginator="true" rows="10" 
+                                 sortBy="ordenerror" sortOrder="descending" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}">
+                                 {RowsPerPageDropdown}"
+                                 style="margin-bottom:20px;display: block;width: 95%;margin-left: auto;margin-right: auto;">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">
@@ -60,7 +61,7 @@
 
                         <p:column sortBy="totalerrores">
                             <f:facet name="header">
-                                <h:outputText value="Total de errores" />
+                                <h:outputText value="TE" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalE}" />
@@ -70,7 +71,7 @@
 
                         <p:column sortBy="totalgraves">
                             <f:facet name="header">
-                                <h:outputText value="Errores Graves" />
+                                <h:outputText value="EG" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalEG}" />
@@ -80,7 +81,7 @@
 
                         <p:column sortBy="totalmedianos">
                             <f:facet name="header">
-                                <h:outputText value="Errores Medianos" />
+                                <h:outputText value="EM" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalEM}" />
@@ -90,7 +91,7 @@
 
                         <p:column sortBy="totalleves">
                             <f:facet name="header">
-                                <h:outputText value="Errores Leves" />
+                                <h:outputText value="EL" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalEL}" />
@@ -100,7 +101,7 @@
 
                         <p:column sortBy="totalordenes">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes Procesadas" />
+                                <h:outputText value="OP" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalO}" />
@@ -110,7 +111,7 @@
 
                         <p:column sortBy="totalcompletas">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes Completas" />
+                                <h:outputText value="OC" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalOC}" />
@@ -120,7 +121,7 @@
 
                         <p:column sortBy="totalincompletas">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes Regresadas Incompletas" />
+                                <h:outputText value="ORI" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalOI}" />
@@ -130,7 +131,7 @@
 
                         <p:column sortBy="totalnada">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes regresadas sin hacer nada" />
+                                <h:outputText value="ORN" />
                             </f:facet>
                             <f:facet name="footer">
                                 <h:outputText value="#{analisisEficiencia.totalON}" />
@@ -140,18 +141,26 @@
 
                         <p:column sortBy="errororden">
                             <f:facet name="header">
-                                <h:outputText value="Errores/Ordenes procesadas completas (%)" />
+                                <h:outputText value="E/O" />
                             </f:facet>
                             <h:outputText value="#{cursor.errororden}" />
                         </p:column>
 
                         <p:column sortBy="ordenerror">
                             <f:facet name="header">
-                                <h:outputText value="Ordenes ingresadas completas por error" />
+                                <h:outputText value="O/E" />
                             </f:facet>
                             <h:outputText value="#{cursor.ordenerror}" />
                         </p:column>
                     </p:dataTable>
+                    <h:outputText value="TE=Total de errores;       EG=Errores Graves;       EM=Errores Medianos      
+                                  EL=Errores Leves" escape="false"
+                                  style="text-align: center;font-size: 15px;margin-left: auto;margin-right: auto;display: block;"/>
+                   <br /> <h:outputText escape="false" value="OP=Ordenes Procesadas;      OC=Ordenes Completas
+                                       ORI=Ordenes Regresadas Incompletas;      ORN=Ordenes regresadas sin hacer nada"
+                                  style="text-align: center;font-size: 15px;margin-left: auto;margin-right: auto;display: block;"/>
+                    <br /><h:outputText value="E/O=Errores/Ordenes procesadas completas (%);     O/E=Ordenes ingresadas completa s por error"
+                                  style="text-align: center;font-size: 15px;margin-left: auto;margin-right: auto;display: block;"/>
                     <!--Para exportar copien todo este bloque
                     en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
                     -->

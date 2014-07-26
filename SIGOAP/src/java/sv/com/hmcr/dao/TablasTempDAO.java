@@ -305,14 +305,14 @@ public class TablasTempDAO implements java.io.Serializable {
     }
     
     //--------metodos para llenar los footer de las tablas
-    public int recuperarAuditadas(String fechaIni,String fechaFin) {
-        int total=0;
+    public Long recuperarAuditadas(String fechaIni,String fechaFin) {
+        Long total;
         HibernateUtil.buildSessionFactory();
         try {           
             HibernateUtil.openSessionAndBindToThread();
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-                total = (Integer) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=2 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
+                total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=2 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
             System.out.println("total: "+total);
                 session.close();
         } finally {
@@ -322,14 +322,14 @@ public class TablasTempDAO implements java.io.Serializable {
 
     }
     
-    public int recuperarOP(String fechaIni,String fechaFin) {
-        int total=0;
+    public Long recuperarOP(String fechaIni,String fechaFin) {
+        Long total;
         HibernateUtil.buildSessionFactory();
         try {           
             HibernateUtil.openSessionAndBindToThread();
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-                total = (int) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=1 fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
+                total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=1 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
             System.out.println("total: "+total);
                 session.close();
         } finally {

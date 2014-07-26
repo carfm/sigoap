@@ -35,6 +35,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import sv.com.hmcr.dao.TablasTempDAO;
 import sv.com.hmcr.dominio.Temporaltiempos;
+import sv.com.hmcr.dominio.Usuario;
 
 /**
  *
@@ -53,9 +54,6 @@ public class TiemposPromedios implements java.io.Serializable {
     
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
-    
-    @ManagedProperty(value = "#{opciones}")
-    private Opciones opciones;
 
     public TiemposPromedios() {  
         
@@ -69,6 +67,7 @@ public class TiemposPromedios implements java.io.Serializable {
         document.setPageSize(PageSize.LETTER);
         Date now = new Date();
         DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
+        Usuario sup = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
 
         try {
             PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
@@ -82,7 +81,7 @@ public class TiemposPromedios implements java.io.Serializable {
                     + "TIEMPOS PROMEDIOS DE PROCESAMIENTO DE ÓRDENES\n"
                     + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
                     +parametrosReportes.getFechaFin()+"\n\n SUPERVISADOS POR: "+
-                    opciones.getUsuario().getNombreusuario()+" "+opciones.getUsuario().getApellidousuario(),
+                    sup.getNombreusuario()+" "+sup.getApellidousuario(),
             new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
             paragraph1.setAlignment(Element.ALIGN_CENTER);           
             paragraph1.setSpacingAfter(30);
@@ -114,7 +113,6 @@ public void postProcessPDF(Object doc) throws IOException {
             document.close();
         } catch (DocumentException ex) {
         }
-
     }
     
     @PostConstruct

@@ -20,10 +20,11 @@
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenProc" 
                                  var="cursor" value="#{ordenProcesada.listado}" 
-                                 style="margin-bottom:20px"  sortBy="usuario" paginator="true" rows="10" 
+                                 sortBy="usuario" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}" selectionMode="single" selection="#{ordenProcesada.seleccionado}" rowKey="#{cursor.usuario}">
+                                 {RowsPerPageDropdown}" selectionMode="single" selection="#{ordenProcesada.seleccionado}" rowKey="#{cursor.usuario}"
+                                 style="margin-bottom:20px;display: block;width: 95%;margin-left: auto;margin-right: auto;">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">
