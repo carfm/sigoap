@@ -57,81 +57,8 @@
                                 <h:outputText value="Advertencia" />
                             </f:facet>
                             <h:outputText value="#{dat.advertencia}" />
-                        </p:column>
-
-                        
-                        
-                        
+                        </p:column>                                        
                     </p:dataTable>
-                    <!--Para exportar copien todo este bloque
-                    en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
-                    -->
-
-                    <p:panelGrid style="margin-top:20px; float: left; margin-left: 20px;">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column colspan="4">Exportar Todos los datos</p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                        <p:dataExporter type="xls" target="noti" fileName="notificaciones" />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="noti" fileName="notificaciones" />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                        <p:dataExporter type="csv" target="noti" fileName="notificaciones" />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column><h:commandLink>
-                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                        <p:dataExporter type="xml" target="noti" fileName="notificaciones" />
-                                    </h:commandLink></p:column>
-                            </p:row> 
-                        </f:facet>
-
-                    </p:panelGrid>
-                    <p:panelGrid style="margin-top:20px; float: right; margin-right: 20px;">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column colspan="4">Exportar Pagina Actual</p:column>
-                            </p:row>
-                            <p:row>            
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/excel.png']}" width="24"/>
-                                        <p:dataExporter type="xls" pageOnly="true" target="noti" fileName="notificaciones" />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="noti" fileName="notificaciones"  />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column>
-                                    <h:commandLink>
-                                        <p:graphicImage value="#{resource['images/csv.png']}" width="24"/>
-                                        <p:dataExporter type="csv" pageOnly="true" target="noti" fileName="notificaciones" />
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column><h:commandLink>
-                                        <p:graphicImage  value="#{resource['images/xml.png']}" width="24"/>
-                                        <p:dataExporter type="xml" pageOnly="true" target="noti" fileName="notificaciones" />
-                                    </h:commandLink></p:column>
-                            </p:row>
-
-                        </f:facet>
-
-                    </p:panelGrid>
                 </h:form>
             </ui:define>
         </body>

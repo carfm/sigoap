@@ -171,7 +171,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="analisisEf" fileName="Analisis_Eficiencia" />
+                                        <p:dataExporter type="pdf" target="analisisEf" fileName="Analisis_Eficiencia" preProcessor="#{analisisEficiencia.preProcessPDF}" />
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
@@ -203,7 +203,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="analisisEf" fileName="Analisis_Eficiencia" preProcessor="#{analisisEficiencia.preProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>

@@ -10,19 +10,12 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
-import com.lowagie.text.ExceptionConverter;
 import com.lowagie.text.Font;
 import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -69,6 +62,8 @@ public class ErrorEncontrado implements java.io.Serializable {
     private int totalEG = 0;
     private int totalEM = 0;
     private int totalEL = 0;
+    private int totalA = 0;
+    private Double totalO = 0.0;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -114,13 +109,10 @@ public class ErrorEncontrado implements java.io.Serializable {
             document.add(imagen);
             //document.close();
 
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (DocumentException | FileNotFoundException e) {
         }
-
     }
+    
 public void postProcessPDF(Object doc) throws IOException {
     Document document = (Document) doc;    
         try {
@@ -231,6 +223,22 @@ public void postProcessPDF(Object doc) throws IOException {
     public void setTotalEL(int totalEL) {
         this.totalEL = totalEL;
     }       
+
+    public int getTotalA() {
+        return totalA;
+    }
+
+    public Double getTotalO() {
+        return totalO;
+    }
+
+    public void setTotalA(int totalA) {
+        this.totalA = totalA;
+    }
+
+    public void setTotalO(Double totalO) {
+        this.totalO = totalO;
+    }
     
     private void calcularTotales() {
         for (temp_errorEncontrado listado1 : listado) {
@@ -238,6 +246,10 @@ public void postProcessPDF(Object doc) throws IOException {
             totalEG += listado1.getGrave();
             totalEM += listado1.getMediano();
             totalEL += listado1.getLeve();
+            totalA = dao.recuperarAuditadas(parametrosReportes.getFechaInicio(),
+                    parametrosReportes.getFechaFin());
+            totalO = (totalE*1.0)/dao.recuperarOP(parametrosReportes.getFechaInicio(),
+                    parametrosReportes.getFechaFin());
         }
     }
 

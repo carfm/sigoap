@@ -95,7 +95,8 @@
                     </p:column>
                 </p:dataTable>
                     
-                    <h:outputText value="PROMEDIO EMPRESARIAL: PROCESADAS: 999 INCOMPLETAS: 999 SIN HACER NADA: 999"
+                    <h:outputText value="PROMEDIO EMPRESARIAL: PROCESADAS: #{comparativo.eComp}
+                                  INCOMPLETAS: #{comparativo.eIn} SIN HACER NADA: #{comparativo.eNada}"
                                   style="text-align: center;font-size: 20px;margin-left: auto;margin-right: auto;display: block;"/>
                 <!--Para exportar copien todo este bloque
                 en target pongan el id de su tabla, en fileName un nombre representativo del reporte.
@@ -116,7 +117,7 @@
                             <p:column>
                                 <h:commandLink>
                                     <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                    <p:dataExporter type="pdf" target="comparativo" fileName="Comparativo_nuevos_empleados"/>
+                                    <p:dataExporter type="pdf" target="comparativo" fileName="Comparativo_nuevos_empleados" preProcessor="#{comparativo.preProcessPDF}" postProcessor="#{comparativo.postProcessPDF}"/>
                                 </h:commandLink>
                             </p:column>
                             <p:column>
@@ -148,7 +149,7 @@
                             <p:column>
                                 <h:commandLink>
                                     <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                    <p:dataExporter type="pdf" pageOnly="true" target="comparativo" fileName="Comparativo_nuevos_empleados"  preProcessor="#{analisisEficiencia.preProcessPDF}"/>
+                                    <p:dataExporter type="pdf" pageOnly="true" target="comparativo" fileName="Comparativo_nuevos_empleados"  preProcessor="#{comparativo.preProcessPDF}" postProcessor="#{comparativo.postProcessPDF}"/>
                                 </h:commandLink>
                             </p:column>
                             <p:column>

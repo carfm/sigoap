@@ -25,5 +25,6 @@
     <mapping class="sv.com.hmcr.dominio.temp_errorEncontrado"/>
     <mapping class="sv.com.hmcr.dominio.temp_procesada"/>
     <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
+    <mapping class="sv.com.hmcr.dominio.Estandar"/>
   </session-factory>
 </hibernate-configuration>
