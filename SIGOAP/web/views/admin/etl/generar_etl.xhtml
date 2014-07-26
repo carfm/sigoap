@@ -14,9 +14,22 @@
         <body>
             <ui:define name="content">
                 <h:form>
-                    <!--Aqui se contiene todo el cuerpo de la pagina-->
-                    <p:commandButton value="Generar ETL" id="ajax"  styleClass="ui-priority-primary" />
+                    <p:commandButton value="Iniciar ETL" type="button"  actionListener="#{etlBean.etl(action)}"  />
+                    <!--Aqui se contiene todo el cuerpo de la pagina<p:commandButton value="Generar ETL" type="button" actionListener="" onclick="PF('pbAjax').start();PF('startButton2').disable();" styleClass="ui-priority-primary" widgetVar="startButton2"/>
+                    -->
+                    <!--
+                   
+                    <h3>Ajax ProgressBar</h3>
+                    <p:commandButton value="Start" type="button"  onclick="PF('pbAjax').start();
+                        PF('startButton2').disable();" actionListener="#{etlBean.etl(action)}" widgetVar="startButton2" />
+                    <p:commandButton value="Cancel" actionListener="#{progressBarView.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton2').enable();" />
+                    <br /><br />
+                    <p:progressBar widgetVar="pbAjax" ajax="true" value="#{etlBean.progress}" labelTemplate="{value}%" styleClass="animated" interval="1000"  >
+                        <p:ajax event="complete" listener="#{progressBarView.onComplete}"  oncomplete="startButton2.enable()"/>
+                    </p:progressBar>
+                     -->
                 </h:form>
+                
             </ui:define>
         </body>
     </ui:composition>

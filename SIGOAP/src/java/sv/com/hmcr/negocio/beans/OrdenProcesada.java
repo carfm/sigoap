@@ -159,12 +159,11 @@ public class OrdenProcesada implements java.io.Serializable {
     }
     
     private void calcularTotales() {
-        for (int i = 0; i < listado.size(); i++) {
-
-            totalO += listado.get(i).getTotalProcesadas();
-            totalOC += listado.get(i).getCompletas();
-            totalOI += listado.get(i).getIncompletas();
-            totalON +=listado.get(i).getNada();
+        for (temp_procesada listado1 : listado) {
+            totalO += listado1.getTotalProcesadas();
+            totalOC += listado1.getCompletas();
+            totalOI += listado1.getIncompletas();
+            totalON += listado1.getNada();
         }
     }
 

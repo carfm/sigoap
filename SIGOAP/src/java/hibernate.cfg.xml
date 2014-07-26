@@ -17,7 +17,6 @@
     <mapping class="sv.com.hmcr.dominio.RegistroError"/>
     <mapping class="sv.com.hmcr.dominio.Razon"/>
     <mapping class="sv.com.hmcr.dominio.AnalisisefTemp"/>
-    <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
     <mapping class="sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos"/>
     <mapping class="sv.com.hmcr.dominio.ComparativonuevosTemp"/>
     <mapping class="sv.com.hmcr.dominio.EstadisticasTemp"/>
@@ -25,5 +24,6 @@
     <mapping class="sv.com.hmcr.dominio.Temporalrazones"/>
     <mapping class="sv.com.hmcr.dominio.temp_errorEncontrado"/>
     <mapping class="sv.com.hmcr.dominio.temp_procesada"/>
+    <mapping class="sv.com.hmcr.dominio.Temporalordenesauditadas"/>
   </session-factory>
 </hibernate-configuration>

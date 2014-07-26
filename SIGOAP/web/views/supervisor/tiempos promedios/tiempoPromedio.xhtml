@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+gener<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- Este bloque deben copiarlo asi como esta-->
 
@@ -61,21 +61,21 @@
                             <h:outputText value="#{cursor.agente}" />
                         </p:column>
 
-                        <p:column sortBy="total" >
+                        <p:column sortBy="promedio" >
                             <f:facet name="header">
                                 <h:outputText value="Tiempo promedio" />
                             </f:facet>
                             <h:outputText value="#{cursor.promedio}" />
                         </p:column>
 
-                        <p:column sortBy="completas" >
+                        <p:column sortBy="minimo" >
                             <f:facet name="header">
                                 <h:outputText value="Tiempo minimo" />
                             </f:facet>
                             <h:outputText value="#{cursor.minimo}" />
                         </p:column>
 
-                        <p:column sortBy="incompletas">
+                        <p:column sortBy="maximo">
                             <f:facet name="header">
                                 <h:outputText value="Tiempo maximo" />
                             </f:facet>

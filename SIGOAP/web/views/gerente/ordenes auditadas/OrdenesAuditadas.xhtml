@@ -17,7 +17,7 @@
         <body>
             <ui:define name="content">
                 <h:form>
-                    <!--con este tag se crea la tabla;
+                  <!--con este tag se crea la tabla;
                     emptyMessage: es el mensaje si no existen datos
                     id: identificador de la tabla
                     value: una lista (de nombre listado) de objetos declarada en el Bean (aqui en bean se llama AnalisisEficiencia)
@@ -30,7 +30,7 @@
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenesAuditadas" 
                                  var="cursor" value="#{ordenesAuditadas.listado}" 
-                                 style="margin-bottom:20px"  sortBy="CORRELATIVO" paginator="true" rows="10" 
+                                 style="margin-bottom:20px"  sortBy="auditor" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
                                  {RowsPerPageDropdown}">
@@ -50,12 +50,7 @@
                         filterBy: filtro de busqueda atributo de la clase de dominio, sortBy:ordenamiento (mismo valor del filterBy)
                         filterMatchMode: la forma de filtrar (vean el showcase para todos los valores posibles)
                         footerText: para poner los totales-->
-                        <p:column  sortBy="correlativo" >
-                            <f:facet name="header">
-                                <h:outputText value="N°" />
-                            </f:facet>
-                            <h:outputText value="#{cursor.correlativo}" />
-                        </p:column>
+
 
                         <p:column filterBy="auditor" filterMatchMode="contains" sortBy="auditor">
                             <f:facet name="header">
@@ -165,7 +160,7 @@
 
                         </f:facet>
 
-                    </p:panelGrid>
+                    </p:panelGrid>  
                 </h:form>
             </ui:define>
         </body>
