@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import sv.com.hmcr.dominio.AnalisisefTemp;
 import sv.com.hmcr.dominio.ComparativonuevosTemp;
 import sv.com.hmcr.dominio.EstadisticasTemp;
+import sv.com.hmcr.dominio.Estandar;
 import sv.com.hmcr.dominio.Temporalordenesauditadas;
 import sv.com.hmcr.dominio.Temporalordenesprocesadasnuevos;
 import sv.com.hmcr.dominio.Temporalrazones;
@@ -302,6 +303,58 @@ public class TablasTempDAO implements java.io.Serializable {
         session.close();
         return lista;
     }
+    
+    //--------metodos para llenar los footer de las tablas
+    public Long recuperarAuditadas(String fechaIni,String fechaFin) {
+        Long total;
+        HibernateUtil.buildSessionFactory();
+        try {           
+            HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+                total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=2 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
+            System.out.println("total: "+total);
+                session.close();
+        } finally {
+            HibernateUtil.closeSessionAndUnbindFromThread();
+        }
+        return total;
+
+    }
+    
+    public Long recuperarOP(String fechaIni,String fechaFin) {
+        Long total;
+        HibernateUtil.buildSessionFactory();
+        try {           
+            HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+                total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=1 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
+            System.out.println("total: "+total);
+                session.close();
+        } finally {
+            HibernateUtil.closeSessionAndUnbindFromThread();
+        }
+        return total;
+
+    }
+    
+    public List<Estandar> recuperarEstandar() {
+        List<Estandar> total;
+        HibernateUtil.buildSessionFactory();
+        try {           
+            HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+                total = (List<Estandar>) session.createQuery("from Estandar").list();
+                session.close();
+        } finally {
+            HibernateUtil.closeSessionAndUnbindFromThread();
+        }
+        return total;
+
+    }
+    
 
     public Connection getConexion() {
         return conexion;

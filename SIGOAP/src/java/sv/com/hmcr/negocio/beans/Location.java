@@ -11,20 +11,19 @@ import java.util.LinkedList;
 import javax.faces.bean.ManagedBean;
 import javax.swing.JOptionPane;
 
-
 @ManagedBean
 public class Location {
 
     private ResultSet resultado;
     private Statement sentencia;
     private Connection conexion;
-    String Conexion = "jdbc:mysql://localhost:3306/pruebadsi?user=root";
+    String Conexion = "jdbc:mysql://localhost:3306/pruebadsi?user=root&password=grupoESA";
     String Driver1 = "com.mysql.jdbc.Driver";
     private LinkedList<TablaLocation> datos = null;
 
     public Location() {
 
-        int i = 0;
+        int i = 1;
         String hora = "00:00:00";
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -34,7 +33,7 @@ public class Location {
             Class.forName(Driver1).newInstance();
             conexion = DriverManager.getConnection(Conexion);
             sentencia = conexion.createStatement();
-            resultado = sentencia.executeQuery("select a.user,d.nombrelocation,a.supervisadoPor from usuario a,procesa_audita b,location d,orden o where b.tipoOperacion='" + i + "'and b.horaFin='" + hora + "' and o.specimen=b.specimen and o.codigolocation=d.codigolocation and  b.fecha='" + cadenaFecha + "'");
+            resultado = sentencia.executeQuery("select a.user,d.nombrelocation,a.supervisadoPor from usuario a,procesa_audita b,location d,orden o where b.tipoOperacion='" + i + "'and b.horaFin is null and o.specimen=b.specimen and o.codigolocation=d.codigolocation and  b.fecha='" + cadenaFecha + "'");
 
             while (resultado.next()) {
                 String user = resultado.getString("user");

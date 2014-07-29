@@ -10,11 +10,22 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -50,17 +61,41 @@ public class OrdenesAuditadas implements java.io.Serializable {
         
     }
     
-    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-        Document pdf = new Document();
-        pdf.open();
-        pdf.setPageSize(PageSize.LETTER);
-        pdf.addCreationDate();
-        pdf.addHeader("hola", "como estas");
-        pdf.addTitle("Analisis de eficiencia\nMio");
-        pdf.add(new Chunk("This is sentence 1. "));
-//        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-//        String logo = servletContext.getRealPath("") + File.separator + "resources"  + File.separator + "images" + File.separator + "LogoHMCR.png";        
-//        pdf.add(Image.getInstance(logo));
+    public void preProcessPDF(Object doc) throws BadElementException, IOException {
+        Document document = (Document) doc;
+        document.setPageSize(PageSize.LETTER);
+        Date now = new Date();
+        DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
+
+        try {
+            PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
+            document.open();
+            Paragraph fechaCre = new Paragraph("Fecha de creacion:"+df.format(now),
+                    new Font(Font.HELVETICA  , 10, Font.NORMAL,new Color(0, 0, 0)));
+            fechaCre.setAlignment(Element.ALIGN_RIGHT);
+            HeaderFooter footer = new HeaderFooter(new Phrase("Pagina - "), true);
+            footer.setAlignment(HeaderFooter.ALIGN_RIGHT);
+            Paragraph paragraph1 = new Paragraph("HMCR SOLUTIONS\n"
+                    + "REPORTE DE ORDENES AUDITADAS\n"
+                    + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
+                    +parametrosReportes.getFechaFin(),
+            new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
+            paragraph1.setAlignment(Element.ALIGN_CENTER);           
+            paragraph1.setSpacingAfter(30);
+            document.add(fechaCre);
+            document.add(paragraph1);
+            document.setFooter(footer);
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String logo = servletContext.getRealPath("") + "/resources/images/LogoHMCR.jpg";
+            Image imagen = Image.getInstance(logo);
+            imagen.setAbsolutePosition(10f, 735f);
+            imagen.scalePercent(40f);
+            document.add(imagen);
+            //document.close();
+
+        } catch (DocumentException | FileNotFoundException e) {
+        }
+
     }
     
     @PostConstruct

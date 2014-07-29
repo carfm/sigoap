@@ -30,10 +30,10 @@
                     -->
                     <p:dataTable emptyMessage="No existen datos para mostrar" id="ordenesProcNuevos" 
                                  var="cursor" value="#{ordenesProcNuevos.listado}" 
-                                 style="margin-bottom:20px"  sortBy="correlativo" paginator="true" rows="10" 
+                                 sortBy="correlativo" paginator="true" rows="10" 
                                  paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}
                                  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
-                                 {RowsPerPageDropdown}">
+                                 {RowsPerPageDropdown}" style="margin-bottom:20px;display: block;width: 95%;margin-left: auto;margin-right: auto;">
 
                         <!--encabezado del reporte-->
                         <f:facet name="header">
@@ -129,7 +129,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" target="ordenesProcNuevos" fileName="Ordenes_Procesadas_Nuevos"  preProcessor="#{ordenesProcNuevos.preProcessPDF(document)}"/>
+                                        <p:dataExporter type="pdf" target="ordenesProcNuevos" fileName="Ordenes_Procesadas_Nuevos"  preProcessor="#{ordenesProcNuevos.preProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>
@@ -161,7 +161,7 @@
                                 <p:column>
                                     <h:commandLink>
                                         <p:graphicImage value="#{resource['images/pdf.png']}" width="24"/>
-                                        <p:dataExporter type="pdf" pageOnly="true" target="ordenesProcNuevos" fileName="Ordenes_Procesadas_Nuevos"  preProcessor="#{ordenesProcNuevos.preProcessPDF(document)}"/>
+                                        <p:dataExporter type="pdf" pageOnly="true" target="ordenesProcNuevos" fileName="Ordenes_Procesadas_Nuevos"  preProcessor="#{ordenesProcNuevos.preProcessPDF}"/>
                                     </h:commandLink>
                                 </p:column>
                                 <p:column>

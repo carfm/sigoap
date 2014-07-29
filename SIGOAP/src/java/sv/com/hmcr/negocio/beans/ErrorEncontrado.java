@@ -6,22 +6,18 @@
 package sv.com.hmcr.negocio.beans;
 
 
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
-import com.lowagie.text.ExceptionConverter;
 import com.lowagie.text.Font;
+import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,6 +25,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -64,6 +62,8 @@ public class ErrorEncontrado implements java.io.Serializable {
     private int totalEG = 0;
     private int totalEM = 0;
     private int totalEL = 0;
+    private Long totalA;
+    private Double totalO = 0.0;
 
     @ManagedProperty(value = "#{parametrosReportes}")
     private ParametrosReportes parametrosReportes;
@@ -77,49 +77,57 @@ public class ErrorEncontrado implements java.io.Serializable {
 
     }
 
-    public void preProcessPDF(Object doc) {
+    public void preProcessPDF(Object doc) throws BadElementException, IOException {
         Document document = (Document) doc;
         document.setPageSize(PageSize.LETTER);
+        Date now = new Date();
+        DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
 
         try {
             PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
-
             document.open();
-            Font font1 = new Font(Font.HELVETICA  , 25, Font.BOLD);
-            Paragraph paragraph1 = new Paragraph();
-            paragraph1.setAlignment(Element.ALIGN_CENTER);           
-            paragraph1.add("HMCR SOLUTIONS\nREPORTE DE ERRORES ENCONTRADOS SEGUN CATEGORIA\n"
+            Paragraph fechaCre = new Paragraph("Fecha de creacion:"+df.format(now),
+                    new Font(Font.HELVETICA  , 10, Font.NORMAL,new Color(0, 0, 0)));
+            fechaCre.setAlignment(Element.ALIGN_RIGHT);
+            HeaderFooter footer = new HeaderFooter(new Phrase("Pagina - "), true);
+            footer.setAlignment(HeaderFooter.ALIGN_RIGHT);
+            Paragraph paragraph1 = new Paragraph("HMCR SOLUTIONS\n"
+                    + "REPORTE DE ERRORES ENCONTRADOS SEGUN CATEGORIA\n"
                     + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
-                    +parametrosReportes.getFechaFin());
-            paragraph1.setFont(font1);
+                    +parametrosReportes.getFechaFin(),
+            new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
+            paragraph1.setAlignment(Element.ALIGN_CENTER);           
             paragraph1.setSpacingAfter(30);
+            document.add(fechaCre);
             document.add(paragraph1);
+            document.setFooter(footer);
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String logo = servletContext.getRealPath("") + "/resources/images/LogoHMCR.jpg";
+            Image imagen = Image.getInstance(logo);
+            imagen.setAbsolutePosition(10f, 735f);
+            imagen.scalePercent(40f);
+            document.add(imagen);
             //document.close();
 
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-public void postProcessPDF(Object doc) throws IOException {
-        Document document = (Document) doc;
-        document.setPageSize(PageSize.LETTER); 
-        Date now = new Date();
-        DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
-       
-        try {
-            PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
-            TableHeader event = new TableHeader();
-            writer.setPageEvent(event);
-            document.open();
-            event.setHeader(""+df.format(now));
-            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-            String logo = servletContext.getRealPath("") + "resources/images/LogoHMCR.jpg";
-            document.add(Image.getInstance(logo));
-            document.close();
         } catch (DocumentException | FileNotFoundException e) {
+        }
+    }
+    
+public void postProcessPDF(Object doc) throws IOException {
+    Document document = (Document) doc;    
+        try {
+            //PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
+            //document.open();
+            Paragraph paragraph1 = new Paragraph("Cantidad de ordenes Auditadas = "+totalA+"\n" +
+                            "Errores por órdenes procesadas completas: cantidad "
+                    + "de errores totales/ ordenes procesadas completas ="+totalO,
+                            new Font(Font.HELVETICA  , 11, Font.NORMAL,new Color(0, 0, 0)));
+            paragraph1.setAlignment(Element.ALIGN_CENTER);           
+            paragraph1.setSpacingBefore(30);
+            document.add(paragraph1);
+            document.close();
+        } catch (DocumentException ex) {
+            Logger.getLogger(ErrorEncontrado.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -215,6 +223,22 @@ public void postProcessPDF(Object doc) throws IOException {
     public void setTotalEL(int totalEL) {
         this.totalEL = totalEL;
     }       
+
+    public Long getTotalA() {
+        return totalA;
+    }
+
+    public Double getTotalO() {
+        return totalO;
+    }
+
+    public void setTotalA(Long totalA) {
+        this.totalA = totalA;
+    }
+
+    public void setTotalO(Double totalO) {
+        this.totalO = totalO;
+    }
     
     private void calcularTotales() {
         for (temp_errorEncontrado listado1 : listado) {
@@ -222,54 +246,12 @@ public void postProcessPDF(Object doc) throws IOException {
             totalEG += listado1.getGrave();
             totalEM += listado1.getMediano();
             totalEL += listado1.getLeve();
+            
         }
-    }
-    
-    class TableHeader extends PdfPageEventHelper {
-        String header;
-        //plantilla con el numero total de paginas
-        PdfTemplate total;
-
-        public void setHeader(String header) {
-            this.header = header;
-        }
-
-        //al abrir el documento, crea el pdfTemplate (total) que guardara el total de paginas
-        @Override
-        public void onOpenDocument(PdfWriter writer, Document document) {
-            total = writer.getDirectContent().createTemplate(30, 16);
-        }
-
-        //al finalizar la pagina, agrega encabezado.
-        @Override
-        public void onEndPage(PdfWriter writer, Document document) {
-            PdfPTable table = new PdfPTable(3);
-            try {
-                table.setWidths(new int[]{24, 24, 2});
-                table.setTotalWidth(527);
-                table.setLockedWidth(true);
-                table.getDefaultCell().setFixedHeight(20);
-                table.getDefaultCell().setBorder(Rectangle.BOTTOM);
-                table.addCell(header);
-                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
-                table.addCell(String.format("Pagina %d de", writer.getPageNumber()));
-                PdfPCell cell = new PdfPCell(Image.getInstance(total));
-                cell.setBorder(Rectangle.BOTTOM);
-                table.addCell(cell);
-                table.writeSelectedRows(0, -1, 34, 803, writer.getDirectContent());
-            }
-            catch(DocumentException de) {
-                throw new ExceptionConverter(de);
-            }
-        }
-
-        //llena el numero total de paginas antes de cerrar el documento.
-        @Override
-        public void onCloseDocument(PdfWriter writer, Document document) {
-            ColumnText.showTextAligned(total, Element.ALIGN_LEFT,
-                    new Phrase(String.valueOf(writer.getPageNumber() - 1)),
-                    2, 2, 0);
-        }
+        totalA = dao.recuperarAuditadas(parametrosReportes.getFechaInicio(),
+                    parametrosReportes.getFechaFin());
+            totalO = (totalE*1.0)/dao.recuperarOP(parametrosReportes.getFechaInicio(),
+                    parametrosReportes.getFechaFin());
     }
 
 }

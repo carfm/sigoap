@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sv.com.hmcr.negocio.beans;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,50 +17,51 @@ import javax.swing.JOptionPane;
 import sv.com.hmcr.dominio.*;
 
 @ManagedBean
-public class Notificacion  
-{
-     private ResultSet resultado;
+public class Notificacion {
+
+    private ResultSet resultado;
     private Statement sentencia;
     private Connection conexion;
-    String Conexion = "jdbc:mysql://localhost:3306/pruebadsi?user=root";
+    String Conexion = "jdbc:mysql://localhost:3306/pruebadsi?user=root&password=grupoESA";
     String Driver1 = "com.mysql.jdbc.Driver";
-   private LinkedList<TablaNotificacion> datos=null;
+    private LinkedList<TablaNotificacion> datos = null;
 
-   public Notificacion() {
-      
-      int y=0;
+    public Notificacion() {
+
         datos = new LinkedList<TablaNotificacion>();
         try {
             Class.forName(Driver1).newInstance();
             conexion = DriverManager.getConnection(Conexion);
             sentencia = conexion.createStatement();
-             resultado = sentencia.executeQuery("select a.fecha,u.nombre,u.apellido,b.advertencia from mensaje a,gestiona b,gestiona c,usuario u where a.idMensaje=b.idMensaje\n" +
-"and b.idMensaje=c.idMensaje and c.visto='"+y+"' and u.user=b.user");
-        
- while (resultado.next()) {
- String fecha = resultado.getString("fecha");
- String nombre = resultado.getString("nombre");
-  String apellido = resultado.getString("apellido");
-  
-  int i = resultado.getInt("advertencia");
- //String str = rs.getString("username");
-  String ad;
-if(i==0)
-{ ad="SI";
-}
-else
-{  ad="NO";
-}
-String agente=nombre+" "+apellido; 
-  //Assuming you have a user object
-  TablaNotificacion tabla= new TablaNotificacion();
-tabla.setFecha(fecha);
-tabla.setAgente(agente);
-tabla.setAdvertencia(ad);
-//ll.add(user);
-datos.add(tabla);
+            resultado = sentencia.executeQuery("select date(a.fechaHoraMensaje) "
+                    + "as fecha,u.nombre,u.apellido,b.advertencia from mensaje a,"
+                    + "gestiona b,usuario u,puede_tener p where p.idMensaje=b.idMensaje"
+                    + " and a.idMensaje=b.idMensaje and a.tipoMensaje=2 and b.visto=0 "
+                    + "and u.user=b.user");
 
-}          
+            while (resultado.next()) {
+                String fecha = resultado.getString("fecha");
+                String nombre = resultado.getString("nombre");
+                String apellido = resultado.getString("apellido");
+
+                int i = resultado.getInt("advertencia");
+                //String str = rs.getString("username");
+                String ad;
+                if (i == 1) {
+                    ad = "SI";
+                } else {
+                    ad = "NO";
+                }
+                String agente = nombre + " " + apellido;
+                //Assuming you have a user object
+                TablaNotificacion tabla = new TablaNotificacion();
+                tabla.setFecha(fecha);
+                tabla.setAgente(agente);
+                tabla.setAdvertencia(ad);
+//ll.add(user);
+                datos.add(tabla);
+
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error 1 " + e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -70,15 +72,15 @@ datos.add(tabla);
             JOptionPane.showMessageDialog(null, "Error 3 " + e.getMessage());
         }
         //JOptionPane.showMessageDialog(null, "no retorna nada ");
-   
-   }
 
-   public LinkedList<TablaNotificacion> getDatos() {
-      return datos;
-   }
-   public void setDatos(LinkedList<TablaNotificacion> datos) {
-      this.datos = datos;
-   }
- 
+    }
+
+    public LinkedList<TablaNotificacion> getDatos() {
+        return datos;
+    }
+
+    public void setDatos(LinkedList<TablaNotificacion> datos) {
+        this.datos = datos;
+    }
 
 }
