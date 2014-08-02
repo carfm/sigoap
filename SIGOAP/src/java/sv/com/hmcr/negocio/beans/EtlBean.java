@@ -6,6 +6,7 @@
 package sv.com.hmcr.negocio.beans;
 
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import sv.com.hmcr.dao.TablasTempDAO;
@@ -16,7 +17,7 @@ import sv.com.hmcr.dao.TablasTempDAO;
  */
 @ManagedBean(name = "etlBean")
 @ViewScoped
-public class EtlBean {
+public class EtlBean implements Serializable {
 
     /**
      * Creates a new instance of EtlBean
@@ -32,6 +33,10 @@ public class EtlBean {
     public void etl(ActionEvent action) {
         progress = 20;
         procedimiento.ejecutarProc("call etlEmpleado()");
+        progress = 30;
+        procedimiento.ejecutarProc("call etlOrden()");
+        progress = 60;
+        procedimiento.ejecutarProc("call etlProcesaAudita()");
         progress = 100;
     }
 

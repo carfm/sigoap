@@ -5,6 +5,7 @@
  */
 package sv.com.hmcr.negocio.beans;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -16,7 +17,7 @@ import sv.com.hmcr.dominio.Usuario;
  */
 @ManagedBean(name = "Opciones")
 @SessionScoped
-public class Opciones {
+public class Opciones implements Serializable{
 
     /**
      * Creates a new instance of Opciones
