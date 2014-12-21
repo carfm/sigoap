@@ -4,9 +4,10 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sigoap?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.url">jdbc:mysql://10.8.40.99:3306/sigoap?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">hmcr</property>
     <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.connection.password">Welcome2DL!</property>
     <mapping class="sv.com.hmcr.dominio.Usuario"/>
     <mapping class="sv.com.hmcr.dominio.Tipousuario"/>
     <mapping class="sv.com.hmcr.dominio.Empleado"/>
