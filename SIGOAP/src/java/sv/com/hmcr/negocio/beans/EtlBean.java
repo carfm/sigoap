@@ -18,7 +18,11 @@ import sv.com.hmcr.dao.TablasTempDAO;
  */
 @ManagedBean
 @ViewScoped
+
 public class EtlBean implements Serializable{
+
+
+
 
     /**
      * Creates a new instance of EtlBean
@@ -29,10 +33,12 @@ public class EtlBean implements Serializable{
     public EtlBean() {
         procedimiento = new TablasTempDAO();
     }
+
     
     public void etl(ActionEvent actionEvent){
-        getProcedimiento().ejecutarProc("call etlEmpleados()");
-        
+        procedimiento.ejecutarProc("call etlEmpleado()");
+        procedimiento.ejecutarProc("call etlOrden()");
+        procedimiento.ejecutarProc("call etlProcesaAudita()");
     }
 
     /**
