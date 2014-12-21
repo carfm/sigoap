@@ -39,6 +39,7 @@ public class EtlBean implements Serializable{
         procedimiento.ejecutarProc("call etlEmpleado()");
         procedimiento.ejecutarProc("call etlOrden()");
         procedimiento.ejecutarProc("call etlProcesaAudita()");
+        procedimiento.ejecutarProc("call etlRegistroError()");
     }
 
     /**
