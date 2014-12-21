@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 public class MyUtil {
 
     public static String baseurl() {
-        return "http://localhost:8080/SIGOAP/";
+        return "http://10.8.40.99:8080/SIGOAP/";
     }
 
     public static String loginUrl() {
