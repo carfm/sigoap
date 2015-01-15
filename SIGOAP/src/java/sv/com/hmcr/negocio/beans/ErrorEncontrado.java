@@ -5,7 +5,6 @@
  */
 package sv.com.hmcr.negocio.beans;
 
-
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -72,8 +71,8 @@ public class ErrorEncontrado implements java.io.Serializable {
 
         dao = new TablasTempDAO();
         listado = new ArrayList<>();
-        daoDetalle=new DetalleDAO();
-        listadoDetalle=null;
+        daoDetalle = new DetalleDAO();
+        listadoDetalle = null;
 
     }
 
@@ -81,22 +80,22 @@ public class ErrorEncontrado implements java.io.Serializable {
         Document document = (Document) doc;
         document.setPageSize(PageSize.LETTER);
         Date now = new Date();
-        DateFormat df =  DateFormat.getDateInstance(DateFormat.MEDIUM);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
         try {
-            PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("temp_errorencontrado.pdf"));
             document.open();
-            Paragraph fechaCre = new Paragraph("Fecha de creacion:"+df.format(now),
-                    new Font(Font.HELVETICA  , 10, Font.NORMAL,new Color(0, 0, 0)));
+            Paragraph fechaCre = new Paragraph("Fecha de creacion:" + df.format(now),
+                    new Font(Font.HELVETICA, 10, Font.NORMAL, new Color(0, 0, 0)));
             fechaCre.setAlignment(Element.ALIGN_RIGHT);
             HeaderFooter footer = new HeaderFooter(new Phrase("Pagina - "), true);
             footer.setAlignment(HeaderFooter.ALIGN_RIGHT);
             Paragraph paragraph1 = new Paragraph("HMCR SOLUTIONS\n"
                     + "REPORTE DE ERRORES ENCONTRADOS SEGUN CATEGORIA\n"
-                    + "DEL PERIODO "+parametrosReportes.getFechaInicio() +" AL  "
-                    +parametrosReportes.getFechaFin(),
-            new Font(Font.HELVETICA  , 14, Font.NORMAL,new Color(0, 0, 0)));
-            paragraph1.setAlignment(Element.ALIGN_CENTER);           
+                    + "DEL PERIODO " + parametrosReportes.getFechaInicio() + " AL  "
+                    + parametrosReportes.getFechaFin(),
+                    new Font(Font.HELVETICA, 14, Font.NORMAL, new Color(0, 0, 0)));
+            paragraph1.setAlignment(Element.ALIGN_CENTER);
             paragraph1.setSpacingAfter(30);
             document.add(fechaCre);
             document.add(paragraph1);
@@ -112,17 +111,17 @@ public class ErrorEncontrado implements java.io.Serializable {
         } catch (DocumentException | FileNotFoundException e) {
         }
     }
-    
-public void postProcessPDF(Object doc) throws IOException {
-    Document document = (Document) doc;    
+
+    public void postProcessPDF(Object doc) throws IOException {
+        Document document = (Document) doc;
         try {
             //PdfWriter.getInstance(document,new FileOutputStream("temp_errorencontrado.pdf"));
             //document.open();
-            Paragraph paragraph1 = new Paragraph("Cantidad de ordenes Auditadas = "+totalA+"\n" +
-                            "Errores por órdenes procesadas completas: cantidad "
-                    + "de errores totales/ ordenes procesadas completas ="+totalO,
-                            new Font(Font.HELVETICA  , 11, Font.NORMAL,new Color(0, 0, 0)));
-            paragraph1.setAlignment(Element.ALIGN_CENTER);           
+            Paragraph paragraph1 = new Paragraph("Cantidad de ordenes Auditadas = " + totalA + "\n"
+                    + "Errores por órdenes procesadas completas: cantidad "
+                    + "de errores totales/ ordenes procesadas completas =" + totalO,
+                    new Font(Font.HELVETICA, 11, Font.NORMAL, new Color(0, 0, 0)));
+            paragraph1.setAlignment(Element.ALIGN_CENTER);
             paragraph1.setSpacingBefore(30);
             document.add(paragraph1);
             document.close();
@@ -131,19 +130,19 @@ public void postProcessPDF(Object doc) throws IOException {
         }
 
     }
-    
+
     @PostConstruct
     public void init() {
         listado = dao.obtenerErrorEncontrado(parametrosReportes.getTop());
         calcularTotales();
     }
-    
+
     public void onRowSelect(SelectEvent event) {
-        String id=daoDetalle.recuperarId(seleccionado.getUsuario());
-        listadoDetalle=daoDetalle.obtenerDetalle(2, id,parametrosReportes.getFechaInicio(),
-                parametrosReportes.getFechaFin()); 
+        String id = daoDetalle.recuperarId(seleccionado.getUsuario());
+        listadoDetalle = daoDetalle.obtenerDetalle(2, id, parametrosReportes.getFechaInicio(),
+                parametrosReportes.getFechaFin());
     }
-    
+
     public List<temp_errorEncontrado> getListado() {
         return listado;
     }
@@ -222,7 +221,7 @@ public void postProcessPDF(Object doc) throws IOException {
 
     public void setTotalEL(int totalEL) {
         this.totalEL = totalEL;
-    }       
+    }
 
     public Long getTotalA() {
         return totalA;
@@ -239,19 +238,19 @@ public void postProcessPDF(Object doc) throws IOException {
     public void setTotalO(Double totalO) {
         this.totalO = totalO;
     }
-    
+
     private void calcularTotales() {
         for (temp_errorEncontrado listado1 : listado) {
             totalE += listado1.getTotal();
             totalEG += listado1.getGrave();
             totalEM += listado1.getMediano();
             totalEL += listado1.getLeve();
-            
+
         }
         totalA = dao.recuperarAuditadas(parametrosReportes.getFechaInicio(),
-                    parametrosReportes.getFechaFin());
-            totalO = (totalE*1.0)/dao.recuperarOP(parametrosReportes.getFechaInicio(),
-                    parametrosReportes.getFechaFin());
+                parametrosReportes.getFechaFin());
+        totalO = (totalE * 1.0) / dao.recuperarOP(parametrosReportes.getFechaInicio(),
+                parametrosReportes.getFechaFin());
     }
 
 }
