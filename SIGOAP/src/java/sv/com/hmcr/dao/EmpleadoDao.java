@@ -10,9 +10,9 @@ public class EmpleadoDao implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     
     public Empleado obtenerEmpleado(String idemp) throws HibernateException {
-        Empleado empleado = null;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Empleado empleado;
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         empleado = (Empleado) session.get(Empleado.class, idemp);
         session.close();
@@ -22,13 +22,11 @@ public class EmpleadoDao implements java.io.Serializable {
     
     public List<Empleado> obtenListaEmpleado() throws HibernateException {
         List<Empleado> listaEmpleado;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         listaEmpleado = (List<Empleado>) session.createQuery("from Empleado order by nombreempleado").list();
         session.close();
         return listaEmpleado;
-    }
-    
-    
+    }    
 }

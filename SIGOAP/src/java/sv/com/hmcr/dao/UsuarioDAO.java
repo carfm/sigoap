@@ -11,9 +11,7 @@ package sv.com.hmcr.dao;
 
 import java.util.List;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import sv.com.hmcr.dominio.Usuario;
 import sv.com.hmcr.util.HibernateUtil;
@@ -25,10 +23,10 @@ public class UsuarioDAO implements java.io.Serializable {
     
 
     public boolean guarda(Usuario usuario) {
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session sesion = sessionFactory.openSession();
+            //SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.save(usuario);
             tx.commit();
@@ -42,8 +40,8 @@ public class UsuarioDAO implements java.io.Serializable {
 
     public boolean actualizar(Usuario usuario) {
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session sesion = sessionFactory.openSession();
+            //SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.saveOrUpdate(usuario);
             tx.commit();
@@ -57,8 +55,8 @@ public class UsuarioDAO implements java.io.Serializable {
 
     public boolean eliminar(Usuario usuario) {
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session sesion = sessionFactory.openSession();
+            //SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = sesion.beginTransaction();
             sesion.delete(usuario);
             tx.commit();
@@ -71,41 +69,37 @@ public class UsuarioDAO implements java.io.Serializable {
     }
 
     public Usuario obtenerUsuario(String user)  {
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         Usuario usuario;
         try {           
-            HibernateUtil.openSessionAndBindToThread();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             usuario = (Usuario) session.get(Usuario.class, user);
             //session.getTransaction().commit();
             session.close();
-        } finally {
-            HibernateUtil.closeSessionAndUnbindFromThread();
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        } 
+        finally {
+           // HibernateUtil.closeSessionAndUnbindFromThread();
         }
-
-//        HibernateUtil.closeSessionFactory();
-//        
-//        Session session;
-//        session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        
-//        session.close();
         return usuario;
 
     }
 
     public List<Usuario> obtenListaUsuarios() throws HibernateException {
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         List<Usuario> listaUsuarios;
         try {           
-            HibernateUtil.openSessionAndBindToThread();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             listaUsuarios = (List<Usuario>) session.createQuery("from Usuario").list();
             session.close();
         } finally {
-            HibernateUtil.closeSessionAndUnbindFromThread();
+            //HibernateUtil.closeSessionAndUnbindFromThread();
         }
         return listaUsuarios;
     }

@@ -38,7 +38,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<AnalisisefTemp> obtenerAnalisisEf(int tipo) throws HibernateException {
         List<AnalisisefTemp> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -63,7 +63,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<Temporalordenesauditadas> obtenerOrdenesAuditadas(int tipo) throws HibernateException {
         List<Temporalordenesauditadas> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -88,7 +88,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<Temporalordenesprocesadasnuevos> obtenerOrdenesProcesadasNuevos(int tipo) throws HibernateException {
         List<Temporalordenesprocesadasnuevos> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -135,7 +135,7 @@ public class TablasTempDAO implements java.io.Serializable {
 
     public void ejecutarProc(String consulta) throws HibernateException {
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query query = session.createSQLQuery(consulta);
         query.executeUpdate();
@@ -144,8 +144,8 @@ public class TablasTempDAO implements java.io.Serializable {
 
     public List<ComparativonuevosTemp> obtenerComparativonuevosTemp(int tipo) throws HibernateException {
         List<ComparativonuevosTemp> lista;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -168,25 +168,23 @@ public class TablasTempDAO implements java.io.Serializable {
                 break;
         }
         session.close();
-        session = null;
         return lista;
     }
 
     public List<EstadisticasTemp> obtenerEstadisticasTemp() throws HibernateException {
         List<EstadisticasTemp> lista;
-        Session session = null;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         lista = (List<EstadisticasTemp>) session.createQuery("from EstadisticasTemp").list();
         session.close();
-        session = null;
         return lista;
     }
 
     public List<Temporaltiempos> obtenerTiemposPromedios(int tipo) throws HibernateException {
         List<Temporaltiempos> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -211,7 +209,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<Temporalrazones> obtenerRazones(int tipo) throws HibernateException {
         List<Temporalrazones> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -257,7 +255,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<temp_procesada> obtenerOrdenProcesada(int tipo) throws HibernateException {
         List<temp_procesada> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -282,7 +280,7 @@ public class TablasTempDAO implements java.io.Serializable {
     public List<temp_errorEncontrado> obtenerErrorEncontrado(int tipo) throws HibernateException {
         List<temp_errorEncontrado> lista;
         Session session;
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         switch (tipo) {
             case 1:
@@ -307,16 +305,16 @@ public class TablasTempDAO implements java.io.Serializable {
     //--------metodos para llenar los footer de las tablas
     public Long recuperarAuditadas(String fechaIni,String fechaFin) {
         Long total;
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         try {           
-            HibernateUtil.openSessionAndBindToThread();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
                 total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=2 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
             System.out.println("total: "+total);
                 session.close();
         } finally {
-            HibernateUtil.closeSessionAndUnbindFromThread();
+            //HibernateUtil.closeSessionAndUnbindFromThread();
         }
         return total;
 
@@ -324,16 +322,16 @@ public class TablasTempDAO implements java.io.Serializable {
     
     public Long recuperarOP(String fechaIni,String fechaFin) {
         Long total;
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         try {           
-            HibernateUtil.openSessionAndBindToThread();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
                 total = (Long) session.createQuery("select count(*) from ProcesaAudita where tipoprocesaaudita=1 and fechaprocesaaudita between '"+fechaIni+"' AND '"+fechaFin+"'").list().get(0);
             System.out.println("total: "+total);
                 session.close();
         } finally {
-            HibernateUtil.closeSessionAndUnbindFromThread();
+            //HibernateUtil.closeSessionAndUnbindFromThread();
         }
         return total;
 
@@ -341,15 +339,15 @@ public class TablasTempDAO implements java.io.Serializable {
     
     public List<Estandar> recuperarEstandar() {
         List<Estandar> total;
-        HibernateUtil.buildSessionFactory();
+        //HibernateUtil.buildSessionFactory();
         try {           
-            HibernateUtil.openSessionAndBindToThread();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //HibernateUtil.openSessionAndBindToThread();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
                 total = (List<Estandar>) session.createQuery("from Estandar").list();
                 session.close();
         } finally {
-            HibernateUtil.closeSessionAndUnbindFromThread();
+            //HibernateUtil.closeSessionAndUnbindFromThread();
         }
         return total;
 
