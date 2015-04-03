@@ -116,9 +116,8 @@ public class OrdenProcesada implements java.io.Serializable {
     }
     
     public void onRowSelect(SelectEvent event) {
-        String id=daoDetalle.recuperarId(seleccionado.getUsuario());
-        listadoDetalle=daoDetalle.obtenerDetalle(1, id,parametrosReportes.getFechaInicio(),
-                parametrosReportes.getFechaFin()); 
+        //String id=daoDetalle.recuperarId(seleccionado.getUsuario());
+        //listadoDetalle=daoDetalle.obtenerDetalle(1, id,parametrosReportes.getFechaInicio(),parametrosReportes.getFechaFin()); 
     }
 
     public List<temp_procesada> getListado() {
@@ -203,7 +202,7 @@ public class OrdenProcesada implements java.io.Serializable {
     
     private void calcularTotales() {
         for (temp_procesada listado1 : listado) {
-            totalO += listado1.getTotalProcesadas();
+            totalO += listado1.getTotal();
             totalOC += listado1.getCompletas();
             totalOI += listado1.getIncompletas();
             totalON += listado1.getNada();

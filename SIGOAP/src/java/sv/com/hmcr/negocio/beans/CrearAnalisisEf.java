@@ -42,7 +42,7 @@ public class CrearAnalisisEf implements java.io.Serializable {
         parametrosReportes.setFechaInicio(fecIni);
         parametrosReportes.setFechaFin(fecFin);
         parametrosReportes.setTop(Integer.parseInt(mostrar));
-        parametrosReportes.setEncabezado("HMCR SOLUTIONS\nANALISIS DE EFICIENCIA\nDEL PERIODO "+fecIni+" AL "+fecFin);
+        parametrosReportes.setEncabezado("DEL PERIODO "+fecIni+" AL "+fecFin);
         dao.ejecutarProc("CALL analisis_eficiencia('" + fecIni + "','" + fecFin + "')");
        try {
             FacesContext contex = FacesContext.getCurrentInstance();

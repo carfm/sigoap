@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "temp_procesada.findAll", query = "SELECT a FROM temp_procesada a"),
     @NamedQuery(name = "temp_procesada.findByUsuario", query = "SELECT a FROM temp_procesada a WHERE a.usuario = :usuario"),
-    @NamedQuery(name = "temp_procesada.findByTotalProcesadas", query = "SELECT a FROM temp_procesada a WHERE a.totalProcesadas = :totalProcesadas"),
+    @NamedQuery(name = "temp_procesada.findByTotalProcesadas", query = "SELECT a FROM temp_procesada a WHERE a.total = :total"),
     @NamedQuery(name = "temp_procesada.findByCompletas", query = "SELECT a FROM temp_procesada a WHERE a.completas = :completas"),
     @NamedQuery(name = "temp_procesada.findByIncompletas", query = "SELECT a FROM temp_procesada a WHERE a.incompletas = :incompletas"),
     @NamedQuery(name = "temp_procesada.findByNada", query = "SELECT a FROM temp_procesada a WHERE a.nada = :nada")})
@@ -37,8 +37,10 @@ public class temp_procesada implements Serializable {
     @Size(min = 1, max = 80)
     @Column(name = "usuario")
     private String usuario;
-    @Column(name = "totalProcesadas")
-    private Integer totalProcesadas;
+    @Column(name = "correlativo")
+    private Integer correlativo;
+    @Column(name = "total")
+    private Integer total;
     @Column(name = "completas")
     private Integer completas;
     @Column(name = "incompletas")
@@ -62,14 +64,6 @@ public class temp_procesada implements Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public Integer getTotalProcesadas() {
-        return totalProcesadas;
-    }
-
-    public void setTotalProcesadas(Integer totalProcesadas) {
-        this.totalProcesadas= totalProcesadas;
     }
 
     public Integer getCompletas() {
@@ -120,6 +114,34 @@ public class temp_procesada implements Serializable {
     @Override
     public String toString() {
         return "sv.com.hmcr.dominio.temp_procesada[ usuario=" + usuario + " ]";
+    }
+
+    /**
+     * @return the correlativo
+     */
+    public Integer getCorrelativo() {
+        return correlativo;
+    }
+
+    /**
+     * @param correlativo the correlativo to set
+     */
+    public void setCorrelativo(Integer correlativo) {
+        this.correlativo = correlativo;
+    }
+
+    /**
+     * @return the total
+     */
+    public Integer getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Integer total) {
+        this.total = total;
     }
     
 }

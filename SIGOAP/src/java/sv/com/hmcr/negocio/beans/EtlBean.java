@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sv.com.hmcr.negocio.beans;
 
 import java.awt.event.ActionEvent;
@@ -19,25 +18,19 @@ import sv.com.hmcr.dao.TablasTempDAO;
 @ManagedBean
 @ViewScoped
 
-public class EtlBean implements Serializable{
-
-
-
+public class EtlBean implements Serializable {
 
     /**
      * Creates a new instance of EtlBean
      */
-    
     private TablasTempDAO procedimiento;
-    
+
     public EtlBean() {
         procedimiento = new TablasTempDAO();
     }
 
-    
-    public void etl(ActionEvent actionEvent){
+    public void etl(ActionEvent actionEvent) {
         procedimiento.ejecutarProc("call etlEmpleado()");
-        procedimiento.ejecutarProc("call etlOrden()");
         procedimiento.ejecutarProc("call etlProcesaAudita()");
         procedimiento.ejecutarProc("call etlRegistroError()");
     }
@@ -55,5 +48,5 @@ public class EtlBean implements Serializable{
     public void setProcedimiento(TablasTempDAO procedimiento) {
         this.procedimiento = procedimiento;
     }
-    
+
 }
